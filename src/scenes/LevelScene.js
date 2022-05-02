@@ -6,8 +6,8 @@ export default class LevelScene extends Phaser.Scene {
   create() {
     window.levelscene = this;
 
-    this.cameras.main.setBounds(0, 0, 4000, 1080);
-    this.physics.world.setBounds(0, 0, 4000, 1080);
+    this.cameras.main.setBounds(0, 0, 9000, 1080);
+    this.physics.world.setBounds(0, 0, 9000, 1080);
     this.physics.world.setBoundsCollision(true, true, false, true);
 
     this.floor = this.createFloor();
@@ -35,7 +35,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(100, 854, 'player');
+    const player = this.physics.add.sprite(1700, 854, 'player');
     player.body.setSize(85, 99);
     player.body.setOffset(24, 20);
     player.setCollideWorldBounds(true);
@@ -71,19 +71,22 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 30);
+    this.createLargePlatform(floor, 0, 930, 70);
     return floor;
   }
 
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
     this.createLargePlatform(platforms, 300, 200, 1);
-    this.createLargePlatform(platforms, 300, 400, 1);
-    this.createLargePlatform(platforms, 800, 400, 2);
-    this.createLargePlatform(platforms, 1600, 500, 1);
-    this.createLargePlatform(platforms, 2400, 350, 1);
+    this.createLargePlatform(platforms, 1000, 400, 2);
+    this.createLargePlatform(platforms, 1700, 500, 1);
+    this.createLargePlatform(platforms, 2400, 300, 4);
     this.createLargePlatform(platforms, 2200, 760, 3);
-    
+    this.createLargePlatform(platforms, 3400, 200, 1);
+    this.createLargePlatform(platforms, 3700, 700, 1);
+    this.createLargePlatform(platforms, 4000, 400, 1);
+    this.createLargePlatform(platforms, 4500, 300, 2);
+    this.createLargePlatform(platforms, 4500, 760, 1);
     return platforms;
   }
 
@@ -141,7 +144,7 @@ export default class LevelScene extends Phaser.Scene {
 
   createEntities() {
     const entities = {};
-    entities.doggo = this.physics.add.sprite(1000, 950, 'doggo').setOrigin(0, 1);
+    entities.doggo = this.physics.add.sprite(1100, 950, 'doggo').setOrigin(0, 1);
     entities.doggo.aura = this.physics.add.existing(
       this.add
         .rectangle(
@@ -156,7 +159,7 @@ export default class LevelScene extends Phaser.Scene {
     );
     this.physics.add.overlap(this.player, entities.doggo.aura);
 
-    entities.anek = this.physics.add.sprite(2600, 390, 'anek').setOrigin(0, 1);
+    entities.anek = this.physics.add.sprite(2800, 320, 'anek').setOrigin(0, 1);
     entities.anek.aura = this.physics.add.existing(
       this.add
         .rectangle(
@@ -170,14 +173,30 @@ export default class LevelScene extends Phaser.Scene {
         .setOrigin(0.5, 1)
     );
     this.physics.add.overlap(this.player, entities.anek.aura);
+
+    entities.some_place = this.physics.add.sprite(230, 100, 'some_place').setOrigin(0, 1);
     
     entities.mountain = this.physics.add.sprite(10, 950, 'mountain').setOrigin(0, 1);
     
     entities.biblioteka = this.physics.add.sprite(2430, 800, 'biblioteka').setOrigin(0, 1);
 
-    entities.grannies = this. physics.add.sprite(850, 435, 'grannies').setOrigin(0,1);
+    entities.evil_guardians = this. physics.add.sprite(1050, 190, 'evil_guardians').setOrigin(0,1);
 
-    entities.domen_ru_1994 = this. physics.add.sprite(1150, 960, 'domen_ru_1994').setOrigin(0,1);
+    entities.grannies = this. physics.add.sprite(1000, 435, 'grannies').setOrigin(0,1);
+
+    entities.domen_ru_1994 = this. physics.add.sprite(1250, 960, 'domen_ru_1994').setOrigin(0,1);
+
+    entities.Lebedev_1996 = this. physics.add.sprite(2850, 945, 'Lebedev_1996').setOrigin(0,1);
+
+    entities.opera_com_1996 = this. physics.add.sprite(3600, 190, 'opera.com_1996').setOrigin(0,1);
+
+    entities.yabloko_ru_1996 = this. physics.add.sprite(3300, 960, 'yabloko_ru_1996').setOrigin(0,1);
+
+    entities.Rambler_1997 = this. physics.add.sprite(4150, 380, 'Rambler_1997').setOrigin(0,1);
+
+    entities.Krovatka_1997 = this. physics.add.sprite(4650, 780, 'Krovatka_1997').setOrigin(0,1);
+
+    entities.tetris_1997 = this. physics.add.sprite(4650, 320, 'tetris_1997').setOrigin(0,1);
 
     return entities;
   }
