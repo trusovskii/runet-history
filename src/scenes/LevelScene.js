@@ -78,6 +78,7 @@ export default class LevelScene extends Phaser.Scene {
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
     this.createLargePlatform(platforms, 300, 200, 1);
+    this.createLargePlatform(platforms, 300, 400, 1);
     this.createLargePlatform(platforms, 800, 400, 2);
     this.createLargePlatform(platforms, 1600, 500, 1);
     this.createLargePlatform(platforms, 2400, 350, 1);
