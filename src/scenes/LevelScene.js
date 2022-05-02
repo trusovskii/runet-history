@@ -35,7 +35,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(1700, 854, 'player');
+    const player = this.physics.add.sprite(5000, 854, 'player');
     player.body.setSize(85, 99);
     player.body.setOffset(24, 20);
     player.setCollideWorldBounds(true);
@@ -84,9 +84,10 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 2200, 760, 3);
     this.createLargePlatform(platforms, 3400, 200, 1);
     this.createLargePlatform(platforms, 3700, 700, 1);
-    this.createLargePlatform(platforms, 4000, 400, 1);
+    this.createLargePlatform(platforms, 4000, 450, 1);
     this.createLargePlatform(platforms, 4500, 300, 2);
     this.createLargePlatform(platforms, 4500, 760, 1);
+    this.createLargePlatform(platforms, 4950, 760, 1);
     return platforms;
   }
 
@@ -192,11 +193,19 @@ export default class LevelScene extends Phaser.Scene {
 
     entities.yabloko_ru_1996 = this. physics.add.sprite(3300, 960, 'yabloko_ru_1996').setOrigin(0,1);
 
-    entities.Rambler_1997 = this. physics.add.sprite(4150, 380, 'Rambler_1997').setOrigin(0,1);
+    entities.Rambler_1997 = this. physics.add.sprite(4150, 440, 'Rambler_1997').setOrigin(0,1);
 
     entities.Krovatka_1997 = this. physics.add.sprite(4650, 780, 'Krovatka_1997').setOrigin(0,1);
 
-    entities.tetris_1997 = this. physics.add.sprite(4650, 320, 'tetris_1997').setOrigin(0,1);
+    entities.tetris_1997 = this. physics.add.sprite(4650, 330, 'tetris_1997').setOrigin(0,1);
+
+    entities.ICQ_1997 = this. physics.add.sprite(5000, 950, 'ICQ_1997').setOrigin(0,1);
+
+    entities.Zvuki_ru_1998 = this. physics.add.sprite(5100, 780, 'Zvuki_ru_1998').setOrigin(0,1);
+
+    entities.Rif_1997 = this. physics.add.sprite(5700, 970, 'Rif_1997').setOrigin(0,1);
+
+    entities.Kaspersky_ru_1997 = this. physics.add.sprite(5600, 950, 'Kaspersky_ru_1997').setOrigin(0,1);
 
     return entities;
   }

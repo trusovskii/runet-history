@@ -35,9 +35,12 @@ export default class LoadingScene extends Phaser.Scene {
 
     this.load.image('Krovatka_1997', 'assets/sprites/Krovatka_1997.png');
     this.load.image('tetris_1997', 'assets/sprites/tetris_1997.png')
+    this.load.image('ICQ_1997', 'assets/sprites/ICQ_1997.png')
+    this.load.image('Zvuki_ru_1998', 'assets/sprites/Zvuki_ru_1998.png')
+    this.load.image('Rif_1997', 'assets/sprites/Rif_1997.png')
+    this.load.image('Kaspersky_ru_1997', 'assets/sprites/Kaspersky_ru_1997.png')
 
   }
- evil_guardians
 
   
   create() {
