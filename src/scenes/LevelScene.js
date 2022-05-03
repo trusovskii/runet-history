@@ -35,7 +35,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(5000, 854, 'player');
+    const player = this.physics.add.sprite(2400, 854, 'player');
     player.body.setSize(85, 99);
     player.body.setOffset(24, 20);
     player.setCollideWorldBounds(true);
@@ -77,17 +77,23 @@ export default class LevelScene extends Phaser.Scene {
 
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
-    this.createLargePlatform(platforms, 300, 200, 1);
-    this.createLargePlatform(platforms, 1000, 400, 2);
-    this.createLargePlatform(platforms, 1700, 500, 1);
-    this.createLargePlatform(platforms, 2400, 300, 4);
-    this.createLargePlatform(platforms, 2200, 760, 3);
-    this.createLargePlatform(platforms, 3400, 200, 1);
-    this.createLargePlatform(platforms, 3700, 700, 1);
+    this.createLargePlatform(platforms, 300, 200, 1); /** Место для самолюбования */
+    this.createLargePlatform(platforms, 400, 580, 1); /** Под горой */
+    this.createLargePlatform(platforms, 1000, 400, 2); /** Бабули */
+    
+    this.createLargePlatform(platforms, 2800, 300, 1);  /** Свинка */
+    this.createLargePlatform(platforms, 2410, 500, 1); /** Крыша библиотеки */
+
+    this.createLargePlatform(platforms, 2200, 760, 3); /** Основание библиотеки */
+    this.createLargePlatform(platforms, 3350, 350, 1); /** Крыша Яблока */
+    
     this.createLargePlatform(platforms, 4000, 450, 1);
     this.createLargePlatform(platforms, 4500, 300, 2);
     this.createLargePlatform(platforms, 4500, 760, 1);
     this.createLargePlatform(platforms, 4950, 760, 1);
+    this.createLargePlatform(platforms, 5500, 300, 1);
+    this.createLargePlatform(platforms, 6000, 400, 2);
+    this.createLargePlatform(platforms, 6700, 500, 1);
     return platforms;
   }
 
@@ -160,7 +166,7 @@ export default class LevelScene extends Phaser.Scene {
     );
     this.physics.add.overlap(this.player, entities.doggo.aura);
 
-    entities.anek = this.physics.add.sprite(2800, 320, 'anek').setOrigin(0, 1);
+    entities.anek = this.physics.add.sprite(2950, 300, 'anek').setOrigin(0, 1);
     entities.anek.aura = this.physics.add.existing(
       this.add
         .rectangle(
@@ -193,7 +199,7 @@ export default class LevelScene extends Phaser.Scene {
 
     entities.yabloko_ru_1996 = this. physics.add.sprite(3300, 960, 'yabloko_ru_1996').setOrigin(0,1);
 
-    entities.Rambler_1997 = this. physics.add.sprite(4150, 440, 'Rambler_1997').setOrigin(0,1);
+    entities.Rambler_1997 = this. physics.add.sprite(4050, 460, 'Rambler_1997').setOrigin(0,1);
 
     entities.Krovatka_1997 = this. physics.add.sprite(4650, 780, 'Krovatka_1997').setOrigin(0,1);
 
