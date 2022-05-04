@@ -5,7 +5,7 @@ const webpackStream = require('webpack-stream');
 const twig = require('gulp-twig');
 
 task('app', function () {
-  return src('src/game.js')
+  return src('src/Game.js')
     .pipe(
       webpackStream(
         {
@@ -66,24 +66,18 @@ task('app', function () {
     .pipe(dest('dist/js/'));
 });
 
-task('twig', function () {
-  return src('templates/*.twig')
-    .pipe(
-      twig({
-        base: 'templates',
-      })
-    )
-    .pipe(dest('dist/'));
-});
-
 task('assets', function () {
   return src('assets/**/*').pipe(dest('dist/assets/'));
 });
 
-task('watch', function () {
-  watch(['src/**/*.js', 'src/**/*.scss'], series('app'));
-  watch('templates/*.twig', series('twig'));
-  watch('assets/**/*', series('assets'));
+task('pages', function () {
+  return src('pages/**/*').pipe(dest('dist/'));
 });
 
-task('default', series('app', 'twig', 'assets'));
+task('watch', function () {
+  watch(['src/**/*'], series('app'));
+  watch('assets/**/*', series('assets'));
+  watch('pages/*', series('pages'));
+});
+
+task('default', series('app', 'assets', 'pages'));

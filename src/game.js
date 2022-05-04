@@ -1,5 +1,5 @@
-import LevelScene from '@/scenes/LevelScene';
-import LoadingScene from '@/scenes/LoadingScene';
+import LevelScene from './scenes/LevelScene';
+import LoadingScene from './scenes/LoadingScene';
 
 const gameConfig = {
   title: 'Meme Game',

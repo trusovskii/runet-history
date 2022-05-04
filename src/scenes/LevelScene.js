@@ -1,3 +1,6 @@
+import PlayerStates from '../PlayerStates';
+import Entities from '../Entities';
+
 export default class LevelScene extends Phaser.Scene {
   constructor() {
     super('level-scene');
@@ -6,9 +9,9 @@ export default class LevelScene extends Phaser.Scene {
   create() {
     window.levelscene = this;
 
-    this.cameras.main.setBounds(0, 0, 9000, 1080);
-    this.physics.world.setBounds(0, 0, 9000, 1080);
-    this.physics.world.setBoundsCollision(true, true, false, true);
+    this.cameras.main.setBounds(0, 0, 8000, 1080);
+    this.physics.world.setBounds(0, 0, 8000, 1080);
+    this.physics.world.setBoundsCollision(false, true, false, false);
 
     this.floor = this.createFloor();
     this.platforms = this.createPlatforms();
@@ -32,34 +35,55 @@ export default class LevelScene extends Phaser.Scene {
     this.keyA = this.input.keyboard.addKey('A');
     this.keyS = this.input.keyboard.addKey('S');
     this.keyD = this.input.keyboard.addKey('D');
+
+    this.key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+    this.key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+    this.key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+    this.key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
+
+    this.activeQuestEntityName = null;
+    this.activeQuizEntityName = null;
+
+    this.playerState = PlayerStates.FREE_MOVE;
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2400, 854, 'player');
+    const player = this.physics.add.sprite(930, 70);
     player.body.setSize(85, 99);
     player.body.setOffset(24, 20);
     player.setCollideWorldBounds(true);
     player.setAccelerationY(2000);
 
-    // this.anims.create({
-    //   key: "left",
-    //   frames: this.anims.generateFrameNumbers(DUDE_KEY, { start: 0, end: 3 }),
-    //   frameRate: 10,
-    //   repeat: -1,
-    // });
+    this.anims.create({
+      key: 'still',
+      frames: this.anims.generateFrameNumbers('player', {
+        frames: [15],
+      }),
+      repeat: -1,
+    });
+    this.anims.create({
+      key: 'jump',
+      frames: this.anims.generateFrameNumbers('player', {
+        frames: [14],
+      }),
+      repeat: -1,
+    });
+    this.anims.create({
+      key: 'fall',
+      frames: this.anims.generateFrameNumbers('player', {
+        frames: [9],
+      }),
+      repeat: -1,
+    });
+    this.anims.create({
+      key: 'run',
+      frames: this.anims.generateFrameNumbers('player', {
+        frames: [0, 6, 7, 8, 10, 11, 12, 13, 4, 1, 2, 3, 5],
+      }),
+      repeat: -1,
+    });
 
-    // this.anims.create({
-    //   key: "turn",
-    //   frames: [{ key: DUDE_KEY, frame: 4 }],
-    //   frameRate: 20,
-    // });
-
-    // this.anims.create({
-    //   key: "right",
-    //   frames: this.anims.generateFrameNumbers(DUDE_KEY, { start: 5, end: 8 }),
-    //   frameRate: 10,
-    //   repeat: -1,
-    // });
+    player.play('still');
 
     this.quest = this.add.sprite(0, 0, 'quest').setOrigin(0.5, 1).setVisible(false);
 
@@ -81,12 +105,12 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 400, 580, 1); /** Под горой */
     this.createLargePlatform(platforms, 1000, 400, 2); /** Бабули */
     
-    this.createLargePlatform(platforms, 2800, 300, 1);  /** Свинка */
+    this.createLargePlatform(platforms, 2800, 300, 1); /** Свинка */
     this.createLargePlatform(platforms, 2410, 500, 1); /** Крыша библиотеки */
 
     this.createLargePlatform(platforms, 2200, 760, 3); /** Основание библиотеки */
     this.createLargePlatform(platforms, 3350, 350, 1); /** Крыша Яблока */
-    
+
     this.createLargePlatform(platforms, 4000, 450, 1);
     this.createLargePlatform(platforms, 4500, 300, 2);
     this.createLargePlatform(platforms, 4500, 760, 1);
@@ -151,135 +175,264 @@ export default class LevelScene extends Phaser.Scene {
 
   createEntities() {
     const entities = {};
-    entities.doggo = this.physics.add.sprite(1100, 950, 'doggo').setOrigin(0, 1);
-    entities.doggo.aura = this.physics.add.existing(
-      this.add
-        .rectangle(
-          entities.doggo.getBounds().centerX,
-          entities.doggo.getBounds().bottom,
-          300,
-          200,
-          0xff0000,
-          0
-        )
-        .setOrigin(0.5, 1)
-    );
-    this.physics.add.overlap(this.player, entities.doggo.aura);
-
-    entities.anek = this.physics.add.sprite(2950, 300, 'anek').setOrigin(0, 1);
-    entities.anek.aura = this.physics.add.existing(
-      this.add
-        .rectangle(
-          entities.anek.getBounds().centerX,
-          entities.anek.getBounds().bottom,
-          300,
-          200,
-          0x00ff00,
-          0
-        )
-        .setOrigin(0.5, 1)
-    );
-    this.physics.add.overlap(this.player, entities.anek.aura);
-
-    entities.some_place = this.physics.add.sprite(230, 100, 'some_place').setOrigin(0, 1);
-    
-    entities.mountain = this.physics.add.sprite(10, 950, 'mountain').setOrigin(0, 1);
-    
-    entities.biblioteka = this.physics.add.sprite(2430, 800, 'biblioteka').setOrigin(0, 1);
-
-    entities.evil_guardians = this. physics.add.sprite(1050, 190, 'evil_guardians').setOrigin(0,1);
-
-    entities.grannies = this. physics.add.sprite(1000, 435, 'grannies').setOrigin(0,1);
-
-    entities.domen_ru_1994 = this. physics.add.sprite(1250, 960, 'domen_ru_1994').setOrigin(0,1);
-
-    entities.Lebedev_1996 = this. physics.add.sprite(2850, 945, 'Lebedev_1996').setOrigin(0,1);
-
-    entities.opera_com_1996 = this. physics.add.sprite(3600, 190, 'opera.com_1996').setOrigin(0,1);
-
-    entities.yabloko_ru_1996 = this. physics.add.sprite(3300, 960, 'yabloko_ru_1996').setOrigin(0,1);
-
-    entities.Rambler_1997 = this. physics.add.sprite(4050, 460, 'Rambler_1997').setOrigin(0,1);
-
-    entities.Krovatka_1997 = this. physics.add.sprite(4650, 780, 'Krovatka_1997').setOrigin(0,1);
-
-    entities.tetris_1997 = this. physics.add.sprite(4650, 330, 'tetris_1997').setOrigin(0,1);
-
-    entities.ICQ_1997 = this. physics.add.sprite(5000, 950, 'ICQ_1997').setOrigin(0,1);
-
-    entities.Zvuki_ru_1998 = this. physics.add.sprite(5100, 780, 'Zvuki_ru_1998').setOrigin(0,1);
-
-    entities.Rif_1997 = this. physics.add.sprite(5700, 970, 'Rif_1997').setOrigin(0,1);
-
-    entities.Kaspersky_ru_1997 = this. physics.add.sprite(5600, 950, 'Kaspersky_ru_1997').setOrigin(0,1);
-
+    Object.entries(Entities).forEach(([entityName, entityData]) => {
+      entities[entityName] = this.physics.add
+        .sprite(entityData.x, entityData.y, entityData.sprite)
+        .setOrigin(0, 1);
+      entities[entityName].aura = this.physics.add.existing(
+        this.add
+          .rectangle(
+            entities[entityName].getBounds().x - 60,
+            entities[entityName].getBounds().y - 60,
+            entities[entityName].getBounds().width + 120,
+            entities[entityName].getBounds().height + 60,
+            0xff0000,
+            0.0125
+          )
+          .setOrigin(0, 0)
+      );
+      if (entityData.quiz) {
+        entities[entityName].quiz = entityData.quiz;
+        entities[entityName].quizState = {
+          answered: false,
+          solved: false,
+          gameObjects: null,
+          currentLine: null,
+        };
+      }
+      this.physics.add.overlap(this.player, entities[entityName].aura);
+    });
     return entities;
   }
-
-
 
   createClouds() {
     const clouds = this.physics.add.staticGroup();
     return clouds;
   }
 
-  handlePlayerMove() {
-    if (this.cursors.left.isDown || this.keyA.isDown) {
-      if (!this.player.body.blocked.left) {
-        this.player.setVelocityX(-500);
-        this.checkFlip(this.player);
+  /**
+   * @param {Phaser.Physics.Arcade.Sprite} quizEntity
+   */
+  showQuiz(quizEntity) {
+    const container = this.add.container(quizEntity.getBounds().x, quizEntity.getBounds().y);
+    const questionBubble = this.add.image(0, 0, 'bubble-line').setOrigin(0, 0);
+    const questionText = this.add
+      .text(15, questionBubble.getBounds().centerY, quizEntity.quiz.quiestion, {
+        fontSize: 18,
+        color: '#000',
+      })
+      .setOrigin(0, 0.5);
+    container.add(questionBubble);
+    container.add(questionText);
+    let offsetX = 0;
+    let offsetY = questionBubble.getBounds().height + 15;
+
+    const answers = [];
+    quizEntity.quiz.answers.forEach((answer, answerIndex) => {
+      const answerBubble = this.add
+        .image(offsetX, offsetY, `answer-bubble-${answerIndex + 1}`)
+        .setOrigin(0, 0);
+      const answerNumberText = this.add
+        .text(
+          offsetX + 15,
+          offsetY + Math.round(answerBubble.getBounds().height / 2),
+          answerIndex + 1,
+          { fontSize: 18, color: '#666' }
+        )
+        .setOrigin(0, 0.5);
+      const answerText = this.add
+        .text(
+          offsetX + answerNumberText.getBounds().width + 30,
+          offsetY + Math.round(answerBubble.getBounds().height / 2),
+          answer,
+          { fontSize: 18, color: '#000' }
+        )
+        .setOrigin(0, 0.5);
+      container.add(answerBubble);
+      container.add(answerNumberText);
+      container.add(answerText);
+      if ((answerIndex + 1) % 2 === 1) {
+        offsetX += answerBubble.getBounds().width + 15;
+      } else {
+        offsetX = 0;
+        offsetY += answerBubble.getBounds().height + 15;
       }
+      answers.push({
+        answerBubble: answerBubble,
+        answerNumberText: answerNumberText,
+        answerText: answerText,
+      });
+    });
+    container.setPosition(
+      quizEntity.getBounds().centerX - container.getBounds().width / 2,
+      quizEntity.getBounds().y - container.getBounds().height - 25
+    );
+    quizEntity.quizState.gameObjects = {
+      container: container,
+      questionBubble: questionBubble,
+      questionText: questionText,
+      answers: answers,
+    };
+  }
 
-      // this.player.anims.play("left", true);
-    } else if (this.cursors.right.isDown || this.keyD.isDown) {
-      if (!this.player.body.blocked.right) {
-        this.player.setVelocityX(500);
-        this.checkFlip(this.player);
+  answerQuiz(quizEntity, number) {
+    if (quizEntity.quiz.correctNumber === number) {
+      quizEntity.quizState.answered = true;
+      quizEntity.quizState.solved = true;
+      quizEntity.quizState.gameObjects.answers[number - 1].answerText.setColor('#3F3');
+      console.log('correct!');
+    } else {
+      quizEntity.quizState.answered = true;
+      quizEntity.quizState.gameObjects.answers[number - 1].answerText.setColor('#F33');
+      console.log('fail!!!');
+    }
+    setTimeout(() => {
+      this.advanceDialogue(quizEntity);
+      this.playerState = PlayerStates.QUIZ_DIALOGUE;
+    }, 1500);
+  }
+
+  advanceDialogue(quizEntity) {
+    console.log('advanceDialogue start');
+    if (quizEntity.quizState.gameObjects) {
+      console.log('cleanup gameObjects');
+      // cleanup previous text bubbles
+      quizEntity.quizState.gameObjects.container.destroy();
+      quizEntity.quizState.gameObjects = null;
+    }
+    let lines = quizEntity.quizState.solved
+      ? quizEntity.quiz.correctAnswerLines
+      : quizEntity.quiz.wrongAnswerLines;
+    let currentLine =
+      quizEntity.quizState.currentLine == null ? 0 : quizEntity.quizState.currentLine;
+    if (lines && lines.length > currentLine) {
+      const line = lines[currentLine];
+      console.log(`showSpeech ${currentLine}`);
+      this.showSpeech(quizEntity, line);
+      quizEntity.quizState.currentLine = currentLine + 1;
+    } else {
+      console.log('set FREE_MOVE');
+      this.playerState = PlayerStates.FREE_MOVE;
+    }
+    console.log('advanceDialogue end');
+  }
+
+  showSpeech(quizEntity, line) {
+    const container = this.add.container(quizEntity.getBounds().x, quizEntity.getBounds().y);
+    const lineText = this.add
+      .text(15, 0, line, {
+        fontSize: 18,
+        color: '#000',
+        wordWrap: { width: 385, useAdvancedWrap: true },
+      })
+      .setOrigin(0, 0.5);
+    const bubbleSpriteKey =
+      lineText.getBounds().height < 38
+        ? 'bubble-line'
+        : lineText.getBounds().height < 86
+        ? 'bubble-speech'
+        : 'bubble-speech-large';
+    const textOffsetY =
+      lineText.getBounds().height < 38 ? 0 : lineText.getBounds().height < 86 ? -20 : -35;
+    const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
+    lineText.setPosition(25, lineBubble.getBounds().centerY + textOffsetY);
+    container.add(lineBubble);
+    container.add(lineText);
+    container.setPosition(
+      quizEntity.getBounds().centerX - container.getBounds().width / 2,
+      quizEntity.getBounds().y - container.getBounds().height - 25
+    );
+    quizEntity.quizState.gameObjects = {
+      container: container,
+      lineBubble: lineBubble,
+      lineText: lineText,
+    };
+  }
+
+  handleInput() {
+    const questEntity = this.activeQuestEntityName
+      ? this.entities[this.activeQuestEntityName]
+      : null;
+    const quizEntity = this.activeQuizEntityName ? this.entities[this.activeQuizEntityName] : null;
+
+    if (this.playerState === PlayerStates.FREE_MOVE) {
+      if (this.cursors.left.isDown || this.keyA.isDown) {
+        if (!this.player.body.blocked.left) {
+          this.player.setVelocityX(-500);
+          this.checkFlip(this.player);
+        }
+      } else if (this.cursors.right.isDown || this.keyD.isDown) {
+        if (!this.player.body.blocked.right) {
+          this.player.setVelocityX(500);
+          this.checkFlip(this.player);
+        }
+      } else {
+        this.player.setVelocityX(0);
       }
-
-      // this.player.anims.play("right", true);
-    } else {
-      this.player.setVelocityX(0);
-
-      // this.player.anims.play("turn");
-    }
-
-    if ((this.cursors.up.isDown || this.keyW.isDown) && this.player.body.blocked.down) {
-      this.player.setVelocityY(-1200);
-    }
-
-    if (this.player.body.velocity.y < 0) {
-      this.player.setTexture('player-jump')
-    } else if (this.player.body.velocity.y > 0) {
-      this.player.setTexture('player-fall')
-    } else {
-      this.player.setTexture('player')
-    }
-
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-      console.log('space');
+      if ((this.cursors.up.isDown || this.keyW.isDown) && this.player.body.blocked.down) {
+        this.player.setVelocityY(-1200);
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+        if (questEntity && questEntity.quizState && !questEntity.quizState.answered) {
+          this.player.setVelocityX(0);
+          this.activeQuizEntityName = this.activeQuestEntityName;
+          this.playerState = PlayerStates.QUIZ_QUESTION;
+          this.showQuiz(questEntity);
+        }
+      }
+    } else if (this.playerState === PlayerStates.QUIZ_QUESTION) {
+      if (quizEntity && !quizEntity.quizState.answered) {
+        [1, 2, 3, 4].forEach((number) => {
+          if (Phaser.Input.Keyboard.JustDown(this[`key${number}`])) {
+            this.answerQuiz(quizEntity, number);
+          }
+        });
+      }
+    } else if (this.playerState === PlayerStates.QUIZ_DIALOGUE) {
+      if (quizEntity) {
+        if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+          this.advanceDialogue(quizEntity);
+        }
+      }
     }
   }
 
   update() {
-    this.handlePlayerMove();
+    this.handleInput();
+
+    if (this.player.body.velocity.y < 0) {
+      this.player.play('jump', true);
+    } else if (this.player.body.velocity.y > 0) {
+      this.player.play('fall', true);
+    } else {
+      if (Math.abs(this.player.body.velocity.x) > 0) {
+        this.player.play('run', true);
+      } else {
+        this.player.play('still', true);
+      }
+    }
 
     this.quest.setPosition(this.player.getBounds().centerX, this.player.getBounds().top - 20);
 
-    let questEntity = null;
+    let questEntityName = null;
     let showQuest = false;
     Object.entries(this.entities).forEach(([entityName, entity]) => {
-      if (entity.aura) {
-        if (!entity.aura.body.touching.none) {
-          showQuest = true;
-          questEntity = entityName;
-        }
+      if (
+        entity.aura &&
+        !entity.aura.body.touching.none &&
+        this.activeQuizEntityName !== entityName &&
+        entity.quizState &&
+        !entity.quizState.answered
+      ) {
+        showQuest = true;
+        questEntityName = entityName;
       }
     });
     if (this.quest.visible !== showQuest) {
-      console.log(`${questEntity} is in range`);
-      console.log((showQuest ? 'show' : 'hide') + ' quest');
       this.quest.setVisible(showQuest);
+    }
+    if (this.activeQuestEntityName !== questEntityName) {
+      this.activeQuestEntityName = questEntityName;
     }
   }
 
