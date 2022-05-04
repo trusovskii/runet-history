@@ -77,26 +77,26 @@ export default {
   },
   Rambler_1997: {
     x: 4450,
-    y: 460,
+    y: 450,
     sprite: 'Rambler_1997',
   },
   Krovatka_1997: {
-    x: 4800,
+    x: 4600,
     y: 955,
     sprite: 'Krovatka_1997',
   },
   tetris_1997: {
     x: 5150,
-    y: 230,
+    y: 225,
     sprite: 'tetris_1997',
   },
   ICQ_1997: {
-    x: 5400,
+    x: 6100,
     y: 950,
     sprite: 'ICQ_1997',
   },
   Zvuki_ru_1998: {
-    x: 5500,
+    x: 6200,
     y: 950,
     sprite: 'Zvuki_ru_1998',
   },
@@ -105,9 +105,14 @@ export default {
     y: 970,
     sprite: 'Rif_1997',
   },
-  Kaspersky_ru_199: {
+  Kaspersky_ru_1997: {
     x: 6100,
     y: 425,
     sprite: 'Kaspersky_ru_1997',
+  },
+  bazar_1997: {
+    x: 5100,
+    y: 970,
+    sprite: 'bazar_1997',
   },
 };

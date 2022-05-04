@@ -48,9 +48,9 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(200, 700);
+    const player = this.physics.add.sprite(2200, 700);
     player.body.setSize(85, 99);
-    player.body.setOffset(24, 20);
+    player.body.setOffset(24, 10);
     player.setCollideWorldBounds(true);
     player.setAccelerationY(2000);
 
@@ -108,7 +108,7 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 120, 780, 4); /** Под горой */
     this.createLargePlatform(platforms, 120, 880, 4); /** Под горой */
 
-    this.createLargePlatform(platforms, 1100, 400, 2); /** Бабули */
+    this.createLargePlatform(platforms, 1150, 400, 3); /** Бабули */
     
     this.createLargePlatform(platforms, 3050, 300, 1); /** Свинка */
 
