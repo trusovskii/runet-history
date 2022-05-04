@@ -1,6 +1,6 @@
 export default {
   doggo: {
-    x: 1100,
+    x: 1400,
     y: 950,
     sprite: 'doggo',
     quiz: {
@@ -18,8 +18,8 @@ export default {
     },
   },
   anek: {
-    x: 2950,
-    y: 300,
+    x: 3150,
+    y: 330,
     sprite: 'anek',
     quiz: {
       quiestion: 'Что это за Анекдот?',
@@ -47,72 +47,67 @@ export default {
   },
   biblioteka: {
     x: 2430,
-    y: 800,
+    y: 965,
     sprite: 'biblioteka',
   },
-  evil_guardians: {
-    x: 1050,
-    y: 190,
-    sprite: 'evil_guardians',
-  },
   grannies: {
-    x: 1000,
-    y: 435,
+    x: 1380,
+    y: 425,
     sprite: 'grannies',
   },
   domen_ru_1994: {
-    x: 1250,
+    x: 1650,
     y: 960,
     sprite: 'domen_ru_1994',
   },
   Lebedev_1996: {
-    x: 2850,
-    y: 945,
+    x: 3250,
+    y: 950,
     sprite: 'Lebedev_1996',
   },
   opera_com_1996: {
-    x: 3600,
-    y: 190,
+    x: 3800,
+    y: 320,
     sprite: 'opera.com_1996',
   },
   yabloko_ru_1996: {
-    x: 3300,
+    x: 3700,
     y: 960,
     sprite: 'yabloko_ru_1996',
   },
   Rambler_1997: {
-    x: 4050,
+    x: 4450,
     y: 460,
     sprite: 'Rambler_1997',
   },
   Krovatka_1997: {
-    x: 4650,
-    y: 780,
+    x: 4800,
+    y: 955,
     sprite: 'Krovatka_1997',
   },
   tetris_1997: {
-    x: 4650,
-    y: 330,
+    x: 5150,
+    y: 230,
     sprite: 'tetris_1997',
   },
   ICQ_1997: {
-    x: 5000,
+    x: 5400,
     y: 950,
     sprite: 'ICQ_1997',
   },
   Zvuki_ru_1998: {
-    x: 5100,
-    y: 780,
+    x: 5500,
+    y: 950,
     sprite: 'Zvuki_ru_1998',
   },
   Rif_1997: {
-    x: 5700,
+    x: 7100,
     y: 970,
     sprite: 'Rif_1997',
   },
   Kaspersky_ru_199: {
-    x: 5600,
-    y: 950,
+    x: 6100,
+    y: 425,
     sprite: 'Kaspersky_ru_1997',
   },
 };

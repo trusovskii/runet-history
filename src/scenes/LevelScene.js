@@ -48,7 +48,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(930, 70);
+    const player = this.physics.add.sprite(200, 700);
     player.body.setSize(85, 99);
     player.body.setOffset(24, 20);
     player.setCollideWorldBounds(true);
@@ -78,7 +78,7 @@ export default class LevelScene extends Phaser.Scene {
     this.anims.create({
       key: 'run',
       frames: this.anims.generateFrameNumbers('player', {
-        frames: [0, 6, 7, 8, 10, 11, 12, 13, 4, 1, 2, 3, 5],
+        frames: [7, 6, 5, 4, 3, 2, 1, 0, 13, 12, 11, 10, 8],
       }),
       repeat: -1,
     });
@@ -102,22 +102,30 @@ export default class LevelScene extends Phaser.Scene {
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
     this.createLargePlatform(platforms, 300, 200, 1); /** Место для самолюбования */
-    this.createLargePlatform(platforms, 400, 580, 1); /** Под горой */
-    this.createLargePlatform(platforms, 1000, 400, 2); /** Бабули */
+
+    this.createLargePlatform(platforms, 170, 580, 3);/** Под горой */
+    this.createLargePlatform(platforms, 113, 680, 4); /** Под горой */
+    this.createLargePlatform(platforms, 120, 780, 4); /** Под горой */
+    this.createLargePlatform(platforms, 120, 880, 4); /** Под горой */
+
+    this.createLargePlatform(platforms, 1100, 400, 2); /** Бабули */
     
-    this.createLargePlatform(platforms, 2800, 300, 1); /** Свинка */
-    this.createLargePlatform(platforms, 2410, 500, 1); /** Крыша библиотеки */
+    this.createLargePlatform(platforms, 3050, 300, 1); /** Свинка */
 
-    this.createLargePlatform(platforms, 2200, 760, 3); /** Основание библиотеки */
-    this.createLargePlatform(platforms, 3350, 350, 1); /** Крыша Яблока */
+    this.createLargePlatform(platforms, 2450, 580, 1); /** Физичность иблиотеки */
+    this.createLargePlatform(platforms, 2450, 680, 1); /** Физичность иблиотеки */
+    this.createLargePlatform(platforms, 2450, 780, 1); /** Физичность иблиотеки */
+    this.createLargePlatform(platforms, 2450, 880, 1); /** Физичность иблиотеки */
 
-    this.createLargePlatform(platforms, 4000, 450, 1);
-    this.createLargePlatform(platforms, 4500, 300, 2);
-    this.createLargePlatform(platforms, 4500, 760, 1);
-    this.createLargePlatform(platforms, 4950, 760, 1);
-    this.createLargePlatform(platforms, 5500, 300, 1);
-    this.createLargePlatform(platforms, 6000, 400, 2);
-    this.createLargePlatform(platforms, 6700, 500, 1);
+
+    this.createLargePlatform(platforms, 3720, 315, 1); /** Крыша Яблока */
+
+    this.createLargePlatform(platforms, 4400, 450, 1); /** Рамблер */
+    this.createLargePlatform(platforms, 5060, 200, 1); /** Тетрис */
+
+  
+    this.createLargePlatform(platforms, 5800, 400, 2); /** Касперский */
+    this.createLargePlatform(platforms, 6600, 600, 1);
     return platforms;
   }
 

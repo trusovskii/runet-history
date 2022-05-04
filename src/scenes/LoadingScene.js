@@ -25,7 +25,6 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image('anek', 'assets/sprites/anek.png');
     this.load.image('mountain', 'assets/sprites/mountain.png');
     this.load.image('biblioteka', 'assets/sprites/biblioteka.png');
-    this.load.image('evil_guardians', 'assets/sprites/evil_guardians.png');
     this.load.image('grannies', 'assets/sprites/grannies.png');
     this.load.image('domen_ru_1994', 'assets/sprites/domen.ru_1994.png');
     this.load.image('Lebedev_1996', 'assets/sprites/Lebedev_1996.png');
