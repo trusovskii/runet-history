@@ -1,11 +1,11 @@
-import LevelScene from './scenes/LevelScene';
-import LoadingScene from './scenes/LoadingScene';
+import LevelScene from "./scenes/LevelScene";
+import LoadingScene from "./scenes/LoadingScene";
 
 const gameConfig = {
-  title: 'Meme Game',
+  title: "Meme Game",
   type: Phaser.CANVAS,
-  parent: 'game',
-  backgroundColor: '#fff',
+  parent: "game",
+  backgroundColor: "#fff",
   scale: {
     mode: Phaser.Scale.ScaleModes.FIT,
     // mode: Phaser.Scale.ScaleModes.RESIZE,
@@ -22,23 +22,23 @@ const gameConfig = {
     // },
   },
   physics: {
-    default: 'arcade',
+    default: "arcade",
     arcade: {
       gravity: {
         y: 0,
       },
-      // debug: true,
+      debug: true,
     },
   },
   // render: {
   //   antialiasGL: false,
   //   pixelArt: true,
   // },
-  // callbacks: {
-  //   postBoot: () => {
-  //     window.sizeChanged();
-  //   },
-  // },
+  callbacks: {
+    postBoot: () => {
+      window.sizeChanged();
+    },
+  },
   canvasStyle: `display: block; width: 100%; height: 100%;`,
   autoFocus: true,
   audio: {
@@ -47,17 +47,18 @@ const gameConfig = {
   scene: [LoadingScene, LevelScene],
 };
 
-// window.sizeChanged = () => {
-//   if (game.isBooted) {
-//     setTimeout(() => {
-//       game.scale.resize(window.innerWidth, window.innerHeight);
-//       game.canvas.setAttribute(
-//         'style',
-//         `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
-//       );
-//     }, 100);
-//   }
-// };
-// window.onresize = () => window.sizeChanged();
+window.sizeChanged = () => {
+  if (game.isBooted) {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+    game.canvas.setAttribute(
+      "style",
+      `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
+    );
+    const zoomFactor = window.innerHeight / 1080;
+    console.log("zoomFactor", zoomFactor);
+    game.scene.getScene("level-scene").cameras.main.zoom = zoomFactor;
+  }
+};
+window.onresize = () => window.sizeChanged();
 
-const game = new Phaser.Game(gameConfig);
+window.game = new Phaser.Game(gameConfig);
