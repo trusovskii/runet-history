@@ -97,8 +97,11 @@ export default {
   },
   Rambler_1997: {
     x: 4450,
-    y: 450,
+    y: 480,
     sprite: "Rambler_1997",
+    colliders: [
+      { x: 4450, y: 470, width: 275, height: 70 },
+    ],
   },
   Krovatka_1997: {
     x: 4600,
@@ -124,6 +127,10 @@ export default {
     x: 7100,
     y: 967,
     sprite: "Rif_1997",
+    colliders: [
+      { x: 7310, y: 645, width: 30, height: 30 },
+      
+    ],
   },
   Kaspersky_ru_1997: {
     x: 6100,
@@ -136,16 +143,16 @@ export default {
     sprite: "bazar_1997",
   },
   pepsi_1998: {
-    x: 8100,
+    x: 8300,
     y: 960,
     sprite: "pepsi_1998",
   colliders: [
-    { x: 8106, y: 905, width: 375, height: 220 },
-    { x: 8230, y: 930, width: 160, height: 330 }
+    { x: 8306, y: 905, width: 375, height: 220 },
+    { x: 8430, y: 930, width: 160, height: 330 }
   ],
   },
   mail_ru_1998: {
-    x: 7785,
+    x: 7985,
     y: 960,
     sprite: "mail_ru_1998",
   },
@@ -155,12 +162,12 @@ export default {
     sprite: "Webmoney_1998",
   },
   fuck_ru_1998: {
-    x: 8500,
+    x: 8700,
     y: 955,
     sprite: "fuck_ru_1998",
   },
   TV_1999: {
-    x: 8600,
+    x: 8800,
     y: 270,
     sprite: "TV_1999",
   },
