@@ -17,6 +17,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("wall-right", "assets/sprites/wall--right.png");
     this.load.image("wall", "assets/sprites/floor-inner.png");
 
+    this.load.image("mountains", "assets/bg/mountains.png");
     this.load.image("cloud", "assets/sprites/cloud.png");
     this.load.image("cloud2", "assets/sprites/cloud2.png");
 

@@ -7,8 +7,8 @@ const gameConfig = {
   parent: "game",
   backgroundColor: "#fff",
   scale: {
-    mode: Phaser.Scale.ScaleModes.FIT,
-    // mode: Phaser.Scale.ScaleModes.RESIZE,
+    // mode: Phaser.Scale.ScaleModes.FIT,
+    mode: Phaser.Scale.ScaleModes.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: window.innerWidth,
     height: window.innerHeight,
@@ -49,14 +49,13 @@ const gameConfig = {
 
 window.sizeChanged = () => {
   if (game.isBooted) {
-    game.scale.resize(window.innerWidth, window.innerHeight);
-    game.canvas.setAttribute(
-      "style",
-      `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
-    );
-    const zoomFactor = window.innerHeight / 1080;
-    console.log("zoomFactor", zoomFactor);
-    game.scene.getScene("level-scene").cameras.main.zoom = zoomFactor;
+    // game.scale.resize(window.innerWidth, window.innerHeight);
+    // game.canvas.setAttribute(
+    //   "style",
+    //   `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
+    // );
+    const levelScene = game.scene.getScene("level-scene");
+    levelScene.events.emit('resize');
   }
 };
 window.onresize = () => window.sizeChanged();

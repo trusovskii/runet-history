@@ -4,15 +4,17 @@ import Entities from "../Entities";
 export default class LevelScene extends Phaser.Scene {
   constructor() {
     super("level-scene");
+    this.WORLD_WIDTH = 8000;
+    this.WORLD_HEIGHT = 1080;
+    window.levelscene = this;
   }
 
   create() {
-    window.levelscene = this;
-
-    this.cameras.main.setBounds(0, 0, 8000, 1080);
-    this.physics.world.setBounds(0, 0, 8000, 1080);
+    this.physics.world.setBounds(0, 0, this.WORLD_WIDTH, this.WORLD_HEIGHT);
     this.physics.world.setBoundsCollision(true, true, false, true);
+    this.cameras.main.setBounds(0, 0, this.WORLD_WIDTH, this.WORLD_HEIGHT);
 
+    this.bg = this.createBackground();
     this.floor = this.createFloor();
     this.platforms = this.createPlatforms();
     this.clouds = this.createClouds();
@@ -30,14 +32,15 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.floor);
 
-    this.cameras.main.startFollow(this.player, true);
+    this.cameras.main.startFollow(this.player);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.keyW = this.input.keyboard.addKey("W");
-    this.keyA = this.input.keyboard.addKey("A");
-    this.keyS = this.input.keyboard.addKey("S");
-    this.keyD = this.input.keyboard.addKey("D");
+    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
     this.key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
     this.key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
@@ -50,10 +53,28 @@ export default class LevelScene extends Phaser.Scene {
     this.activeQuizEntityName = null;
 
     this.playerState = PlayerStates.FREE_MOVE;
+
+    this.keyPlus = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.PLUS
+    );
+    this.keyMinus = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.MINUS
+    );
+
+    this.physics.world.drawDebug = false;
+    this.physics.world.debugGraphic.clear();
+
+    this.events.on('resize', () => {
+      const zoomFactor = window.innerHeight / 1080;
+      this.cameras.main.zoom = zoomFactor;
+      this.events.once("update", () => {
+        this.resizeBackground();
+      });
+    });
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(5700, 700);
+    const player = this.physics.add.sprite(2000, 800);
     player.body.setSize(45, 99);
     player.body.setOffset(44, 10);
     player.setCollideWorldBounds(true);
@@ -107,6 +128,20 @@ export default class LevelScene extends Phaser.Scene {
     return floor;
   }
 
+  createBackground() {
+    const bg = this.add
+      .tileSprite(
+        0,
+        960,
+        window.innerWidth,
+        this.textures.get("mountains").getSourceImage().height,
+        "mountains"
+      )
+      .setOrigin(0, 1)
+      .setScrollFactor(0, 1);
+    return bg;
+  }
+
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
     this.createLargePlatform(
@@ -115,8 +150,6 @@ export default class LevelScene extends Phaser.Scene {
       200,
       1
     ); /** Место для самолюбования */
-
-
 
     this.createLargePlatform(platforms, 1150, 400, 3); /** Бабули */
 
@@ -198,7 +231,7 @@ export default class LevelScene extends Phaser.Scene {
               entities[entityName].getBounds().width + 120,
               entities[entityName].getBounds().height + 60,
               0xff0000,
-              0.0125
+              0
             )
             .setOrigin(0, 0)
         );
@@ -226,7 +259,7 @@ export default class LevelScene extends Phaser.Scene {
                 collider.width,
                 collider.height,
                 0x0000ff,
-                0.02
+                0
               )
               .setOrigin(0, 1),
             true
@@ -454,6 +487,35 @@ export default class LevelScene extends Phaser.Scene {
         }
       }
     }
+
+    if (
+      Phaser.Input.Keyboard.JustDown(this.keyPlus) ||
+      (this.keyPlus.isDown &&
+        !Phaser.Input.Keyboard.DownDuration(this.keyPlus, 500))
+    ) {
+      this.cameras.main.zoom += 0.1;
+      this.events.once("update", () => {
+        this.resizeBackground();
+      });
+    } else if (
+      Phaser.Input.Keyboard.JustDown(this.keyMinus) ||
+      (this.keyMinus.isDown &&
+        !Phaser.Input.Keyboard.DownDuration(this.keyMinus, 500))
+    ) {
+      this.cameras.main.zoom -= 0.1;
+      this.events.once("update", () => {
+        this.resizeBackground();
+      });
+    }
+
+    if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+      if (this.physics.world.drawDebug) {
+        this.physics.world.drawDebug = false;
+        this.physics.world.debugGraphic.clear();
+      } else {
+        this.physics.world.drawDebug = true;
+      }
+    }
   }
 
   update() {
@@ -469,13 +531,6 @@ export default class LevelScene extends Phaser.Scene {
       }
     }
 
-    this.handleInput();
-
-    this.quest.setPosition(
-      this.player.getBounds().centerX,
-      this.player.getBounds().top - 20
-    );
-
     let questEntityName = null;
     let showQuest = false;
     Object.entries(this.entities).forEach(([entityName, entity]) => {
@@ -490,12 +545,36 @@ export default class LevelScene extends Phaser.Scene {
         questEntityName = entityName;
       }
     });
+
+    if (showQuest) {
+      this.quest.setPosition(
+        this.player.getBounds().centerX,
+        this.player.getBounds().top - 20
+      );
+    }
     if (this.quest.visible !== showQuest) {
       this.quest.setVisible(showQuest);
     }
     if (this.activeQuestEntityName !== questEntityName) {
       this.activeQuestEntityName = questEntityName;
     }
+
+    this.bg.setTilePosition(this.cameras.main.scrollX * 0.5, 0);
+    if (this.cameras.main.worldView.width > 0 && !this.bgResized) {
+      this.resizeBackground();
+      this.bgResized = true;
+    }
+
+    this.handleInput();
+  }
+
+  resizeBackground() {
+    const camZoom = this.cameras.main.zoom;
+    const bgWidth = this.cameras.main.worldView.width;
+    const unscaledWidth = bgWidth * camZoom;
+    const bgX = (unscaledWidth - bgWidth) / 2;
+    this.bg.setSize(bgWidth, this.bg.height);
+    this.bg.setPosition(bgX, this.bg.y);
   }
 
   checkFlip(sprite) {
