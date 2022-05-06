@@ -11,7 +11,7 @@ export default class LevelScene extends Phaser.Scene {
 
     this.cameras.main.setBounds(0, 0, 8000, 1080);
     this.physics.world.setBounds(0, 0, 8000, 1080);
-    this.physics.world.setBoundsCollision(true, true, true, true);
+    this.physics.world.setBoundsCollision(true, true, false, true);
 
     this.floor = this.createFloor();
     this.platforms = this.createPlatforms();
@@ -53,7 +53,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2200, 700);
+    const player = this.physics.add.sprite(5700, 700);
     player.body.setSize(45, 99);
     player.body.setOffset(44, 10);
     player.setCollideWorldBounds(true);
@@ -116,41 +116,11 @@ export default class LevelScene extends Phaser.Scene {
       1
     ); /** Место для самолюбования */
 
-    this.createLargePlatform(platforms, 170, 580, 3); /** Под горой */
-    this.createLargePlatform(platforms, 113, 680, 4); /** Под горой */
-    this.createLargePlatform(platforms, 120, 780, 4); /** Под горой */
-    this.createLargePlatform(platforms, 120, 880, 4); /** Под горой */
+
 
     this.createLargePlatform(platforms, 1150, 400, 3); /** Бабули */
 
     this.createLargePlatform(platforms, 3050, 300, 1); /** Свинка */
-
-    this.createLargePlatform(
-      platforms,
-      2450,
-      580,
-      1
-    ); /** Физичность иблиотеки */
-    this.createLargePlatform(
-      platforms,
-      2450,
-      680,
-      1
-    ); /** Физичность иблиотеки */
-    this.createLargePlatform(
-      platforms,
-      2450,
-      780,
-      1
-    ); /** Физичность иблиотеки */
-    this.createLargePlatform(
-      platforms,
-      2450,
-      880,
-      1
-    ); /** Физичность иблиотеки */
-
-    this.createLargePlatform(platforms, 3720, 315, 1); /** Крыша Яблока */
 
     this.createLargePlatform(platforms, 4400, 450, 1); /** Рамблер */
     this.createLargePlatform(platforms, 5060, 200, 1); /** Тетрис */

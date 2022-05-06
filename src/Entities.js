@@ -1,7 +1,7 @@
 export default {
   doggo: {
     x: 1400,
-    y: 950,
+    y: 960,
     sprite: "doggo",
     quiz: {
       quiestion: "Что это за собачка?",
@@ -47,15 +47,23 @@ export default {
   },
   mountain: {
     x: 10,
-    y: 950,
+    y: 960,
     sprite: "mountain",
+    colliders: [
+      { x: 35, y: 950, width: 830, height: 165 },
+      { x: 75, y: 785, width: 780, height: 50 },
+      { x: 100, y: 735, width: 720, height: 50 },
+      { x: 140, y: 685, width: 660, height: 50 },
+      { x: 170, y: 635, width: 600, height: 50 },
+      { x: 200, y: 585, width: 520, height: 20 }
+    ],
   },
   biblioteka: {
     x: 2430,
-    y: 965,
+    y: 968,
     sprite: "biblioteka",
     colliders: [
-      { x: 2450, y: 965, width: 665, height: 365 }
+      { x: 2450, y: 965, width: 380, height: 365 }
     ],
   },
   grannies: {
@@ -70,7 +78,7 @@ export default {
   },
   Lebedev_1996: {
     x: 3250,
-    y: 950,
+    y: 957,
     sprite: "Lebedev_1996",
   },
   opera_com_1996: {
@@ -80,8 +88,12 @@ export default {
   },
   yabloko_ru_1996: {
     x: 3700,
-    y: 960,
+    y: 965,
     sprite: "yabloko_ru_1996",
+    colliders: [
+      { x: 3700, y: 525, width: 375, height: 200 },
+      { x: 3850, y: 930, width: 95, height: 400 }
+    ],
   },
   Rambler_1997: {
     x: 4450,
@@ -90,7 +102,7 @@ export default {
   },
   Krovatka_1997: {
     x: 4600,
-    y: 955,
+    y: 965,
     sprite: "Krovatka_1997",
   },
   tetris_1997: {
@@ -100,12 +112,12 @@ export default {
   },
   ICQ_1997: {
     x: 6100,
-    y: 950,
+    y: 960,
     sprite: "ICQ_1997",
   },
   Zvuki_ru_1998: {
     x: 6200,
-    y: 950,
+    y: 960,
     sprite: "Zvuki_ru_1998",
   },
   Rif_1997: {
