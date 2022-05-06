@@ -106,7 +106,7 @@ export default {
     sprite: "Krovatka_1997",
   },
   tetris_1997: {
-    x: 5150,
+    x: 5180,
     y: 225,
     sprite: "tetris_1997",
   },
@@ -122,7 +122,7 @@ export default {
   },
   Rif_1997: {
     x: 7100,
-    y: 970,
+    y: 967,
     sprite: "Rif_1997",
   },
   Kaspersky_ru_1997: {
@@ -134,5 +134,34 @@ export default {
     x: 5100,
     y: 970,
     sprite: "bazar_1997",
+  },
+  pepsi_1998: {
+    x: 8100,
+    y: 960,
+    sprite: "pepsi_1998",
+  colliders: [
+    { x: 8106, y: 905, width: 375, height: 220 },
+    { x: 8230, y: 930, width: 160, height: 330 }
+  ],
+  },
+  mail_ru_1998: {
+    x: 7785,
+    y: 960,
+    sprite: "mail_ru_1998",
+  },
+  Webmoney_1998: {
+    x: 7550,
+    y: 375,
+    sprite: "Webmoney_1998",
+  },
+  fuck_ru_1998: {
+    x: 8500,
+    y: 955,
+    sprite: "fuck_ru_1998",
+  },
+  TV_1999: {
+    x: 8600,
+    y: 270,
+    sprite: "TV_1999",
   },
 };

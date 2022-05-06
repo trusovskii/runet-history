@@ -9,8 +9,8 @@ export default class LevelScene extends Phaser.Scene {
   create() {
     window.levelscene = this;
 
-    this.cameras.main.setBounds(0, 0, 8000, 1080);
-    this.physics.world.setBounds(0, 0, 8000, 1080);
+    this.cameras.main.setBounds(0, 0, 10000, 1080);
+    this.physics.world.setBounds(0, 0, 10000, 1080);
     this.physics.world.setBoundsCollision(true, true, false, true);
 
     this.floor = this.createFloor();
@@ -53,7 +53,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(5700, 700);
+    const player = this.physics.add.sprite(7700, 700);
     player.body.setSize(45, 99);
     player.body.setOffset(44, 10);
     player.setCollideWorldBounds(true);
@@ -103,7 +103,7 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 70);
+    this.createLargePlatform(floor, 0, 930, 90);
     return floor;
   }
 
@@ -116,8 +116,6 @@ export default class LevelScene extends Phaser.Scene {
       1
     ); /** Место для самолюбования */
 
-
-
     this.createLargePlatform(platforms, 1150, 400, 3); /** Бабули */
 
     this.createLargePlatform(platforms, 3050, 300, 1); /** Свинка */
@@ -126,7 +124,12 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 5060, 200, 1); /** Тетрис */
 
     this.createLargePlatform(platforms, 5800, 400, 2); /** Касперский */
-    this.createLargePlatform(platforms, 6600, 600, 1);
+    this.createLargePlatform(platforms, 6600, 600, 1); /** Около Рифа */
+
+    this.createLargePlatform(platforms, 7400, 350, 1); /** Мейл.ру */
+
+    this.createLargePlatform(platforms, 8500, 250, 1); /** Телевизор */
+
     return platforms;
   }
 
