@@ -4,7 +4,7 @@ import Entities from "../Entities";
 export default class LevelScene extends Phaser.Scene {
   constructor() {
     super("level-scene");
-    this.WORLD_WIDTH = 8000;
+    this.WORLD_WIDTH = 10000;
     this.WORLD_HEIGHT = 1080;
     window.levelscene = this;
   }
@@ -74,8 +74,8 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2000, 800);
-    player.body.setSize(45, 99);
+    const player = this.physics.add.sprite(4400, 700);
+    player.body.setSize(25, 99);
     player.body.setOffset(44, 10);
     player.setCollideWorldBounds(true);
     player.setAccelerationY(2000);
@@ -124,7 +124,7 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 70);
+    this.createLargePlatform(floor, 0, 930, 90);
     return floor;
   }
 
@@ -147,19 +147,22 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(
       platforms,
       300,
-      200,
+      190,
       1
     ); /** Место для самолюбования */
 
-    this.createLargePlatform(platforms, 1150, 400, 3); /** Бабули */
+    this.createLargePlatform(platforms, 1140, 400, 3); /** Бабули */
 
     this.createLargePlatform(platforms, 3050, 300, 1); /** Свинка */
-
-    this.createLargePlatform(platforms, 4400, 450, 1); /** Рамблер */
     this.createLargePlatform(platforms, 5060, 200, 1); /** Тетрис */
 
     this.createLargePlatform(platforms, 5800, 400, 2); /** Касперский */
-    this.createLargePlatform(platforms, 6600, 600, 1);
+    this.createLargePlatform(platforms, 6600, 600, 1); /** Около Рифа */
+
+    this.createLargePlatform(platforms, 7400, 350, 1); /** Мейл.ру */
+
+    this.createLargePlatform(platforms, 8700, 250, 1); /** Телевизор */
+
     return platforms;
   }
 
