@@ -64,7 +64,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.drawDebug = false;
     this.physics.world.debugGraphic.clear();
 
-    this.events.on('resize', () => {
+    this.events.on("resize", () => {
       const zoomFactor = window.innerHeight / 1080;
       this.cameras.main.zoom = zoomFactor;
       this.events.once("update", () => {
@@ -132,7 +132,7 @@ export default class LevelScene extends Phaser.Scene {
     const bg = this.add
       .tileSprite(
         0,
-        960,
+        1080,
         window.innerWidth,
         this.textures.get("mountains").getSourceImage().height,
         "mountains"
@@ -564,8 +564,12 @@ export default class LevelScene extends Phaser.Scene {
 
     this.bg.setTilePosition(this.cameras.main.scrollX * 0.5, 0);
     if (this.cameras.main.worldView.width > 0 && !this.bgResized) {
-      this.resizeBackground();
+      const zoomFactor = window.innerHeight / 1080;
+      this.cameras.main.zoom = zoomFactor;
       this.bgResized = true;
+      this.events.once("update", () => {
+        this.resizeBackground();
+      });
     }
 
     this.handleInput();
