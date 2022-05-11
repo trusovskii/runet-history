@@ -62,6 +62,11 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("answer-bubble-2", "assets/sprites/answer-bubble-2.png");
     this.load.image("answer-bubble-3", "assets/sprites/answer-bubble-3.png");
     this.load.image("answer-bubble-4", "assets/sprites/answer-bubble-4.png");
+
+    this.load.image("control-left", "assets/controls/left.png");
+    this.load.image("control-right", "assets/controls/right.png");
+    this.load.image("control-jump", "assets/controls/jump.png");
+    this.load.image("control-speak", "assets/controls/scream.png");
   }
 
   create() {

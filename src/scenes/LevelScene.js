@@ -1,25 +1,34 @@
-import PlayerStates from "../PlayerStates";
 import Entities from "../Entities";
+
+const WORLD_WIDTH = 10000;
+const WORLD_HEIGHT = 1080;
+
+const layers = {
+  BACKGROUND: 1000,
+  FLOOR: 1010,
+  PLATFORMS: 1020,
+  PLAYER: 1030,
+  ENTITIES: 1040,
+  CONTROLS: 1050,
+};
 
 export default class LevelScene extends Phaser.Scene {
   constructor() {
     super("level-scene");
-    this.WORLD_WIDTH = 10000;
-    this.WORLD_HEIGHT = 1080;
     window.levelscene = this;
   }
 
   create() {
-    this.physics.world.setBounds(0, 0, this.WORLD_WIDTH, this.WORLD_HEIGHT);
+    this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.physics.world.setBoundsCollision(true, true, false, true);
-    this.cameras.main.setBounds(0, 0, this.WORLD_WIDTH, this.WORLD_HEIGHT);
+    this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
-    this.bg = this.createBackground();
-    this.floor = this.createFloor();
-    this.platforms = this.createPlatforms();
-    this.clouds = this.createClouds();
-    this.player = this.createPlayer();
-    this.entities = this.createEntities();
+    this.createBackground();
+    this.createFloor();
+    this.createPlatforms();
+    this.createPlayer();
+    this.createEntities();
+    this.createControls();
 
     this.floor.children.iterate((entry) => {
       this.children.bringToTop(entry);
@@ -28,6 +37,7 @@ export default class LevelScene extends Phaser.Scene {
       this.children.bringToTop(entry);
     });
     this.children.bringToTop(this.player);
+    this.children.bringToTop(this.quest);
 
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.floor);
@@ -49,10 +59,21 @@ export default class LevelScene extends Phaser.Scene {
     );
     this.key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
 
+    this.touchState = {
+      left: false,
+      right: false,
+      jump: false,
+      action: false,
+    };
+
     this.activeQuestEntityName = null;
     this.activeQuizEntityName = null;
 
-    this.playerState = PlayerStates.FREE_MOVE;
+    this.playerFlags = {
+      canMove: true,
+      quizQuestion: false,
+      quizDialogue: false,
+    };
 
     this.keyPlus = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.PLUS
@@ -68,13 +89,13 @@ export default class LevelScene extends Phaser.Scene {
       const zoomFactor = window.innerHeight / 1080;
       this.cameras.main.zoom = zoomFactor;
       this.events.once("update", () => {
-        this.resizeBackground();
+        this.resizeStaticObjects();
       });
     });
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(4400, 700);
+    const player = this.physics.add.sprite(2000, 700);
     player.body.setSize(25, 99);
     player.body.setOffset(44, 10);
     player.setCollideWorldBounds(true);
@@ -116,7 +137,7 @@ export default class LevelScene extends Phaser.Scene {
       .setOrigin(0.5, 1)
       .setVisible(false);
 
-    return player;
+    this.player = player;
   }
 
   /**
@@ -125,11 +146,12 @@ export default class LevelScene extends Phaser.Scene {
   createFloor() {
     const floor = this.physics.add.staticGroup();
     this.createLargePlatform(floor, 0, 930, 90);
-    return floor;
+    this.floor = floor;
   }
 
   createBackground() {
-    const bg = this.add
+    const bgLayer = this.add.layer();
+    const mountains = this.add
       .tileSprite(
         0,
         1080,
@@ -139,7 +161,11 @@ export default class LevelScene extends Phaser.Scene {
       )
       .setOrigin(0, 1)
       .setScrollFactor(0, 1);
-    return bg;
+    bgLayer.add([mountains]);
+    this.bg = {
+      layer: bgLayer,
+      mountains,
+    };
   }
 
   createPlatforms() {
@@ -163,7 +189,7 @@ export default class LevelScene extends Phaser.Scene {
 
     this.createLargePlatform(platforms, 8700, 250, 1); /** Телевизор */
 
-    return platforms;
+    this.platforms = platforms;
   }
 
   createLargePlatform(group, x, y, width = 0, height = 0) {
@@ -272,12 +298,7 @@ export default class LevelScene extends Phaser.Scene {
         });
       }
     });
-    return entities;
-  }
-
-  createClouds() {
-    const clouds = this.physics.add.staticGroup();
-    return clouds;
+    this.entities = entities;
   }
 
   /**
@@ -291,7 +312,9 @@ export default class LevelScene extends Phaser.Scene {
     const questionBubble = this.add.image(0, 0, "bubble-line").setOrigin(0, 0);
     const questionText = this.add
       .text(15, questionBubble.getBounds().centerY, quizEntity.quiz.quiestion, {
-        fontSize: 18,
+        fontFamily: "DigitalStrip",
+        fontSize: 16,
+        lineSpacing: 10,
         color: "#000",
       })
       .setOrigin(0, 0.5);
@@ -310,7 +333,12 @@ export default class LevelScene extends Phaser.Scene {
           offsetX + 15,
           offsetY + Math.round(answerBubble.getBounds().height / 2),
           answerIndex + 1,
-          { fontSize: 18, color: "#666" }
+          {
+            fontFamily: "DigitalStrip",
+            fontSize: 16,
+            lineSpacing: 10,
+            color: "#666",
+          }
         )
         .setOrigin(0, 0.5);
       const answerText = this.add
@@ -318,7 +346,12 @@ export default class LevelScene extends Phaser.Scene {
           offsetX + answerNumberText.getBounds().width + 30,
           offsetY + Math.round(answerBubble.getBounds().height / 2),
           answer,
-          { fontSize: 18, color: "#000" }
+          {
+            fontFamily: "DigitalStrip",
+            fontSize: 16,
+            lineSpacing: 10,
+            color: "#000",
+          }
         )
         .setOrigin(0, 0.5);
       container.add(answerBubble);
@@ -365,7 +398,7 @@ export default class LevelScene extends Phaser.Scene {
     }
     setTimeout(() => {
       this.advanceDialogue(quizEntity);
-      this.playerState = PlayerStates.QUIZ_DIALOGUE;
+      this.playerFlags.quizDialogue = true;
     }, 1500);
   }
 
@@ -391,7 +424,7 @@ export default class LevelScene extends Phaser.Scene {
       quizEntity.quizState.currentLine = currentLine + 1;
     } else {
       console.log("set FREE_MOVE");
-      this.playerState = PlayerStates.FREE_MOVE;
+      this.playerFlags.quizDialogue = false;
     }
     console.log("advanceDialogue end");
   }
@@ -403,7 +436,9 @@ export default class LevelScene extends Phaser.Scene {
     );
     const lineText = this.add
       .text(15, 0, line, {
-        fontSize: 18,
+        fontFamily: "DigitalStrip",
+        fontSize: 16,
+        lineSpacing: 10,
         color: "#000",
         wordWrap: { width: 385, useAdvancedWrap: true },
       })
@@ -443,13 +478,21 @@ export default class LevelScene extends Phaser.Scene {
       ? this.entities[this.activeQuizEntityName]
       : null;
 
-    if (this.playerState === PlayerStates.FREE_MOVE) {
-      if (this.cursors.left.isDown || this.keyA.isDown) {
+    if (this.playerFlags.canMove) {
+      if (
+        this.cursors.left.isDown ||
+        this.keyA.isDown ||
+        this.touchState.left
+      ) {
         if (!this.player.body.blocked.left) {
           this.player.setVelocityX(-500);
           this.checkFlip(this.player);
         }
-      } else if (this.cursors.right.isDown || this.keyD.isDown) {
+      } else if (
+        this.cursors.right.isDown ||
+        this.keyD.isDown ||
+        this.touchState.right
+      ) {
         if (!this.player.body.blocked.right) {
           this.player.setVelocityX(500);
           this.checkFlip(this.player);
@@ -458,7 +501,7 @@ export default class LevelScene extends Phaser.Scene {
         this.player.setVelocityX(0);
       }
       if (
-        (this.cursors.up.isDown || this.keyW.isDown) &&
+        (this.cursors.up.isDown || this.keyW.isDown || this.touchState.jump) &&
         this.player.body.blocked.down
       ) {
         this.player.setVelocityY(-1200);
@@ -471,11 +514,12 @@ export default class LevelScene extends Phaser.Scene {
         ) {
           this.player.setVelocityX(0);
           this.activeQuizEntityName = this.activeQuestEntityName;
-          this.playerState = PlayerStates.QUIZ_QUESTION;
+          this.playerFlags.quizQuestion = true;
           this.showQuiz(questEntity);
         }
       }
-    } else if (this.playerState === PlayerStates.QUIZ_QUESTION) {
+    }
+    if (this.playerFlags.quizQuestion) {
       if (quizEntity && !quizEntity.quizState.answered) {
         [1, 2, 3, 4].forEach((number) => {
           if (Phaser.Input.Keyboard.JustDown(this[`key${number}`])) {
@@ -483,7 +527,8 @@ export default class LevelScene extends Phaser.Scene {
           }
         });
       }
-    } else if (this.playerState === PlayerStates.QUIZ_DIALOGUE) {
+    }
+    if (this.playerFlags.quizDialogue) {
       if (quizEntity) {
         if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
           this.advanceDialogue(quizEntity);
@@ -498,7 +543,7 @@ export default class LevelScene extends Phaser.Scene {
     ) {
       this.cameras.main.zoom += 0.1;
       this.events.once("update", () => {
-        this.resizeBackground();
+        this.resizeStaticObjects();
       });
     } else if (
       Phaser.Input.Keyboard.JustDown(this.keyMinus) ||
@@ -507,7 +552,7 @@ export default class LevelScene extends Phaser.Scene {
     ) {
       this.cameras.main.zoom -= 0.1;
       this.events.once("update", () => {
-        this.resizeBackground();
+        this.resizeStaticObjects();
       });
     }
 
@@ -562,26 +607,44 @@ export default class LevelScene extends Phaser.Scene {
       this.activeQuestEntityName = questEntityName;
     }
 
-    this.bg.setTilePosition(this.cameras.main.scrollX * 0.5, 0);
+    this.bg.mountains.setTilePosition(this.cameras.main.scrollX * 0.5, 0);
     if (this.cameras.main.worldView.width > 0 && !this.bgResized) {
       const zoomFactor = window.innerHeight / 1080;
       this.cameras.main.zoom = zoomFactor;
       this.bgResized = true;
       this.events.once("update", () => {
-        this.resizeBackground();
+        this.resizeStaticObjects();
       });
     }
 
     this.handleInput();
   }
 
-  resizeBackground() {
+  resizeStaticObjects() {
     const camZoom = this.cameras.main.zoom;
-    const bgWidth = this.cameras.main.worldView.width;
-    const unscaledWidth = bgWidth * camZoom;
-    const bgX = (unscaledWidth - bgWidth) / 2;
-    this.bg.setSize(bgWidth, this.bg.height);
-    this.bg.setPosition(bgX, this.bg.y);
+    const camWidth = this.cameras.main.worldView.width;
+    const camHeight = this.cameras.main.worldView.height;
+    const unscaledWidth = camWidth * camZoom;
+    const unscaledHeight = camHeight * camZoom;
+    const topX = (unscaledWidth - camWidth) / 2;
+    const topY = (unscaledHeight - camHeight) / 2;
+
+    this.bg.mountains.setSize(camWidth, this.bg.mountains.height);
+    this.bg.mountains.setPosition(topX, this.bg.mountains.y);
+
+    this.controls.layer.each((item) => {
+      item.setScale(0.5 / camZoom);
+    });
+    this.controls.left.setPosition(topX + 32, topY + camHeight - 32);
+    this.controls.right.setPosition(
+      topX + 32 + this.controls.left.displayWidth + 32,
+      topY + camHeight - 32
+    );
+    this.controls.jump.setPosition(topX + camWidth - 32, topY + camHeight - 32);
+    this.controls.speak.setPosition(
+      topX + camWidth - 32,
+      topY + camHeight - 32 - this.controls.jump.displayHeight - 32
+    );
   }
 
   checkFlip(sprite) {
@@ -590,5 +653,46 @@ export default class LevelScene extends Phaser.Scene {
     } else {
       sprite.setFlipX(true);
     }
+  }
+
+  createControls() {
+    const controlsLayer = this.add.layer();
+    const left = this.add.image(0, 0, "control-left").setOrigin(0, 1);
+    const right = this.add.image(0, 0, "control-right").setOrigin(0, 1);
+    const jump = this.add.image(0, 0, "control-jump").setOrigin(1, 1);
+    const speak = this.add.image(0, 0, "control-speak").setOrigin(1, 1);
+    controlsLayer.add([left, right, jump, speak]);
+    controlsLayer.each((item) => {
+      item.setScrollFactor(0, 0);
+      item.setInteractive();
+    });
+    controlsLayer.setDepth(layers.CONTROLS);
+    left.on("pointerdown", () => {
+      left.setAlpha(0.5);
+      this.touchState.left = true;
+    });
+    right.on("pointerdown", () => {
+      right.setAlpha(0.5);
+      this.touchState.right = true;
+    });
+    jump.on("pointerdown", () => {
+      jump.setAlpha(0.5);
+      this.touchState.jump = true;
+    });
+    speak.on("pointerdown", () => {
+      speak.setAlpha(0.5);
+      this.touchState.speak = true;
+    });
+    this.input.on("pointerup", () => {
+      this.touchState.left = false;
+      this.touchState.right = false;
+      this.touchState.jump = false;
+      this.touchState.speak = false;
+      left.setAlpha(1);
+      right.setAlpha(1);
+      jump.setAlpha(1);
+      speak.setAlpha(1);
+    });
+    this.controls = { layer: controlsLayer, left, right, jump, speak };
   }
 }
