@@ -23,6 +23,8 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
+    this.input.addPointer(9);
+
     this.createBackground();
     this.createFloor();
     this.createPlatforms();
@@ -42,7 +44,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.floor);
 
-    this.cameras.main.startFollow(this.player);
+    this.cameras.main.startFollow(this.player, true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -86,7 +88,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.debugGraphic.clear();
 
     this.events.on("resize", () => {
-      const zoomFactor = window.innerHeight / 1080;
+      const zoomFactor = Math.round(window.innerHeight / 1080 * 128) / 128;
       this.cameras.main.zoom = zoomFactor;
       this.events.once("update", () => {
         this.resizeStaticObjects();
@@ -667,32 +669,17 @@ export default class LevelScene extends Phaser.Scene {
       item.setInteractive();
     });
     controlsLayer.setDepth(layers.CONTROLS);
-    left.on("pointerdown", () => {
-      left.setAlpha(0.5);
-      this.touchState.left = true;
-    });
-    right.on("pointerdown", () => {
-      right.setAlpha(0.5);
-      this.touchState.right = true;
-    });
-    jump.on("pointerdown", () => {
-      jump.setAlpha(0.5);
-      this.touchState.jump = true;
-    });
-    speak.on("pointerdown", () => {
-      speak.setAlpha(0.5);
-      this.touchState.speak = true;
-    });
-    this.input.on("pointerup", () => {
-      this.touchState.left = false;
-      this.touchState.right = false;
-      this.touchState.jump = false;
-      this.touchState.speak = false;
-      left.setAlpha(1);
-      right.setAlpha(1);
-      jump.setAlpha(1);
-      speak.setAlpha(1);
-    });
+    const buttons = { left, right, jump, speak }
+    Object.entries(buttons).forEach(([keyName, key]) => {
+      key.on("pointerdown", () => {
+        key.setAlpha(0.5);
+        this.touchState[keyName] = true;
+      });
+      key.on("pointerup", () => {
+        key.setAlpha(1);
+        this.touchState[keyName] = false;
+      });
+    })
     this.controls = { layer: controlsLayer, left, right, jump, speak };
   }
 }

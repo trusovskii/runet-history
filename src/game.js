@@ -55,9 +55,35 @@ window.sizeChanged = () => {
     //   `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
     // );
     const levelScene = game.scene.getScene("level-scene");
-    levelScene.events.emit('resize');
+    levelScene.events.emit("resize");
   }
 };
-window.onresize = () => window.sizeChanged();
+window.addEventListener(
+  "resize",
+  () => {
+    setTimeout(() => {
+      window.sizeChanged();
+    }, 80);
+  },
+  false
+);
+window.addEventListener(
+  "orientationchange",
+  () => {
+    setTimeout(() => {
+      window.sizeChanged();
+    }, 80);
+  },
+  false
+);
+window.addEventListener(
+  "deviceorientation",
+  () => {
+    setTimeout(() => {
+      window.sizeChanged();
+    }, 80);
+  },
+  false
+);
 
 window.game = new Phaser.Game(gameConfig);
