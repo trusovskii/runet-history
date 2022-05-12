@@ -82,10 +82,13 @@ export default {
     sprite: "Lebedev_1996",
   },
   opera_com_1996: {
-    x: 3800,
-    y: 320,
+    x: 4200,
+    y: 720,
     sprite: "opera.com_1996",
-  },
+    colliders: [
+    { x: 4210, y: 720, width: 70, height: 100 },
+    ],
+    },
   yabloko_ru_1996: {
     x: 3700,
     y: 965,
@@ -128,7 +131,7 @@ export default {
     y: 967,
     sprite: "Rif_1997",
     colliders: [
-      { x: 7310, y: 645, width: 30, height: 30 },
+      { x: 7270, y: 720, width: 30, height: 30 },
       
     ],
   },
@@ -137,11 +140,20 @@ export default {
     y: 425,
     sprite: "Kaspersky_ru_1997",
   },
+
+  /* 
   bazar_1997: {
     x: 5100,
     y: 970,
     sprite: "bazar_1997",
   },
+  */
+  router_1996: {
+  x: 5200,
+  y: 973,
+  sprite: "router_1996",
+  },
+
   pepsi_1998: {
     x: 8300,
     y: 960,

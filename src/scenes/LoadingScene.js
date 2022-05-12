@@ -51,6 +51,7 @@ export default class LoadingScene extends Phaser.Scene {
 
 
     this.load.image("bazar_1997", "assets/sprites/bazar_1997.png");
+    this.load.image("router_1996", "assets/sprites/router_1996.png");
 
     this.load.image("bubble-line", "assets/sprites/bubble-line.png");
     this.load.image("bubble-speech", "assets/sprites/bubble-speech.png");
