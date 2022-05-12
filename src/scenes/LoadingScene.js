@@ -5,8 +5,8 @@ export default class LoadingScene extends Phaser.Scene {
 
   preload() {
     this.load.spritesheet("player", "assets/sprites/player.png", {
-      frameWidth: 120,
-      frameHeight: 123,
+      frameWidth: 284,
+      frameHeight: 275,
     });
     this.load.image("quest", "assets/sprites/quest.png");
 
