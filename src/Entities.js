@@ -155,16 +155,16 @@ export default {
   },
 
   pepsi_1998: {
-    x: 8300,
+    x: 8200,
     y: 960,
     sprite: "pepsi_1998",
-  colliders: [
-    { x: 8306, y: 905, width: 375, height: 220 },
-    { x: 8430, y: 930, width: 160, height: 330 }
+    colliders: [
+    { x: 8206, y: 905, width: 375, height: 220 },
+    { x: 8330, y: 930, width: 160, height: 330 }
   ],
   },
   mail_ru_1998: {
-    x: 7985,
+    x: 7885,
     y: 960,
     sprite: "mail_ru_1998",
   },
@@ -189,7 +189,7 @@ export default {
     sprite: "explorer_1999",
   },
   live_journal_1999: {
-    x: 10500,
+    x: 10450,
     y: 270,
     sprite: "live-journal-1999",
   },
@@ -205,11 +205,11 @@ export default {
   },
   ru_center_2000: {
     x: 10920,
-    y: 570,
+    y: 530,
     sprite: "ru_center_2000",
   },
   yandex_2000: {
-    x: 11690,
+    x: 11710,
     y: 670,
     sprite: "yandex_2000",
   },
@@ -218,4 +218,68 @@ export default {
     y: 750,
     sprite: "wiki_2001",
   },
+  mas_2001: {
+    x: 12900,
+    y: 953,
+    sprite: "mas_2001",
+  },
+  kinopoisk_2003: {
+    x: 13430,
+    y: 660,
+    sprite: "kinopoisk_2003",
+  }, 
+  mamba_2003: {
+    x: 12830,
+    y: 377,
+    sprite: "mamba_2003",
+  },   
+  rutracker_2004: {
+    x: 13800,
+    y: 440,
+    sprite: "rutracker_2004",
+    colliders: [
+      { x: 13800, y: 440, width: 550, height: 100 },
+    ],
+  },
+  leprosorium_2004: {
+    x: 14700,
+    y: 675,
+    sprite: "leprosorium_2004",
+  }, 
+  runet_2004: {
+    x: 15300,
+    y: 960,
+    sprite: "runet_2004",
+    colliders: [
+      { x: 15300, y: 910, width: 115, height: 300 },
+    ],
+  }, 
+  bash_2004: {
+    x: 15750,
+    y: 600,
+    sprite: "bash_2004",
+    colliders: [
+      { x: 15798, y: 530, width: 200, height: 115 },
+    ],
+  }, 
+  habr_2006: {
+    x: 16500,
+    y: 500,
+    sprite: "habr_2006",
+  }, 
+  orly_2006: {
+    x: 16150,
+    y: 955,
+    sprite: "orly_2006",
+  }, 
+  not_bag_2006: {
+    x: 16850,
+    y: 960,
+    sprite: "not_bag_2006",
+  }, 
+  durov_2006: {
+    x: 17600,
+    y: 960,
+    sprite: "durov_2006",
+  }, 
 };
