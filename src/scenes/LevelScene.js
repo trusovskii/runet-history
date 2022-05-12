@@ -148,8 +148,9 @@ export default class LevelScene extends Phaser.Scene {
 
   createPlayer() {
     const player = this.physics.add.sprite(2000, 700);
-    player.body.setSize(25, 99);
-    player.body.setOffset(44, 10);
+    player.body.setSize(30, 200);
+    player.setScale(0.4, 0.4);
+    player.body.setOffset(120, 40);
     player.setCollideWorldBounds(true);
     player.setAccelerationY(2000);
 
@@ -170,14 +171,14 @@ export default class LevelScene extends Phaser.Scene {
     this.anims.create({
       key: "fall",
       frames: this.anims.generateFrameNumbers("player", {
-        frames: [9],
+        frames: [13],
       }),
       repeat: -1,
     });
     this.anims.create({
       key: "run",
       frames: this.anims.generateFrameNumbers("player", {
-        frames: [7, 6, 5, 4, 3, 2, 1, 0, 13, 12, 11, 10, 8],
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       }),
       repeat: -1,
     });
