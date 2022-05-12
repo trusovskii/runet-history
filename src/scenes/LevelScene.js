@@ -88,7 +88,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.debugGraphic.clear();
 
     this.events.on("resize", () => {
-      const zoomFactor = Math.round(window.innerHeight / 1080 * 128) / 128;
+      const zoomFactor = Math.round((window.innerHeight / 1080) * 128) / 128;
       this.cameras.main.zoom = zoomFactor;
       this.events.once("update", () => {
         this.resizeStaticObjects();
@@ -624,12 +624,20 @@ export default class LevelScene extends Phaser.Scene {
 
   resizeStaticObjects() {
     const camZoom = this.cameras.main.zoom;
-    const camWidth = this.cameras.main.worldView.width;
-    const camHeight = this.cameras.main.worldView.height;
-    const unscaledWidth = camWidth * camZoom;
-    const unscaledHeight = camHeight * camZoom;
-    const topX = (unscaledWidth - camWidth) / 2;
-    const topY = (unscaledHeight - camHeight) / 2;
+    const camWidth = Math.ceil(this.cameras.main.worldView.width);
+    const camHeight = Math.ceil(this.cameras.main.worldView.height);
+    const unscaledWidth = Math.ceil(camWidth * camZoom);
+    const unscaledHeight = Math.ceil(camHeight * camZoom);
+    const topX = Math.round((unscaledWidth - camWidth) / 2);
+    const topY = Math.round((unscaledHeight - camHeight) / 2);
+
+    // console.log("camZoom:", camZoom);
+    // console.log("camWidth:", camWidth);
+    // console.log("camHeight:", camHeight);
+    // console.log("unscaledWidth:", unscaledWidth);
+    // console.log("unscaledHeight:", unscaledHeight);
+    // console.log("topX:", topX);
+    // console.log("topY:", topY);
 
     this.bg.mountains.setSize(camWidth, this.bg.mountains.height);
     this.bg.mountains.setPosition(topX, this.bg.mountains.y);
@@ -669,7 +677,7 @@ export default class LevelScene extends Phaser.Scene {
       item.setInteractive();
     });
     controlsLayer.setDepth(layers.CONTROLS);
-    const buttons = { left, right, jump, speak }
+    const buttons = { left, right, jump, speak };
     Object.entries(buttons).forEach(([keyName, key]) => {
       key.on("pointerdown", () => {
         key.setAlpha(0.5);
@@ -679,7 +687,7 @@ export default class LevelScene extends Phaser.Scene {
         key.setAlpha(1);
         this.touchState[keyName] = false;
       });
-    })
+    });
     this.controls = { layer: controlsLayer, left, right, jump, speak };
   }
 }

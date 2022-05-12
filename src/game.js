@@ -63,7 +63,7 @@ window.addEventListener(
   () => {
     setTimeout(() => {
       window.sizeChanged();
-    }, 80);
+    }, 100);
   },
   false
 );
@@ -72,7 +72,7 @@ window.addEventListener(
   () => {
     setTimeout(() => {
       window.sizeChanged();
-    }, 80);
+    }, 100);
   },
   false
 );
@@ -81,9 +81,22 @@ window.addEventListener(
   () => {
     setTimeout(() => {
       window.sizeChanged();
-    }, 80);
+    }, 100);
   },
   false
 );
+
+let currentWidth = window.innerWidth;
+let currentHeight = window.innerHeight;
+setInterval(() => {
+  if (
+    window.innerWidth !== currentWidth ||
+    window.innerHeight !== currentHeight
+  ) {
+    setTimeout(() => {
+      window.sizeChanged();
+    }, 100);
+  }
+}, 500);
 
 window.game = new Phaser.Game(gameConfig);
