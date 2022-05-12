@@ -16,6 +16,9 @@ export default class LevelScene extends Phaser.Scene {
   constructor() {
     super("level-scene");
     window.levelscene = this;
+    this.isLandscape = false;
+    this.isMobile = false;
+    this.shouldResizeStaticObjects = true;
   }
 
   create() {
@@ -23,7 +26,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
-    this.input.addPointer(9);
+    this.input.addPointer(4);
 
     this.createBackground();
     this.createFloor();
@@ -31,6 +34,19 @@ export default class LevelScene extends Phaser.Scene {
     this.createPlayer();
     this.createEntities();
     this.createControls();
+
+    this.debugText = this.add
+      .text(0, 0, "debug", {
+        fontFamily: "DigitalStrip",
+        fontSize: 20,
+        lineSpacing: 8,
+        color: "#404",
+        wordWrap: { width: 400, useAdvancedWrap: true },
+      })
+      .setOrigin(0, 0)
+      .setScrollFactor(0, 0)
+      .setDepth(9999)
+      .setVisible(false);
 
     this.floor.children.iterate((entry) => {
       this.children.bringToTop(entry);
@@ -61,6 +77,13 @@ export default class LevelScene extends Phaser.Scene {
     );
     this.key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
 
+    this.keyPlus = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.PLUS
+    );
+    this.keyMinus = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.MINUS
+    );
+
     this.touchState = {
       left: false,
       right: false,
@@ -77,23 +100,50 @@ export default class LevelScene extends Phaser.Scene {
       quizDialogue: false,
     };
 
-    this.keyPlus = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.PLUS
-    );
-    this.keyMinus = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.MINUS
-    );
-
     this.physics.world.drawDebug = false;
     this.physics.world.debugGraphic.clear();
 
+    this.safeAreaLeft = 0;
+    this.safeAreaRight = 0;
+
+    console.log("listen to resize");
     this.events.on("resize", () => {
-      const zoomFactor = Math.round((window.innerHeight / 1080) * 128) / 128;
-      this.cameras.main.zoom = zoomFactor;
-      this.events.once("update", () => {
-        this.resizeStaticObjects();
-      });
+      console.log("scene resize");
+      this.onResize();
     });
+    this.events.once("postupdate", () => {
+      console.log("scene postupdate");
+      this.onResize();
+    });
+  }
+
+  onResize() {
+    console.log("scene on resize");
+    this.isLandscape = window.innerWidth > window.innerHeight;
+    this.isMobile = this.isLandscape && window.innerWidth <= 1024;
+
+    this.cameras.main.zoom = this.getScaledZoom();
+    this.safeAreaLeft =
+      parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          "--safe-area-left"
+        )
+      ) || 0;
+    this.safeAreaRight =
+      parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          "--safe-area-right"
+        )
+      ) || 0;
+
+    this.shouldResizeStaticObjects = true;
+  }
+
+  getScaledZoom() {
+    return (
+      Math.round((window.innerHeight / 1080) * (this.isMobile ? 2 : 1) * 128) /
+      128
+    );
   }
 
   createPlayer() {
@@ -544,18 +594,14 @@ export default class LevelScene extends Phaser.Scene {
         !Phaser.Input.Keyboard.DownDuration(this.keyPlus, 500))
     ) {
       this.cameras.main.zoom += 0.1;
-      this.events.once("update", () => {
-        this.resizeStaticObjects();
-      });
+      this.shouldResizeStaticObjects = true;
     } else if (
       Phaser.Input.Keyboard.JustDown(this.keyMinus) ||
       (this.keyMinus.isDown &&
         !Phaser.Input.Keyboard.DownDuration(this.keyMinus, 500))
     ) {
       this.cameras.main.zoom -= 0.1;
-      this.events.once("update", () => {
-        this.resizeStaticObjects();
-      });
+      this.shouldResizeStaticObjects = true;
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
@@ -610,19 +656,33 @@ export default class LevelScene extends Phaser.Scene {
     }
 
     this.bg.mountains.setTilePosition(this.cameras.main.scrollX * 0.5, 0);
-    if (this.cameras.main.worldView.width > 0 && !this.bgResized) {
-      const zoomFactor = window.innerHeight / 1080;
-      this.cameras.main.zoom = zoomFactor;
-      this.bgResized = true;
-      this.events.once("update", () => {
-        this.resizeStaticObjects();
-      });
+
+    if (
+      this.cameras.main.worldView.width > 0 &&
+      this.shouldResizeStaticObjects
+    ) {
+      this.resizeStaticObjects();
+      this.shouldResizeStaticObjects = false;
+    }
+
+    this.debugText.setText([
+      `safeAreaLeft: ${this.safeAreaLeft}`,
+      `safeAreaRight: ${this.safeAreaRight}`,
+      `window.innerWidth: ${window.innerWidth}`,
+      `window.innerHeight: ${window.innerHeight}`,
+    ]);
+
+    if (this.isMobile && !this.controls.layer.visible) {
+      this.controls.layer.setVisible(true);
+    } else if (!this.isMobile && this.controls.layer.visible) {
+      this.controls.layer.setVisible(false);
     }
 
     this.handleInput();
   }
 
   resizeStaticObjects() {
+    console.log("resizeStaticObjects");
     const camZoom = this.cameras.main.zoom;
     const camWidth = Math.ceil(this.cameras.main.worldView.width);
     const camHeight = Math.ceil(this.cameras.main.worldView.height);
@@ -639,20 +699,32 @@ export default class LevelScene extends Phaser.Scene {
     // console.log("topX:", topX);
     // console.log("topY:", topY);
 
+    this.debugText.setPosition(topX + 10, topY + 10);
+
     this.bg.mountains.setSize(camWidth, this.bg.mountains.height);
     this.bg.mountains.setPosition(topX, this.bg.mountains.y);
 
     this.controls.layer.each((item) => {
       item.setScale(0.5 / camZoom);
     });
-    this.controls.left.setPosition(topX + 32, topY + camHeight - 32);
-    this.controls.right.setPosition(
-      topX + 32 + this.controls.left.displayWidth + 32,
+    this.controls.left.setPosition(
+      topX + this.safeAreaLeft * camZoom + 32,
       topY + camHeight - 32
     );
-    this.controls.jump.setPosition(topX + camWidth - 32, topY + camHeight - 32);
+    this.controls.right.setPosition(
+      topX +
+        this.safeAreaLeft * camZoom +
+        32 +
+        this.controls.left.displayWidth +
+        32,
+      topY + camHeight - 32
+    );
+    this.controls.jump.setPosition(
+      topX + camWidth - this.safeAreaRight * camZoom - 32,
+      topY + camHeight - 32
+    );
     this.controls.speak.setPosition(
-      topX + camWidth - 32,
+      topX + camWidth - this.safeAreaRight * camZoom - 32,
       topY + camHeight - 32 - this.controls.jump.displayHeight - 32
     );
   }

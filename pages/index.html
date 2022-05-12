@@ -11,8 +11,12 @@
         src: url('/assets/fonts/DigitalStrip.ttf');
         font-weight: normal;
       }
-    </style>
-    <style>
+      :root {
+        --safe-area-top: env(safe-area-inset-top);
+        --safe-area-right: env(safe-area-inset-right);
+        --safe-area-bottom: env(safe-area-inset-bottom);
+        --safe-area-left: env(safe-area-inset-left);
+      }
       html, body {
         margin: 0;
         padding: 0;
@@ -25,6 +29,6 @@
   <body>
     <div style="font-family:'DigitalStrip'; color: transparent; pointer-events: none; position: absolute;">DigitalStrip</div>
     <div id="game"></div>
-    <script src="./js/game.js?cb=13"></script>
+    <script src="./js/game.js?cb=14sd"></script>
   </body>
 </html>

@@ -34,11 +34,11 @@ const gameConfig = {
   //   antialiasGL: false,
   //   pixelArt: true,
   // },
-  callbacks: {
-    postBoot: () => {
-      window.sizeChanged();
-    },
-  },
+  // callbacks: {
+  //   postBoot: () => {
+  //     window.sizeChanged();
+  //   },
+  // },
   canvasStyle: `display: block; width: 100%; height: 100%;`,
   autoFocus: true,
   audio: {
@@ -55,6 +55,7 @@ window.sizeChanged = () => {
     //   `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
     // );
     const levelScene = game.scene.getScene("level-scene");
+    console.log('emit resize');
     levelScene.events.emit("resize");
   }
 };
@@ -90,9 +91,11 @@ let currentWidth = window.innerWidth;
 let currentHeight = window.innerHeight;
 setInterval(() => {
   if (
-    window.innerWidth !== currentWidth ||
-    window.innerHeight !== currentHeight
+    currentWidth !== window.innerWidth ||
+    currentHeight !== window.innerHeight
   ) {
+    currentWidth = window.innerWidth;
+    currentHeight = window.innerHeight;
     setTimeout(() => {
       window.sizeChanged();
     }, 100);

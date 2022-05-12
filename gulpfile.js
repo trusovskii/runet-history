@@ -76,8 +76,8 @@ task('pages', function () {
 
 task('watch', function () {
   watch(['src/**/*'], series('app'));
-  watch('assets/**/*', series('assets'));
-  watch('pages/*', series('pages'));
+  watch(['pages/**/*'], series('pages'));
+  watch(['assets/**/*'], series('assets'));
 });
 
-task('default', series('app', 'assets', 'pages'));
+task('default', series('app', 'pages', 'assets'));
