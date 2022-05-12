@@ -150,7 +150,7 @@ export default {
   */
   router_1996: {
   x: 5200,
-  y: 973,
+  y: 970,
   sprite: "router_1996",
   },
 
@@ -174,7 +174,7 @@ export default {
     sprite: "Webmoney_1998",
   },
   fuck_ru_1998: {
-    x: 8700,
+    x: 8900,
     y: 955,
     sprite: "fuck_ru_1998",
   },
@@ -182,5 +182,40 @@ export default {
     x: 8800,
     y: 270,
     sprite: "TV_1999",
+  },
+  explorer_1999: {
+    x: 9700,
+    y: 470,
+    sprite: "explorer_1999",
+  },
+  live_journal_1999: {
+    x: 10500,
+    y: 270,
+    sprite: "live-journal-1999",
+  },
+  nosik_1999: {
+    x: 10000,
+    y: 970,
+    sprite: "nosik_1999",
+  },
+  hh_2000: {
+    x: 10500,
+    y: 965,
+    sprite: "hh_2000",
+  },
+  ru_center_2000: {
+    x: 10920,
+    y: 570,
+    sprite: "ru_center_2000",
+  },
+  yandex_2000: {
+    x: 11690,
+    y: 670,
+    sprite: "yandex_2000",
+  },
+  wiki_2001: {
+    x: 12200,
+    y: 750,
+    sprite: "wiki_2001",
   },
 };

@@ -48,10 +48,17 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("fuck_ru_1998", "assets/sprites/fuck_ru_1998.png");
     this.load.image("TV_1999", "assets/sprites/TV_1999.png");
 
-
-
     this.load.image("bazar_1997", "assets/sprites/bazar_1997.png");
     this.load.image("router_1996", "assets/sprites/router_1996.png");
+    this.load.image("explorer_1999", "assets/sprites/explorer_1999.png");
+    this.load.image("live-journal-1999", "assets/sprites/live-journal-1999.png")
+    this.load.image("nosik_1999", "assets/sprites/nosik_1999.png")
+    this.load.image("hh_2000", "assets/sprites/hh_2000.png")
+    this.load.image("ru_center_2000", "assets/sprites/ru_center_2000.png")
+    this.load.image("yandex_2000", "assets/sprites/yandex_2000.png")
+    this.load.image("wiki_2001", "assets/sprites/wiki_2001.png")
+
+
 
     this.load.image("bubble-line", "assets/sprites/bubble-line.png");
     this.load.image("bubble-speech", "assets/sprites/bubble-speech.png");
