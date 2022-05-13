@@ -48,9 +48,28 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("fuck_ru_1998", "assets/sprites/fuck_ru_1998.png");
     this.load.image("TV_1999", "assets/sprites/TV_1999.png");
 
-
-
     this.load.image("bazar_1997", "assets/sprites/bazar_1997.png");
+    this.load.image("router_1996", "assets/sprites/router_1996.png");
+    this.load.image("explorer_1999", "assets/sprites/explorer_1999.png");
+    this.load.image("live-journal-1999", "assets/sprites/live-journal-1999.png")
+    this.load.image("nosik_1999", "assets/sprites/nosik_1999.png")
+    this.load.image("hh_2000", "assets/sprites/hh_2000.png")
+    this.load.image("ru_center_2000", "assets/sprites/ru_center_2000.png")
+    this.load.image("yandex_2000", "assets/sprites/yandex_2000.png")
+    this.load.image("wiki_2001", "assets/sprites/wiki_2001.png")
+    this.load.image("mas_2001", "assets/sprites/mas_2001.png")
+    this.load.image("kinopoisk_2003", "assets/sprites/kinopoisk_2003.png")
+    this.load.image("rutracker_2004", "assets/sprites/rutracker_2004.png")
+    this.load.image("mamba_2003", "assets/sprites/mamba_2003.png")
+    this.load.image("leprosorium_2004", "assets/sprites/leprosorium_2004.png")
+    this.load.image("runet_2004", "assets/sprites/runet_2004.png")
+    this.load.image("bash_2004", "assets/sprites/bash_2004.png")
+    this.load.image("habr_2006", "assets/sprites/habr_2006.png")
+    this.load.image("orly_2006", "assets/sprites/orly_2006.png")
+    this.load.image("not_bag_2006", "assets/sprites/not_bag_2006.png")
+    this.load.image("durov_2006", "assets/sprites/durov_2006.png")
+
+
 
     this.load.image("bubble-line", "assets/sprites/bubble-line.png");
     this.load.image("bubble-speech", "assets/sprites/bubble-speech.png");

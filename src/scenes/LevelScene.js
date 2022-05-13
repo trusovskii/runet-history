@@ -1,6 +1,6 @@
 import Entities from "../Entities";
 
-const WORLD_WIDTH = 10000;
+const WORLD_WIDTH = 20000;
 const WORLD_HEIGHT = 1080;
 
 const layers = {
@@ -163,7 +163,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2000, 700);
+    const player = this.physics.add.sprite(15600, 700);
     player.body.setSize(30, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -221,7 +221,7 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 90);
+    this.createLargePlatform(floor, 0, 930, 200);
     this.floor = floor;
   }
 
@@ -264,6 +264,14 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 7400, 350, 1); /** Мейл.ру */
 
     this.createLargePlatform(platforms, 8700, 250, 1); /** Телевизор */
+    this.createLargePlatform(platforms, 9500, 450, 1); /** Интернет Эксплорер */
+    this.createLargePlatform(platforms, 10250, 250, 1); /** Живой журнал */
+    this.createLargePlatform(platforms, 10900, 510, 1); /** Ру центр */
+    this.createLargePlatform(platforms, 11600, 650, 1); /** Яндекс */
+    this.createLargePlatform(platforms, 13300, 650, 1); /** Кинопоиск */
+    this.createLargePlatform(platforms, 12850, 350, 1); /** Мамба */
+    this.createLargePlatform(platforms, 14600, 650, 1); /** Лепрозорий */
+    this.createLargePlatform(platforms, 16400, 500, 4); /** Хабр */
 
     this.platforms = platforms;
   }
