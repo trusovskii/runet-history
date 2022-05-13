@@ -4,6 +4,13 @@ export default {
     y: 960,
     sprite: "doggo",
     quiz: {
+      area: {
+        x: 1300,
+        y: 960,
+        width: 500,
+        height: 350,
+        origin: [0, 1],
+      },
       quiestion: "Что это за собачка?",
       answers: [
         `Пёс MS DOS`,
@@ -27,6 +34,13 @@ export default {
     y: 330,
     sprite: "anek",
     quiz: {
+      area: {
+        x: 3050,
+        y: 330,
+        width: 500,
+        height: 350,
+        origin: [0, 1],
+      },
       quiestion: "Что это за Анекдот?",
       answers: [`Хз`, `Хз`, `Хз`, `Хз`],
       correctNumber: 1,
@@ -70,6 +84,21 @@ export default {
     x: 1380,
     y: 425,
     sprite: "grannies",
+    dialogue: {
+      area: {
+        x: 1300,
+        y: 425,
+        width: 280,
+        height: 280,
+        origin: [0, 1],
+      },
+      lines: [
+        { text: 'Здарова бабка', player: true },
+        { text: 'Здоров, внучок', player: false },
+        { text: 'Пачом бананы', player: true },
+        { text: 'А всё ёпта', player: false },
+      ],
+    },
   },
   domen_ru_1994: {
     x: 1650,
@@ -80,6 +109,21 @@ export default {
     x: 3250,
     y: 957,
     sprite: "Lebedev_1996",
+    popup: {
+      area: {
+        x: 3140,
+        y: 957,
+        width: 500,
+        height: 350,
+        origin: [0, 1],
+      },
+      bubble: {
+        x: 3230,
+        y: 937,
+        origin: [0, 1],
+        text: 'Ну умер и умер.',
+      },
+    },
   },
   opera_com_1996: {
     x: 3800,

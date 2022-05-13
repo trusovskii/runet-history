@@ -7,21 +7,30 @@ const layers = {
   BACKGROUND: 1000,
   FLOOR: 1010,
   PLATFORMS: 1020,
-  PLAYER: 1030,
-  ENTITIES: 1040,
-  CONTROLS: 1050,
+  ENTITIES: 1030,
+  BUBBLES: 1040,
+  PLAYER: 1050,
+  QUEST: 1060,
+  CONTROLS: 1070,
 };
+
+const DIALOG_ZOOM_EASING = "Power2";
+const DIALOG_ZOOM_DURATION = 500;
+const DIALOG_ZOOM_AMOUNT = 0.3;
 
 export default class LevelScene extends Phaser.Scene {
   constructor() {
     super("level-scene");
     window.levelscene = this;
-    this.isLandscape = false;
-    this.isMobile = false;
-    this.shouldResizeStaticObjects = true;
   }
 
   create() {
+    this.isLandscape = false;
+    this.isMobile = false;
+    this.shouldResizeStaticObjects = true;
+    this.nearbyEntityName = null;
+    this.additionalZoom = 0;
+
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -35,16 +44,27 @@ export default class LevelScene extends Phaser.Scene {
     this.createEntities();
     this.createControls();
 
-    this.debugText = this.add
+    this.pointerDebugText = this.add
       .text(0, 0, "debug", {
         fontFamily: "DigitalStrip",
         fontSize: 20,
         lineSpacing: 8,
         color: "#404",
         wordWrap: { width: 400, useAdvancedWrap: true },
+        stroke: "#ffffff",
+        strokeThickness: 4,
       })
       .setOrigin(0, 0)
-      .setScrollFactor(0, 0)
+      .setDepth(9999)
+      .setVisible(false);
+    this.pointerDebugX = this.add
+      .line(0, 0, 0, 0, 0, 0, 0x00000, 1)
+      .setOrigin(0, 0)
+      .setDepth(9999)
+      .setVisible(false);
+    this.pointerDebugY = this.add
+      .line(0, 0, 0, 0, 0, 0, 0x00000, 1)
+      .setOrigin(0, 0)
       .setDepth(9999)
       .setVisible(false);
 
@@ -60,7 +80,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.floor);
 
-    this.cameras.main.startFollow(this.player, true);
+    this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -69,6 +89,7 @@ export default class LevelScene extends Phaser.Scene {
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+    this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
     this.key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
     this.key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
@@ -91,13 +112,8 @@ export default class LevelScene extends Phaser.Scene {
       action: false,
     };
 
-    this.activeQuestEntityName = null;
-    this.activeQuizEntityName = null;
-
     this.playerFlags = {
       canMove: true,
-      quizQuestion: false,
-      quizDialogue: false,
     };
 
     this.physics.world.drawDebug = false;
@@ -122,7 +138,7 @@ export default class LevelScene extends Phaser.Scene {
     this.isLandscape = window.innerWidth > window.innerHeight;
     this.isMobile = this.isLandscape && window.innerWidth <= 1024;
 
-    this.cameras.main.zoom = this.getScaledZoom();
+    this.cameras.main.zoom = this.getScaledZoom() + this.additionalZoom;
     this.safeAreaLeft =
       parseInt(
         getComputedStyle(document.documentElement).getPropertyValue(
@@ -179,6 +195,13 @@ export default class LevelScene extends Phaser.Scene {
       key: "run",
       frames: this.anims.generateFrameNumbers("player", {
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      }),
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "thinking",
+      frames: this.anims.generateFrameNumbers("player", {
+        frames: [12],
       }),
       repeat: -1,
     });
@@ -300,38 +323,95 @@ export default class LevelScene extends Phaser.Scene {
   createEntities() {
     const entities = {};
     Object.entries(Entities).forEach(([entityName, entityData]) => {
-      entities[entityName] = this.physics.add
+      const entity = this.physics.add
         .sprite(entityData.x, entityData.y, entityData.sprite)
         .setOrigin(0, 1);
 
       if (entityData.quiz) {
-        entities[entityName].aura = this.physics.add.existing(
+        entity.quizArea = this.physics.add.existing(
           this.add
             .rectangle(
-              entities[entityName].getBounds().x - 60,
-              entities[entityName].getBounds().y - 60,
-              entities[entityName].getBounds().width + 120,
-              entities[entityName].getBounds().height + 60,
+              entityData.quiz.area.x,
+              entityData.quiz.area.y,
+              entityData.quiz.area.width,
+              entityData.quiz.area.height,
               0xff0000,
               0
             )
-            .setOrigin(0, 0)
+            .setOrigin(
+              entityData.quiz.area.origin?.[0] ?? 0,
+              entityData.quiz.area.origin?.[1] ?? 0
+            )
         );
-        this.physics.add.overlap(this.player, entities[entityName].aura);
-      }
+        this.physics.add.overlap(this.player, entity.quizArea);
 
-      if (entityData.quiz) {
-        entities[entityName].quiz = entityData.quiz;
-        entities[entityName].quizState = {
+        entity.quizData = entityData.quiz;
+        entity.quizState = {
+          started: false,
+          shown: false,
           answered: false,
           solved: false,
           gameObjects: null,
           currentLine: null,
+          finished: false,
+        };
+      }
+
+      if (entityData.popup) {
+        entity.popupArea = this.physics.add.existing(
+          this.add
+            .rectangle(
+              entityData.popup.area.x,
+              entityData.popup.area.y,
+              entityData.popup.area.width,
+              entityData.popup.area.height,
+              0xffff00,
+              0
+            )
+            .setOrigin(
+              entityData.popup.area.origin?.[0] ?? 0,
+              entityData.popup.area.origin?.[1] ?? 0
+            )
+        );
+        this.physics.add.overlap(this.player, entity.popupArea);
+
+        entity.popupData = entityData.popup;
+        entity.popupState = {
+          shown: false,
+          gameObjects: null,
+        };
+      }
+
+      if (entityData.dialogue) {
+        entity.dialogueArea = this.physics.add.existing(
+          this.add
+            .rectangle(
+              entityData.dialogue.area.x,
+              entityData.dialogue.area.y,
+              entityData.dialogue.area.width,
+              entityData.dialogue.area.height,
+              0xffff00,
+              0
+            )
+            .setOrigin(
+              entityData.dialogue.area.origin?.[0] ?? 0,
+              entityData.dialogue.area.origin?.[1] ?? 0
+            )
+        );
+        this.physics.add.overlap(this.player, entity.dialogueArea);
+
+        entity.dialogueData = entityData.dialogue;
+        entity.dialogueState = {
+          started: false,
+          shown: false,
+          gameObjects: null,
+          currentLine: null,
+          finished: false,
         };
       }
 
       if (entityData.colliders) {
-        entities[entityName].colliders = [];
+        entity.colliders = [];
         entityData.colliders.forEach((collider) => {
           const colliderBody = this.physics.add.existing(
             this.add
@@ -347,24 +427,23 @@ export default class LevelScene extends Phaser.Scene {
             true
           );
           this.physics.add.collider(this.player, colliderBody);
-          entities[entityName].colliders.push(colliderBody);
+          entity.colliders.push(colliderBody);
         });
       }
+
+      entities[entityName] = entity;
     });
     this.entities = entities;
   }
 
   /**
-   * @param {Phaser.Physics.Arcade.Sprite} quizEntity
+   * @param {Phaser.Physics.Arcade.Sprite} entity
    */
-  showQuiz(quizEntity) {
-    const container = this.add.container(
-      quizEntity.getBounds().x,
-      quizEntity.getBounds().y
-    );
+  showQuiz(entity) {
+    const container = this.add.container(0, 0);
     const questionBubble = this.add.image(0, 0, "bubble-line").setOrigin(0, 0);
     const questionText = this.add
-      .text(15, questionBubble.getBounds().centerY, quizEntity.quiz.quiestion, {
+      .text(15, questionBubble.getBounds().centerY, entity.quizData.quiestion, {
         fontFamily: "DigitalStrip",
         fontSize: 16,
         lineSpacing: 10,
@@ -377,7 +456,7 @@ export default class LevelScene extends Phaser.Scene {
     let offsetY = questionBubble.getBounds().height + 15;
 
     const answers = [];
-    quizEntity.quiz.answers.forEach((answer, answerIndex) => {
+    entity.quizData.answers.forEach((answer, answerIndex) => {
       const answerBubble = this.add
         .image(offsetX, offsetY, `answer-bubble-${answerIndex + 1}`)
         .setOrigin(0, 0);
@@ -423,70 +502,102 @@ export default class LevelScene extends Phaser.Scene {
       });
     });
     container.setPosition(
-      quizEntity.getBounds().centerX - container.getBounds().width / 2,
-      quizEntity.getBounds().y - container.getBounds().height - 25
+      entity.getBounds().centerX - container.getBounds().width / 2,
+      entity.getBounds().y - container.getBounds().height - 25
     );
-    quizEntity.quizState.gameObjects = {
+    entity.quizState.gameObjects = {
       container: container,
       questionBubble: questionBubble,
       questionText: questionText,
       answers: answers,
     };
+    entity.quizState.started = true;
+    entity.quizState.shown = true;
+    this.applyCameraAdditionalZoom(DIALOG_ZOOM_AMOUNT);
   }
 
-  answerQuiz(quizEntity, number) {
-    if (quizEntity.quiz.correctNumber === number) {
-      quizEntity.quizState.answered = true;
-      quizEntity.quizState.solved = true;
-      quizEntity.quizState.gameObjects.answers[number - 1].answerText.setColor(
+  hideQuiz(entity) {
+    if (entity.quizState.gameObjects) {
+      console.log("cleanup gameObjects");
+      entity.quizState.gameObjects.container.destroy();
+      entity.quizState.gameObjects = null;
+    }
+    entity.quizState.shown = false;
+  }
+
+  applyCameraAdditionalZoom(additionalZoom) {
+    console.log("applyCameraAdditionalZoom");
+    this.additionalZoom = additionalZoom;
+    const newZoom = this.getScaledZoom() + this.additionalZoom;
+    if (this.cameras.main.zoom !== newZoom) {
+      this.cameras.main.zoomTo(
+        newZoom,
+        DIALOG_ZOOM_DURATION,
+        DIALOG_ZOOM_EASING
+      );
+    }
+  }
+
+  answerQuiz(entity, number) {
+    if (entity.quizData.correctNumber === number) {
+      entity.quizState.answered = true;
+      entity.quizState.solved = true;
+      entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
         "#3F3"
       );
       console.log("correct!");
     } else {
-      quizEntity.quizState.answered = true;
-      quizEntity.quizState.gameObjects.answers[number - 1].answerText.setColor(
+      entity.quizState.answered = true;
+      entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
         "#F33"
       );
       console.log("fail!!!");
     }
     setTimeout(() => {
-      this.advanceDialogue(quizEntity);
-      this.playerFlags.quizDialogue = true;
-    }, 1500);
+      this.advanceQuizDialogue(entity);
+    }, 750);
   }
 
-  advanceDialogue(quizEntity) {
-    console.log("advanceDialogue start");
-    if (quizEntity.quizState.gameObjects) {
+  advanceQuizDialogue(entity) {
+    console.log("advanceQuizDialogue start");
+    if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
       // cleanup previous text bubbles
-      quizEntity.quizState.gameObjects.container.destroy();
-      quizEntity.quizState.gameObjects = null;
+      entity.quizState.gameObjects.container.destroy();
+      entity.quizState.gameObjects = null;
     }
-    let lines = quizEntity.quizState.solved
-      ? quizEntity.quiz.correctAnswerLines
-      : quizEntity.quiz.wrongAnswerLines;
+    let lines = entity.quizState.solved
+      ? entity.quizData.correctAnswerLines
+      : entity.quizData.wrongAnswerLines;
     let currentLine =
-      quizEntity.quizState.currentLine == null
-        ? 0
-        : quizEntity.quizState.currentLine;
+      entity.quizState.currentLine == null ? 0 : entity.quizState.currentLine;
     if (lines && lines.length > currentLine) {
       const line = lines[currentLine];
-      console.log(`showSpeech ${currentLine}`);
-      this.showSpeech(quizEntity, line);
-      quizEntity.quizState.currentLine = currentLine + 1;
+      console.log(`showQuizLine ${currentLine}`);
+      this.showQuizLine(entity, line);
+      entity.quizState.currentLine = currentLine + 1;
+      this.applyCameraAdditionalZoom(DIALOG_ZOOM_AMOUNT);
+      entity.quizState.shown = true;
     } else {
-      console.log("set FREE_MOVE");
-      this.playerFlags.quizDialogue = false;
+      console.log("No more lines of dialogue");
+      entity.quizState.finished = true;
+      entity.quizState.shown = false;
+      this.applyCameraAdditionalZoom(0);
     }
-    console.log("advanceDialogue end");
+    console.log("advanceQuizDialogue end");
   }
 
-  showSpeech(quizEntity, line) {
-    const container = this.add.container(
-      quizEntity.getBounds().x,
-      quizEntity.getBounds().y
-    );
+  hideQuizDialogue(entity) {
+    if (entity.quizState.gameObjects) {
+      console.log("cleanup gameObjects");
+      entity.quizState.gameObjects.container.destroy();
+      entity.quizState.gameObjects = null;
+    }
+    entity.quizState.shown = false;
+  }
+
+  showQuizLine(entity, line) {
+    const container = this.add.container(0, 0);
     const lineText = this.add
       .text(15, 0, line, {
         fontFamily: "DigitalStrip",
@@ -513,10 +624,142 @@ export default class LevelScene extends Phaser.Scene {
     container.add(lineBubble);
     container.add(lineText);
     container.setPosition(
-      quizEntity.getBounds().centerX - container.getBounds().width / 2,
-      quizEntity.getBounds().y - container.getBounds().height - 25
+      entity.getBounds().centerX - container.getBounds().width / 2,
+      entity.getBounds().y - container.getBounds().height - 25
     );
-    quizEntity.quizState.gameObjects = {
+    entity.quizState.gameObjects = {
+      container: container,
+      lineBubble: lineBubble,
+      lineText: lineText,
+    };
+  }
+
+  showPopup(entity) {
+    if (entity.popupState.gameObjects) {
+      return;
+    }
+    const bubbleData = entity.popupData.bubble;
+    const container = this.add.container(bubbleData.x, bubbleData.y);
+    const lineText = this.add
+      .text(15, 0, entity.popupData.bubble.text, {
+        fontFamily: "DigitalStrip",
+        fontSize: 16,
+        lineSpacing: 10,
+        color: "#000",
+        wordWrap: { width: 385, useAdvancedWrap: true },
+      })
+      .setOrigin(0, 0.5);
+    const bubbleSpriteKey =
+      lineText.getBounds().height < 38
+        ? "bubble-line"
+        : lineText.getBounds().height < 86
+        ? "bubble-speech"
+        : "bubble-speech-large";
+    const textOffsetY =
+      lineText.getBounds().height < 38
+        ? 0
+        : lineText.getBounds().height < 86
+        ? -20
+        : -35;
+    const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
+    lineText.setPosition(25, lineBubble.getBounds().centerY + textOffsetY);
+    container.add(lineBubble);
+    container.add(lineText);
+    container.setPosition(
+      entity.getBounds().centerX - container.getBounds().width / 2,
+      entity.getBounds().y - container.getBounds().height - 25
+    );
+    entity.popupState.gameObjects = {
+      container: container,
+      lineBubble: lineBubble,
+      lineText: lineText,
+    };
+    entity.popupState.shown = true;
+    this.applyCameraAdditionalZoom(DIALOG_ZOOM_AMOUNT);
+  }
+
+  hidePopup(entity) {
+    if (entity.popupState.gameObjects) {
+      entity.popupState.gameObjects.container.destroy();
+      entity.popupState.gameObjects = null;
+      this.applyCameraAdditionalZoom(0);
+    }
+    entity.popupState.shown = false;
+  }
+
+  advanceDialogue(entity) {
+    console.log("advanceDialogue start");
+    entity.dialogueState.started = true;
+    if (entity.dialogueState.gameObjects) {
+      console.log("cleanup gameObjects");
+      // cleanup previous text bubbles
+      entity.dialogueState.gameObjects.container.destroy();
+      entity.dialogueState.gameObjects = null;
+    }
+    let lines = entity.dialogueData.lines;
+    let currentLine =
+      entity.dialogueState.currentLine == null
+        ? 0
+        : entity.dialogueState.currentLine;
+    if (lines && lines.length > currentLine) {
+      const line = lines[currentLine];
+      console.log(`showDialogueLine ${currentLine}`);
+      this.showDialogueLine(entity, line);
+      entity.dialogueState.currentLine = currentLine + 1;
+      entity.dialogueState.shown = true;
+      this.applyCameraAdditionalZoom(DIALOG_ZOOM_AMOUNT);
+    } else {
+      console.log("No more lines of dialogue");
+      entity.dialogueState.finished = true;
+      entity.dialogueState.shown = false;
+      this.applyCameraAdditionalZoom(0);
+    }
+    console.log("advanceDialogue end");
+  }
+
+  hideDialogue(entity) {
+    if (entity.dialogueState.gameObjects) {
+      console.log("cleanup gameObjects");
+      // cleanup previous text bubbles
+      entity.dialogueState.gameObjects.container.destroy();
+      entity.dialogueState.gameObjects = null;
+    }
+    entity.dialogueState.shown = false;
+  }
+
+  showDialogueLine(entity, line) {
+    const container = this.add.container(0, 0);
+    const lineText = this.add
+      .text(15, 0, line.text, {
+        fontFamily: "DigitalStrip",
+        fontSize: 16,
+        lineSpacing: 10,
+        color: "#000",
+        wordWrap: { width: 385, useAdvancedWrap: true },
+      })
+      .setOrigin(0, 0.5);
+    const bubbleSpriteKey =
+      lineText.getBounds().height < 38
+        ? "bubble-line"
+        : lineText.getBounds().height < 86
+        ? "bubble-speech"
+        : "bubble-speech-large";
+    const textOffsetY =
+      lineText.getBounds().height < 38
+        ? 0
+        : lineText.getBounds().height < 86
+        ? -20
+        : -35;
+    const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
+    lineText.setPosition(25, lineBubble.getBounds().centerY + textOffsetY);
+    container.add(lineBubble);
+    container.add(lineText);
+    const speaker = line.player ? this.player : entity;
+    container.setPosition(
+      speaker.getBounds().centerX - container.getBounds().width / 2,
+      speaker.getBounds().y - container.getBounds().height - 25
+    );
+    entity.dialogueState.gameObjects = {
       container: container,
       lineBubble: lineBubble,
       lineText: lineText,
@@ -524,13 +767,6 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   handleInput() {
-    const questEntity = this.activeQuestEntityName
-      ? this.entities[this.activeQuestEntityName]
-      : null;
-    const quizEntity = this.activeQuizEntityName
-      ? this.entities[this.activeQuizEntityName]
-      : null;
-
     if (this.playerFlags.canMove) {
       if (
         this.cursors.left.isDown ||
@@ -559,32 +795,40 @@ export default class LevelScene extends Phaser.Scene {
       ) {
         this.player.setVelocityY(-1200);
       }
-      if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-        if (
-          questEntity &&
-          questEntity.quizState &&
-          !questEntity.quizState.answered
-        ) {
-          this.player.setVelocityX(0);
-          this.activeQuizEntityName = this.activeQuestEntityName;
-          this.playerFlags.quizQuestion = true;
-          this.showQuiz(questEntity);
-        }
-      }
     }
-    if (this.playerFlags.quizQuestion) {
-      if (quizEntity && !quizEntity.quizState.answered) {
-        [1, 2, 3, 4].forEach((number) => {
-          if (Phaser.Input.Keyboard.JustDown(this[`key${number}`])) {
-            this.answerQuiz(quizEntity, number);
+
+    const nearbyEntity = this.nearbyEntityName
+      ? this.entities[this.nearbyEntityName]
+      : null;
+
+    if (nearbyEntity) {
+      if (nearbyEntity.quizData) {
+        if (!nearbyEntity.quizState.started) {
+          if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+            this.player.setVelocityX(0);
+            this.player.play("thinking");
+            this.showQuiz(nearbyEntity);
           }
-        });
-      }
-    }
-    if (this.playerFlags.quizDialogue) {
-      if (quizEntity) {
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-          this.advanceDialogue(quizEntity);
+        } else {
+          if (!nearbyEntity.quizState.answered) {
+            [1, 2, 3, 4].forEach((number) => {
+              if (Phaser.Input.Keyboard.JustDown(this[`key${number}`])) {
+                this.answerQuiz(nearbyEntity, number);
+              }
+            });
+          } else {
+            if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+              this.advanceQuizDialogue(nearbyEntity);
+            }
+          }
+        }
+      } else if (nearbyEntity.dialogueData) {
+        if (!nearbyEntity.dialogueState.finished) {
+          if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+            this.player.setVelocityX(0);
+            this.player.play("thinking");
+            this.advanceDialogue(nearbyEntity);
+          }
         }
       }
     }
@@ -613,36 +857,90 @@ export default class LevelScene extends Phaser.Scene {
         this.physics.world.drawDebug = true;
       }
     }
+
+    if (Phaser.Input.Keyboard.JustDown(this.keyP)) {
+      if (this.pointerDebugText.visible) {
+        this.pointerDebugText.setVisible(false);
+        this.pointerDebugX.setVisible(false);
+        this.pointerDebugY.setVisible(false);
+      } else {
+        this.pointerDebugText.setVisible(true);
+        this.pointerDebugX.setVisible(true);
+        this.pointerDebugY.setVisible(true);
+      }
+    }
   }
 
   update() {
     if (this.player.body.velocity.y < 0) {
       this.player.play("jump", true);
-    } else if (this.player.body.velocity.y > 0) {
+    } else if (this.player.body.velocity.y > 100) {
       this.player.play("fall", true);
     } else {
       if (Math.abs(this.player.body.velocity.x) > 0) {
         this.player.play("run", true);
       } else {
-        this.player.play("still", true);
+        if (
+          ["jump", "fall", "run"].includes(this.player.anims.currentAnim.key)
+        ) {
+          this.player.play("still", true);
+        }
       }
     }
 
-    let questEntityName = null;
-    let showQuest = false;
+    let nearbyEntityName = null;
     Object.entries(this.entities).forEach(([entityName, entity]) => {
       if (
-        entity.aura &&
-        !entity.aura.body.touching.none &&
-        this.activeQuizEntityName !== entityName &&
-        entity.quizState &&
-        !entity.quizState.answered
+        (entity.quizArea && !entity.quizArea.body.touching.none) ||
+        (entity.popupArea && !entity.popupArea.body.touching.none) ||
+        (entity.dialogueArea && !entity.dialogueArea.body.touching.none)
       ) {
-        showQuest = true;
-        questEntityName = entityName;
+        nearbyEntityName = entityName;
+      }
+
+      if (entity.popupArea) {
+        if (!entity.popupArea.body.touching.none && !entity.popupState.shown) {
+          this.showPopup(entity);
+        } else if (
+          entity.popupArea.body.touching.none &&
+          entity.popupState.shown
+        ) {
+          this.hidePopup(entity);
+        }
+      }
+
+      if (entity.quizArea) {
+        if (
+          entity.quizState &&
+          entity.quizState.started &&
+          !entity.quizState.finished &&
+          entity.quizArea.body.touching.none
+        ) {
+          // out of range of active quiz area
+          if (!entity.quizState.answered) {
+            // hide quiz
+          } else {
+            // hide quiz dialogue
+          }
+        }
+      }
+
+      if (entity.dialogueArea) {
       }
     });
 
+    let nearbyEntity = nearbyEntityName
+      ? this.entities[nearbyEntityName]
+      : null;
+
+    if (this.nearbyEntityName !== nearbyEntityName) {
+      this.nearbyEntityName = nearbyEntityName;
+    }
+
+    const showQuest =
+      nearbyEntity &&
+      ((nearbyEntity.quizState && !nearbyEntity.quizState.started) ||
+        (nearbyEntity.dialogueState && !nearbyEntity.dialogueState.started));
     if (showQuest) {
       this.quest.setPosition(
         this.player.getBounds().centerX,
@@ -651,9 +949,6 @@ export default class LevelScene extends Phaser.Scene {
     }
     if (this.quest.visible !== showQuest) {
       this.quest.setVisible(showQuest);
-    }
-    if (this.activeQuestEntityName !== questEntityName) {
-      this.activeQuestEntityName = questEntityName;
     }
 
     this.bg.mountains.setTilePosition(this.cameras.main.scrollX * 0.5, 0);
@@ -666,12 +961,19 @@ export default class LevelScene extends Phaser.Scene {
       this.shouldResizeStaticObjects = false;
     }
 
-    this.debugText.setText([
-      `safeAreaLeft: ${this.safeAreaLeft}`,
-      `safeAreaRight: ${this.safeAreaRight}`,
-      `window.innerWidth: ${window.innerWidth}`,
-      `window.innerHeight: ${window.innerHeight}`,
+    const pointerX = this.input.mousePointer.positionToCamera(
+      this.cameras.main
+    ).x;
+    const pointerY = this.input.mousePointer.positionToCamera(
+      this.cameras.main
+    ).y;
+    this.pointerDebugText.setText([
+      `X: ${pointerX.toFixed(2)}`,
+      `Y: ${pointerY.toFixed(2)}`,
     ]);
+    this.pointerDebugText.setPosition(pointerX + 20, pointerY + 20);
+    this.pointerDebugX.setTo(pointerX, 0, pointerX, WORLD_HEIGHT);
+    this.pointerDebugY.setTo(0, pointerY, WORLD_WIDTH, pointerY);
 
     if (this.isMobile && !this.controls.layer.visible) {
       this.controls.layer.setVisible(true);
@@ -699,8 +1001,6 @@ export default class LevelScene extends Phaser.Scene {
     // console.log("unscaledHeight:", unscaledHeight);
     // console.log("topX:", topX);
     // console.log("topY:", topY);
-
-    this.debugText.setPosition(topX + 10, topY + 10);
 
     this.bg.mountains.setSize(camWidth, this.bg.mountains.height);
     this.bg.mountains.setPosition(topX, this.bg.mountains.y);
