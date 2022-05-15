@@ -55,7 +55,7 @@ export default {
     },
   },
   some_place: {
-    x: 230,
+    x: 240,
     y: 100,
     sprite: "some_place",
   },
@@ -318,12 +318,124 @@ export default {
   }, 
   not_bag_2006: {
     x: 16850,
-    y: 960,
+    y: 970,
     sprite: "not_bag_2006",
   }, 
   durov_2006: {
     x: 17600,
-    y: 960,
+    y: 970,
     sprite: "durov_2006",
+    colliders: [
+      { x: 17620, y: 950, width: 200, height: 300 },
+    ],
+  }, 
+  ok_2006: {
+    x: 18300,
+    y: 470,
+    sprite: "ok_2006",
+  }, 
+  tagline_2006: {
+    x: 18850,
+    y: 400,
+    sprite: "tagline_2006",
+  }, 
+  year_2007: {
+    x: 19000,
+    y: 1060,
+    sprite: "year_2007",
+  }, 
+  raek_2006: {
+    x: 18800,
+    y: 820,
+    sprite: "raek_2006",
+  }, 
+  youtube_2007: {
+    x: 19700,
+    y: 960,
+    sprite: "youtube_2007",
+  }, 
+  dvd_2007: {
+    x: 20200,
+    y: 970,
+    sprite: "dvd_2007",
+    colliders: [
+      { x: 20220, y: 1000, width: 300, height: 300 },
+    ],
+  }, 
+  penek_2007: {
+    x: 19670,
+    y: 510,
+    sprite: "penek_2007",
+    dialogue: {
+      area: {
+        x: 19600,
+        y: 510,
+        width: 320,
+        height: 280,
+        origin: [0, 1],
+      },
+      lines: [
+        { text: 'На пенёк сел? Должен был косарь отдать. А тут чего так мало?', player: false },
+        { text: 'Кажется, мне тут не рады', player: true },
+      ],
+    },
+  }, 
+  lurk_2007: {
+    x: 21000,
+    y: 970,
+    sprite: "lurk_2007",
+  }, 
+  who_are_you_2007: {
+    x: 21650,
+    y: 955,
+    sprite: "who_are_you_2007",
+  },
+  ypychka_2007: {
+    x: 20700,
+    y: 425,
+    sprite: "ypychka_2007",
+  },  
+  putin_krab_2008: {
+    x: 22530,
+    y: 580,
+    sprite: "putin_krab_2008",
+    popup: {
+      area: {
+        x: 22500,
+        y: 560,
+        width: 320,
+        height: 250,
+        origin: [0, 1],
+      },
+      bubble: {
+        x: 22730,
+        y: 370,
+        origin: [0, 1],
+        text: 'Восемь лет я пахал, как краб на галерах, с утра до ночи, и делал это с полной отдачей сил!',
+      },
+    },
+  },  
+  must_due_2008: {
+    x: 23200,
+    y: 955,
+    sprite: "must_due_2008",
+  }, 
+  demotivator_2008: {
+    x: 24100,
+    y: 800,
+    sprite: "demotivator_2008",
+    colliders: [
+      { x: 24100, y: 800, width: 190, height: 150 },
+    ],
+  }, 
+  gos_2009: {
+    x: 23500,
+    y: 350,
+    sprite: "gos_2009",
+  }, 
+  year_2009: {
+    x: 21120,
+    y: 1060,
+    sprite: "year_2009",
   }, 
 };

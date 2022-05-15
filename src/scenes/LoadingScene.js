@@ -68,6 +68,21 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("orly_2006", "assets/sprites/orly_2006.png")
     this.load.image("not_bag_2006", "assets/sprites/not_bag_2006.png")
     this.load.image("durov_2006", "assets/sprites/durov_2006.png")
+    this.load.image("ok_2006", "assets/sprites/ok_2006.png")
+    this.load.image("tagline_2006", "assets/sprites/tagline_2006.png")
+    this.load.image("year_2007", "assets/sprites/year_2007.png")
+    this.load.image("raek_2006", "assets/sprites/raek_2006.png")
+    this.load.image("youtube_2007", "assets/sprites/youtube_2007.png")
+    this.load.image("dvd_2007", "assets/sprites/dvd_2007.png")
+    this.load.image("penek_2007", "assets/sprites/penek_2007.png")
+    this.load.image("lurk_2007", "assets/sprites/lurk_2007.png")
+    this.load.image("who_are_you_2007", "assets/sprites/who_are_you_2007.png")
+    this.load.image("ypychka_2007", "assets/sprites/ypychka_2007.png")
+    this.load.image("putin_krab_2008", "assets/sprites/putin_krab_2008.png")
+    this.load.image("must_due_2008", "assets/sprites/must_due_2008.png")
+    this.load.image("demotivator_2008", "assets/sprites/demotivator_2008.png")
+    this.load.image("gos_2009", "assets/sprites/gos_2009.png")
+    this.load.image("year_2009", "assets/sprites/year_2009.png")
 
 
 

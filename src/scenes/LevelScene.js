@@ -1,6 +1,6 @@
 import Entities from "../Entities";
 
-const WORLD_WIDTH = 20000;
+const WORLD_WIDTH = 25000;
 const WORLD_HEIGHT = 1080;
 
 const layers = {
@@ -163,8 +163,8 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(15600, 700);
-    player.body.setSize(30, 200);
+    const player = this.physics.add.sprite(24300, 700);
+    player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
     player.setCollideWorldBounds(true);
@@ -221,7 +221,7 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 200);
+    this.createLargePlatform(floor, 0, 930, 250);
     this.floor = floor;
   }
 
@@ -248,7 +248,7 @@ export default class LevelScene extends Phaser.Scene {
     const platforms = this.physics.add.staticGroup();
     this.createLargePlatform(
       platforms,
-      300,
+      310,
       190,
       1
     ); /** Место для самолюбования */
@@ -272,6 +272,13 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 12850, 350, 1); /** Мамба */
     this.createLargePlatform(platforms, 14600, 650, 1); /** Лепрозорий */
     this.createLargePlatform(platforms, 16400, 500, 4); /** Хабр */
+    this.createLargePlatform(platforms, 18200, 440, 1); /** Одноклассники */
+    this.createLargePlatform(platforms, 18900, 290, 1); /** Тэглайн */
+    this.createLargePlatform(platforms, 19600, 480, 1); /** На пенёк сел */
+    this.createLargePlatform(platforms, 20600, 400, 2); /** Упячка */
+    this.createLargePlatform(platforms, 21500, 300, 2); 
+    this.createLargePlatform(platforms, 22400, 500, 2); /** Путин краб */
+    this.createLargePlatform(platforms, 23300, 340, 2); /** Госуслуги */
 
     this.platforms = platforms;
   }
