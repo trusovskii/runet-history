@@ -1,4 +1,9 @@
 export default {
+  year_1990: {
+    x: 400,
+    y: 1060,
+    sprite: "year_1990",
+  },
   doggo: {
     x: 1400,
     y: 960,
@@ -77,6 +82,36 @@ export default {
       { x: 170, y: 635, width: 600, height: 50 },
       { x: 200, y: 585, width: 520, height: 20 },
     ],
+    quiz: {
+      x: 10,
+      y: 960,
+      origin: { x: 0, y: 1 },
+      area: {
+        x: 10,
+        y: 960,
+        width: 930,
+        height: 400,
+        origin: { x: 0, y: 1 },
+      },
+      quiestion: "Четвёрка отцов-основателей Рунета? Да это же…",
+      answers: [
+        `Джоэл Шац, Алексей Солдатов, 
+Леонид Егошин, Алексей Руднев`,
+        `Алексей Шац, Джоэл Солдатов, 
+Леонид Руднев, Алексей Егошин`,
+        `Шац-Шац, Егор Летов, 
+Солдат Рудев, Джоэл Егошин`,
+        `Алексей Рудин, Джон Шац, 
+Александр Солдатов, Степан Егошин`,
+      ],
+      correctNumber: 1,
+      correctAnswerLines: [
+      "Да, перед вами одни из отцов-основателей Рунета. Джоэл Шац — IT-бизнесмен и психонавт; организатор телемостов СССР-США. Алексей Солдатов — учёный, учредитель первого в стране коммерческого интернет-провайдера «Релком» и инициатор открытия РосНИИРОС. Леонид Егошин и Алексей Руднев — программисты кооператива «ДЕМОС», регистраторы и создатели первых сайтов в доменных зонах .SU и.RU.",
+      ],
+      wrongAnswerLines: [
+      "Как бы не так, перед вами одни из отцов-основателей Рунета. Джоэл Шац — IT-бизнесмен и психонавт; организатор телемостов СССР-США. Алексей Солдатов — учёный, учредитель первого в стране коммерческого интернет-провайдера «Релком» и инициатор открытия РосНИИРОС. Леонид Егошин и Алексей Руднев — программисты кооператива «ДЕМОС», регистраторы и создатели первых сайтов в доменных зонах .SU и.RU.",
+      ],
+    },
   },
   biblioteka: {
     x: 2430,
@@ -130,11 +165,21 @@ export default {
       },
     },
   },
+  year_1995: {
+    x: 3370,
+    y: 1060,
+    sprite: "year_1995",
+  },
   opera_com_1996: {
     x: 4200,
     y: 720,
     sprite: "opera.com_1996",
     colliders: [{ x: 4210, y: 720, width: 70, height: 100 }],
+  },
+  year_1996: {
+    x: 4220,
+    y: 1060,
+    sprite: "year_1996",
   },
   yabloko_ru_1996: {
     x: 3700,
@@ -182,6 +227,11 @@ export default {
     y: 425,
     sprite: "Kaspersky_ru_1997",
   },
+  year_1997: {
+    x: 6100,
+    y: 1060,
+    sprite: "year_1997",
+  },
 
   /* 
   bazar_1997: {
@@ -210,6 +260,11 @@ export default {
     y: 960,
     sprite: "mail_ru_1998",
   },
+  year_1998: {
+    x: 7700,
+    y: 1060,
+    sprite: "year_1998",
+  },
   Webmoney_1998: {
     x: 7550,
     y: 375,
@@ -229,6 +284,11 @@ export default {
     x: 9700,
     y: 470,
     sprite: "explorer_1999",
+  },
+  year_1999: {
+    x: 9700,
+    y: 1060,
+    sprite: "year_1999",
   },
   live_journal_1999: {
     x: 10450,
@@ -386,7 +446,7 @@ export default {
   },
   ypychka_2007: {
     x: 20700,
-    y: 425,
+    y: 430,
     sprite: "ypychka_2007",
   },
   putin_krab_2008: {
@@ -413,10 +473,10 @@ export default {
     sprite: "must_due_2008",
   },
   demotivator_2008: {
-    x: 24100,
+    x: 24030,
     y: 800,
     sprite: "demotivator_2008",
-    colliders: [{ x: 24100, y: 800, width: 190, height: 150 }],
+    colliders: [{ x: 24030, y: 800, width: 190, height: 150 }],
   },
   gos_2009: {
     x: 23500,
@@ -428,4 +488,139 @@ export default {
     y: 1060,
     sprite: "year_2009",
   },
+  medved: {
+    x: 24700,
+    y: 970,
+    sprite: "medved",
+    dialogue: {
+      x: 24500,
+      y: 970,
+      origin: { x: 0, y: 1 },
+    area: {
+      x: 24500,
+      y: 970,
+      width: 320,
+      height: 280,
+      origin: { x: 0, y: 1 },
+    },
+    lines: [
+      {
+        text: "Превед, медвед",
+        player: true,
+      },
+      { text: "Превед", player: false },
+    ],
+  }
+  },
+  ch_2: {
+    x: 25800,
+    y: 988,
+    sprite: "ch_2",
+    colliders: [{ x: 25800, y: 975, width: 250, height: 150 }],
+  },
+  meme_face: {
+    x: 24500,
+    y: 365,
+    sprite: "meme_face",
+  },
+  tochka_ru_2010: {
+    x: 26380,
+    y: 530,
+    sprite: "tochka_ru_2010",
+  },
+  afisha_2010: {
+    x: 27090,
+    y: 955,
+    sprite: "afisha_2010",
+    colliders: [
+      { x: 27100, y: 565, width: 380, height: 220 },
+      { x: 27244, y: 900, width: 120, height: 300 }
+    ],
+  },
+  kianu_2010: {
+    x: 26900,
+    y: 970,
+    sprite: "kianu_2010",
+  },
+  lentach_2011: {
+    x: 27760,
+    y: 540,
+    sprite: "lentach_2011",
+    colliders: [
+      { x: 27760, y: 540, width: 340, height: 90 },
+    ],
+  },
+  lol: {
+    x: 28000,
+    y: 956,
+    sprite: "lol",
+  },
+  selfie: {
+    x: 28230,
+    y: 956,
+    sprite: "selfie",
+  },
+  cat: {
+    x: 28400,
+    y: 350,
+    sprite: "cat",
+    colliders: [
+      { x: 28400, y: 350, width: 420, height: 90 },
+    ],
+  },
+  reestr_site_2012: {
+    x: 30150,
+    y: 727,
+    sprite: "reestr_site_2012",
+  },
+  lisa: {
+    x: 29950,
+    y: 330,
+    sprite: "lisa",
+  },
+  tg_2013: {
+    x: 30570,
+    y: 930,
+    sprite: "tg_2013",
+  },
+  free_2013: {
+    x: 31250,
+    y: 700,
+    sprite: "free_2013",
+    colliders: [
+      { x: 31250, y: 700, width: 150, height: 80 },
+    ],
+  },
+  people_internet_2014: {
+    x: 31720,
+    y: 960,
+    sprite: "people_internet_2014",
+  },
+  meduza_2014: {
+    x: 31770,
+    y: 360,
+    sprite: "meduza_2014",
+  },
+  gold_site_2014: {
+    x: 32520,
+    y: 640,
+    sprite: "gold_site_2014",
+  },
+  durov_way_out_2014: {
+    x: 33050,
+    y: 985,
+    sprite: "durov_way_out_2014",
+  },
+  paket_yrovoy_2016: {
+    x: 33650,
+    y: 970,
+    sprite: "paket_yrovoy_2016",
+  },
+  alisa_2017: {
+    x: 33490,
+    y: 350,
+    sprite: "alisa_2017",
+  },
 };
+
+

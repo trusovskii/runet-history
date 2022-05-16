@@ -26,6 +26,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("wall", `assets/sprites/floor-inner.png?cb=${cb}`);
 
     this.load.image("mountains", `assets/bg/mountains.png?cb=${cb}`);
+    this.load.image("year_1990", `assets/sprites/year_1990.png?cb=${cb}`);
     this.load.image("cloud", `assets/sprites/cloud.png?cb=${cb}`);
     this.load.image("cloud2", `assets/sprites/cloud2.png?cb=${cb}`);
 
@@ -40,10 +41,12 @@ export default class LoadingScene extends Phaser.Scene {
       `assets/sprites/domen.ru_1994.png?cb=${cb}`
     );
     this.load.image("Lebedev_1996", `assets/sprites/Lebedev_1996.png?cb=${cb}`);
+    this.load.image("year_1995", `assets/sprites/year_1995.png?cb=${cb}`);
     this.load.image(
       "opera.com_1996",
       `assets/sprites/opera.com_1996.png?cb=${cb}`
     );
+    this.load.image("year_1996", `assets/sprites/year_1996.png?cb=${cb}`);
     this.load.image(
       "yabloko_ru_1996",
       `assets/sprites/yabloko_ru_1996.png?cb=${cb}`
@@ -64,8 +67,10 @@ export default class LoadingScene extends Phaser.Scene {
       "Kaspersky_ru_1997",
       `assets/sprites/Kaspersky_ru_1997.png?cb=${cb}`
     );
+    this.load.image("year_1997", `assets/sprites/year_1997.png?cb=${cb}`);
 
     this.load.image("mail_ru_1998", `assets/sprites/mail_ru_1998.png?cb=${cb}`);
+    this.load.image("year_1998", `assets/sprites/year_1998.png?cb=${cb}`);
     this.load.image("pepsi_1998", `assets/sprites/pepsi_1998.png?cb=${cb}`);
     this.load.image(
       "Webmoney_1998",
@@ -74,12 +79,14 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("fuck_ru_1998", `assets/sprites/fuck_ru_1998.png?cb=${cb}`);
     this.load.image("TV_1999", `assets/sprites/TV_1999.png?cb=${cb}`);
 
-    this.load.image("bazar_1997", `assets/sprites/bazar_1997.png?cb=${cb}`);
+    /** this.load.image("bazar_1997", `assets/sprites/bazar_1997.png?cb=${cb}`); */
+
     this.load.image("router_1996", `assets/sprites/router_1996.png?cb=${cb}`);
     this.load.image(
       "explorer_1999",
       `assets/sprites/explorer_1999.png?cb=${cb}`
     );
+    this.load.image("year_1999", `assets/sprites/year_1999.png?cb=${cb}`);
     this.load.image(
       "live-journal-1999",
       `assets/sprites/live-journal-1999.png?cb=${cb}`
@@ -119,7 +126,9 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("youtube_2007", `assets/sprites/youtube_2007.png?cb=${cb}`);
     this.load.image("dvd_2007", `assets/sprites/dvd_2007.png?cb=${cb}`);
     this.load.image("penek_2007", `assets/sprites/penek_2007.png?cb=${cb}`);
-    this.load.image("lurk_2007", `assets/sprites/lurk_2007.png?cb=${cb}`);
+    this.load.image(
+      "lurk_2007", 
+      `assets/sprites/lurk_2007.png?cb=${cb}`);
     this.load.image(
       "who_are_you_2007",
       `assets/sprites/who_are_you_2007.png?cb=${cb}`
@@ -139,6 +148,26 @@ export default class LoadingScene extends Phaser.Scene {
     );
     this.load.image("gos_2009", `assets/sprites/gos_2009.png?cb=${cb}`);
     this.load.image("year_2009", `assets/sprites/year_2009.png?cb=${cb}`);
+    this.load.image("medved", `assets/sprites/medved.png?cb=${cb}`);
+    this.load.image("ch_2", `assets/sprites/ch_2.png?cb=${cb}`);
+    this.load.image("meme_face", `assets/sprites/meme_face.png?cb=${cb}`);
+    this.load.image("tochka_ru_2010", `assets/sprites/tochka_ru_2010.png?cb=${cb}`);
+    this.load.image("afisha_2010", `assets/sprites/afisha_2010.png?cb=${cb}`);
+    this.load.image("kianu_2010", `assets/sprites/kianu_2010.png?cb=${cb}`);
+    this.load.image("lentach_2011", `assets/sprites/lentach_2011.png?cb=${cb}`);
+    this.load.image("lol", `assets/sprites/lol.png?cb=${cb}`);
+    this.load.image("selfie", `assets/sprites/selfie.png?cb=${cb}`);
+    this.load.image("cat", `assets/sprites/cat.png?cb=${cb}`);
+    this.load.image("reestr_site_2012", `assets/sprites/reestr_site_2012.png?cb=${cb}`);
+    this.load.image("lisa", `assets/sprites/lisa.png?cb=${cb}`);
+    this.load.image("tg_2013", `assets/sprites/tg_2013.png?cb=${cb}`);
+    this.load.image("free_2013", `assets/sprites/free_2013.png?cb=${cb}`);
+    this.load.image("people_internet_2014", `assets/sprites/people_internet_2014.png?cb=${cb}`);
+    this.load.image("meduza_2014", `assets/sprites/meduza_2014.png?cb=${cb}`);
+    this.load.image("gold_site_2014", `assets/sprites/gold_site_2014.png?cb=${cb}`);
+    this.load.image("durov_way_out_2014", `assets/sprites/durov_way_out_2014.png?cb=${cb}`);
+    this.load.image("paket_yrovoy_2016", `assets/sprites/paket_yrovoy_2016.png?cb=${cb}`);
+    this.load.image("alisa_2017", `assets/sprites/alisa_2017.png?cb=${cb}`);
 
     // #region Bubbles
 

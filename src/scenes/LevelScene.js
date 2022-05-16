@@ -1,6 +1,6 @@
 import Entities from "../Entities";
 
-const WORLD_WIDTH = 25000;
+const WORLD_WIDTH = 36000;
 const WORLD_HEIGHT = 1080;
 
 const layers = {
@@ -195,7 +195,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(1200, 230);
+    const player = this.physics.add.sprite(2000, 230);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -253,7 +253,7 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 250);
+    this.createLargePlatform(floor, 0, 930, 350);
     this.floor = floor;
   }
 
@@ -311,6 +311,16 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 21500, 300, 2);
     this.createLargePlatform(platforms, 22400, 500, 2); /** Путин краб */
     this.createLargePlatform(platforms, 23300, 340, 2); /** Госуслуги */
+    this.createLargePlatform(platforms, 24400, 340, 2); /** Трольфейс */
+    this.createLargePlatform(platforms, 25250, 480, 1); 
+    this.createLargePlatform(platforms, 26300, 500, 1); /** Точка рф */
+    this.createLargePlatform(platforms, 29100, 520, 1); 
+    this.createLargePlatform(platforms, 29770, 700, 3); /** Тян РНК */
+    this.createLargePlatform(platforms, 29700, 250, 1); /** Лиса */
+    this.createLargePlatform(platforms, 31680, 350, 1); /** Медуза */
+    this.createLargePlatform(platforms, 32400, 630, 1); /** Золотой сайт */
+    this.createLargePlatform(platforms, 32900, 340, 1); 
+    this.createLargePlatform(platforms, 33600, 340, 1); /** Алиса */
 
     this.platforms = platforms;
   }
