@@ -4,12 +4,15 @@ export default {
     y: 960,
     sprite: "doggo",
     quiz: {
+      x: 1300,
+      y: 960,
+      origin: { x: 0, y: 1 },
       area: {
         x: 1300,
         y: 960,
         width: 500,
         height: 350,
-        origin: [0, 1],
+        origin: { x: 0, y: 1 },
       },
       quiestion: "Что это за собачка?",
       answers: [
@@ -34,12 +37,15 @@ export default {
     y: 330,
     sprite: "anek",
     quiz: {
+      x: 3050,
+      y: 330,
+      origin: { x: 0, y: 1 },
       area: {
         x: 3050,
         y: 330,
         width: 500,
         height: 350,
-        origin: [0, 1],
+        origin: { x: 0, y: 1 },
       },
       quiestion: "Что это за Анекдот?",
       answers: [`Хз`, `Хз`, `Хз`, `Хз`],
@@ -69,34 +75,35 @@ export default {
       { x: 100, y: 735, width: 720, height: 50 },
       { x: 140, y: 685, width: 660, height: 50 },
       { x: 170, y: 635, width: 600, height: 50 },
-      { x: 200, y: 585, width: 520, height: 20 }
+      { x: 200, y: 585, width: 520, height: 20 },
     ],
   },
   biblioteka: {
     x: 2430,
     y: 968,
     sprite: "biblioteka",
-    colliders: [
-      { x: 2450, y: 965, width: 380, height: 365 }
-    ],
+    colliders: [{ x: 2450, y: 965, width: 380, height: 365 }],
   },
   grannies: {
     x: 1380,
     y: 425,
     sprite: "grannies",
     dialogue: {
+      x: 1236,
+      y: 130,
+      origin: { x: 0, y: 0 },
       area: {
-        x: 1300,
+        x: 1200,
         y: 425,
-        width: 280,
+        width: 480,
         height: 280,
-        origin: [0, 1],
+        origin: { x: 0, y: 1 },
       },
       lines: [
-        { text: 'Здарова бабка', player: true },
-        { text: 'Здоров, внучок', player: false },
-        { text: 'Пачом бананы', player: true },
-        { text: 'А всё ёпта', player: false },
+        { text: "Здарова бабка", player: true },
+        { text: "Здоров, внучок", player: false },
+        { text: "Пачом бананы", player: true },
+        { text: "А всё ёпта", player: false },
       ],
     },
   },
@@ -110,18 +117,16 @@ export default {
     y: 957,
     sprite: "Lebedev_1996",
     popup: {
+      x: 3160,
+      y: 637,
+      origin: { x: 0, y: 1 },
+      text: "Ну [color=#bb00bb]умер[/color] и [color=#00bbbb]умер[/color].",
       area: {
         x: 3140,
         y: 957,
         width: 500,
         height: 350,
-        origin: [0, 1],
-      },
-      bubble: {
-        x: 3230,
-        y: 937,
-        origin: [0, 1],
-        text: 'Ну умер и умер.',
+        origin: { x: 0, y: 1 },
       },
     },
   },
@@ -129,26 +134,22 @@ export default {
     x: 4200,
     y: 720,
     sprite: "opera.com_1996",
-    colliders: [
-    { x: 4210, y: 720, width: 70, height: 100 },
-    ],
-    },
+    colliders: [{ x: 4210, y: 720, width: 70, height: 100 }],
+  },
   yabloko_ru_1996: {
     x: 3700,
     y: 965,
     sprite: "yabloko_ru_1996",
     colliders: [
       { x: 3700, y: 525, width: 375, height: 200 },
-      { x: 3850, y: 930, width: 95, height: 400 }
+      { x: 3850, y: 930, width: 95, height: 400 },
     ],
   },
   Rambler_1997: {
     x: 4450,
     y: 480,
     sprite: "Rambler_1997",
-    colliders: [
-      { x: 4450, y: 470, width: 275, height: 70 },
-    ],
+    colliders: [{ x: 4450, y: 470, width: 275, height: 70 }],
   },
   Krovatka_1997: {
     x: 4600,
@@ -174,10 +175,7 @@ export default {
     x: 7100,
     y: 967,
     sprite: "Rif_1997",
-    colliders: [
-      { x: 7270, y: 720, width: 30, height: 30 },
-      
-    ],
+    colliders: [{ x: 7270, y: 720, width: 30, height: 30 }],
   },
   Kaspersky_ru_1997: {
     x: 6100,
@@ -193,9 +191,9 @@ export default {
   },
   */
   router_1996: {
-  x: 5200,
-  y: 970,
-  sprite: "router_1996",
+    x: 5200,
+    y: 970,
+    sprite: "router_1996",
   },
 
   pepsi_1998: {
@@ -203,9 +201,9 @@ export default {
     y: 960,
     sprite: "pepsi_1998",
     colliders: [
-    { x: 8206, y: 905, width: 375, height: 220 },
-    { x: 8330, y: 930, width: 160, height: 330 }
-  ],
+      { x: 8206, y: 905, width: 375, height: 220 },
+      { x: 8330, y: 930, width: 160, height: 330 },
+    ],
   },
   mail_ru_1998: {
     x: 7885,
@@ -271,120 +269,116 @@ export default {
     x: 13430,
     y: 660,
     sprite: "kinopoisk_2003",
-  }, 
+  },
   mamba_2003: {
     x: 12830,
     y: 377,
     sprite: "mamba_2003",
-  },   
+  },
   rutracker_2004: {
     x: 13800,
     y: 440,
     sprite: "rutracker_2004",
-    colliders: [
-      { x: 13800, y: 440, width: 550, height: 100 },
-    ],
+    colliders: [{ x: 13800, y: 440, width: 550, height: 100 }],
   },
   leprosorium_2004: {
     x: 14700,
     y: 675,
     sprite: "leprosorium_2004",
-  }, 
+  },
   runet_2004: {
     x: 15300,
     y: 960,
     sprite: "runet_2004",
-    colliders: [
-      { x: 15300, y: 910, width: 115, height: 300 },
-    ],
-  }, 
+    colliders: [{ x: 15300, y: 910, width: 115, height: 300 }],
+  },
   bash_2004: {
     x: 15750,
     y: 600,
     sprite: "bash_2004",
-    colliders: [
-      { x: 15798, y: 530, width: 200, height: 115 },
-    ],
-  }, 
+    colliders: [{ x: 15798, y: 530, width: 200, height: 115 }],
+  },
   habr_2006: {
     x: 16500,
     y: 500,
     sprite: "habr_2006",
-  }, 
+  },
   orly_2006: {
     x: 16150,
     y: 955,
     sprite: "orly_2006",
-  }, 
+  },
   not_bag_2006: {
     x: 16850,
     y: 970,
     sprite: "not_bag_2006",
-  }, 
+  },
   durov_2006: {
     x: 17600,
     y: 970,
     sprite: "durov_2006",
-    colliders: [
-      { x: 17620, y: 950, width: 200, height: 300 },
-    ],
-  }, 
+    colliders: [{ x: 17620, y: 950, width: 200, height: 300 }],
+  },
   ok_2006: {
     x: 18300,
     y: 470,
     sprite: "ok_2006",
-  }, 
+  },
   tagline_2006: {
     x: 18850,
     y: 400,
     sprite: "tagline_2006",
-  }, 
+  },
   year_2007: {
     x: 19000,
     y: 1060,
     sprite: "year_2007",
-  }, 
+  },
   raek_2006: {
     x: 18800,
     y: 820,
     sprite: "raek_2006",
-  }, 
+  },
   youtube_2007: {
     x: 19700,
     y: 960,
     sprite: "youtube_2007",
-  }, 
+  },
   dvd_2007: {
     x: 20200,
     y: 970,
     sprite: "dvd_2007",
-    colliders: [
-      { x: 20220, y: 1000, width: 300, height: 300 },
-    ],
-  }, 
+    colliders: [{ x: 20220, y: 1000, width: 300, height: 300 }],
+  },
   penek_2007: {
     x: 19670,
     y: 510,
     sprite: "penek_2007",
     dialogue: {
+      x: 19600,
+      y: 510,
+      origin: { x: 0, y: 1 },
       area: {
         x: 19600,
         y: 510,
         width: 320,
         height: 280,
-        origin: [0, 1],
+        origin: { x: 0, y: 1 },
       },
       lines: [
-        { text: 'На пенёк сел? Должен был косарь отдать. А тут чего так мало?', player: false },
-        { text: 'Кажется, мне тут не рады', player: true },
+        {
+          text: "На пенёк сел? Должен был косарь отдать. А тут чего так мало?",
+          player: false,
+        },
+        { text: "Кажется, мне тут не рады", player: true },
       ],
     },
-  }, 
+  },
   lurk_2007: {
     x: 21000,
     y: 970,
     sprite: "lurk_2007",
-  }, 
+  },
   who_are_you_2007: {
     x: 21650,
     y: 955,
@@ -394,48 +388,44 @@ export default {
     x: 20700,
     y: 425,
     sprite: "ypychka_2007",
-  },  
+  },
   putin_krab_2008: {
     x: 22530,
     y: 580,
     sprite: "putin_krab_2008",
     popup: {
+      x: 22730,
+      y: 370,
+      origin: { x: 0, y: 1 },
+      text: "Восемь лет я пахал, как краб на галерах, с утра до ночи, и делал это с полной отдачей сил!",
       area: {
         x: 22500,
         y: 560,
         width: 320,
         height: 250,
-        origin: [0, 1],
-      },
-      bubble: {
-        x: 22730,
-        y: 370,
-        origin: [0, 1],
-        text: 'Восемь лет я пахал, как краб на галерах, с утра до ночи, и делал это с полной отдачей сил!',
+        origin: { x: 0, y: 1 },
       },
     },
-  },  
+  },
   must_due_2008: {
     x: 23200,
     y: 955,
     sprite: "must_due_2008",
-  }, 
+  },
   demotivator_2008: {
     x: 24100,
     y: 800,
     sprite: "demotivator_2008",
-    colliders: [
-      { x: 24100, y: 800, width: 190, height: 150 },
-    ],
-  }, 
+    colliders: [{ x: 24100, y: 800, width: 190, height: 150 }],
+  },
   gos_2009: {
     x: 23500,
     y: 350,
     sprite: "gos_2009",
-  }, 
+  },
   year_2009: {
     x: 21120,
     y: 1060,
     sprite: "year_2009",
-  }, 
+  },
 };

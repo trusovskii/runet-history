@@ -26,6 +26,7 @@
   "dependencies": {
     "normalize.css": "^8.0.1",
     "phaser": "^3.55.2",
+    "phaser3-rex-plugins": "^1.1.69",
     "postcss-loader": "^6.2.0",
     "regenerator-runtime": "^0.13.9",
     "style-loader": "^3.3.1"

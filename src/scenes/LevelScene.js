@@ -30,6 +30,7 @@ export default class LevelScene extends Phaser.Scene {
     this.shouldResizeStaticObjects = true;
     this.nearbyEntityName = null;
     this.additionalZoom = 0;
+    this.correctAnswers = 0;
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.physics.world.setBoundsCollision(true, true, false, true);
@@ -45,16 +46,25 @@ export default class LevelScene extends Phaser.Scene {
     this.createControls();
 
     this.pointerDebugText = this.add
-      .text(0, 0, "debug", {
-        fontFamily: "DigitalStrip",
-        fontSize: 20,
-        lineSpacing: 8,
-        color: "#404",
-        wordWrap: { width: 400, useAdvancedWrap: true },
-        stroke: "#ffffff",
-        strokeThickness: 4,
+      .rexBBCodeText({
+        x: 0,
+        y: 0,
+        text: "debug",
+        origin: { x: 0, y: 0 },
+        style: {
+          fontFamily: "DigitalStrip",
+          fontSize: 20,
+          lineSpacing: 8,
+          color: "#404",
+          // wordWrap: { width: 400, useAdvancedWrap: true },
+          wrap: {
+            mode: "word",
+            width: 400,
+          },
+          stroke: "#ffffff",
+          strokeThickness: 4,
+        },
       })
-      .setOrigin(0, 0)
       .setDepth(9999)
       .setVisible(false);
     this.pointerDebugX = this.add
@@ -67,6 +77,28 @@ export default class LevelScene extends Phaser.Scene {
       .setOrigin(0, 0)
       .setDepth(9999)
       .setVisible(false);
+    this.correctAnswersText = this.add
+      .rexBBCodeText({
+        x: 15,
+        y: 15,
+        text: "Correct answers: 0",
+        origin: { x: 0, y: 0 },
+        style: {
+          fontFamily: "DigitalStrip",
+          fontSize: 16,
+          lineSpacing: 8,
+          color: "#404",
+          // wordWrap: { width: 400, useAdvancedWrap: true },
+          wrap: {
+            mode: "word",
+            width: 400,
+          },
+          stroke: "#ffffff",
+          strokeThickness: 4,
+        },
+      })
+      .setDepth(9999)
+      .setScrollFactor(0, 0);
 
     this.floor.children.iterate((entry) => {
       this.children.bringToTop(entry);
@@ -163,7 +195,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(24300, 700);
+    const player = this.physics.add.sprite(1200, 230);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -276,7 +308,7 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 18900, 290, 1); /** Тэглайн */
     this.createLargePlatform(platforms, 19600, 480, 1); /** На пенёк сел */
     this.createLargePlatform(platforms, 20600, 400, 2); /** Упячка */
-    this.createLargePlatform(platforms, 21500, 300, 2); 
+    this.createLargePlatform(platforms, 21500, 300, 2);
     this.createLargePlatform(platforms, 22400, 500, 2); /** Путин краб */
     this.createLargePlatform(platforms, 23300, 340, 2); /** Госуслуги */
 
@@ -354,8 +386,8 @@ export default class LevelScene extends Phaser.Scene {
               0
             )
             .setOrigin(
-              entityData.quiz.area.origin?.[0] ?? 0,
-              entityData.quiz.area.origin?.[1] ?? 0
+              entityData.quiz.area.origin?.x ?? 0,
+              entityData.quiz.area.origin?.y ?? 0
             )
         );
         this.physics.add.overlap(this.player, entity.quizArea);
@@ -384,8 +416,8 @@ export default class LevelScene extends Phaser.Scene {
               0
             )
             .setOrigin(
-              entityData.popup.area.origin?.[0] ?? 0,
-              entityData.popup.area.origin?.[1] ?? 0
+              entityData.popup.area.origin?.x ?? 0,
+              entityData.popup.area.origin?.y ?? 0
             )
         );
         this.physics.add.overlap(this.player, entity.popupArea);
@@ -409,8 +441,8 @@ export default class LevelScene extends Phaser.Scene {
               0
             )
             .setOrigin(
-              entityData.dialogue.area.origin?.[0] ?? 0,
-              entityData.dialogue.area.origin?.[1] ?? 0
+              entityData.dialogue.area.origin?.x ?? 0,
+              entityData.dialogue.area.origin?.y ?? 0
             )
         );
         this.physics.add.overlap(this.player, entity.dialogueArea);
@@ -421,6 +453,7 @@ export default class LevelScene extends Phaser.Scene {
           shown: false,
           gameObjects: null,
           currentLine: null,
+          isPlayer: false,
           finished: false,
         };
       }
@@ -473,7 +506,7 @@ export default class LevelScene extends Phaser.Scene {
     const answers = [];
     entity.quizData.answers.forEach((answer, answerIndex) => {
       const answerBubble = this.add
-        .image(offsetX, offsetY, `answer-bubble-${answerIndex + 1}`)
+        .image(offsetX, offsetY, `answer-${answerIndex + 1}`)
         .setOrigin(0, 0);
       const answerNumberText = this.add
         .text(
@@ -517,8 +550,10 @@ export default class LevelScene extends Phaser.Scene {
       });
     });
     container.setPosition(
-      entity.getBounds().centerX - container.getBounds().width / 2,
-      entity.getBounds().y - container.getBounds().height - 25
+      entity.quizData.x -
+        container.getBounds().width * entity.quizData.origin?.x ?? 0,
+      entity.quizData.y -
+        container.getBounds().height * entity.quizData.origin?.y ?? 0
     );
     entity.quizState.gameObjects = {
       container: container,
@@ -532,25 +567,30 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   hideQuiz(entity) {
+    console.log("hideQuiz");
     if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
       entity.quizState.gameObjects.container.destroy();
       entity.quizState.gameObjects = null;
+      this.applyCameraAdditionalZoom(0);
     }
     entity.quizState.shown = false;
   }
 
   applyCameraAdditionalZoom(additionalZoom) {
-    console.log("applyCameraAdditionalZoom");
+    console.log("applyCameraAdditionalZoom:", additionalZoom);
     this.additionalZoom = additionalZoom;
     const newZoom = this.getScaledZoom() + this.additionalZoom;
-    if (this.cameras.main.zoom !== newZoom) {
-      this.cameras.main.zoomTo(
-        newZoom,
-        DIALOG_ZOOM_DURATION,
-        DIALOG_ZOOM_EASING
-      );
-    }
+    this.cameras.main.zoomEffect.reset();
+    this.cameras.main.zoomTo(
+      newZoom,
+      DIALOG_ZOOM_DURATION,
+      DIALOG_ZOOM_EASING,
+      false,
+      (camera, progress, camX, camY) => {
+        this.resizeStaticObjects();
+      }
+    );
   }
 
   answerQuiz(entity, number) {
@@ -561,6 +601,8 @@ export default class LevelScene extends Phaser.Scene {
         "#3F3"
       );
       console.log("correct!");
+      this.correctAnswers++;
+      this.correctAnswersText.text = `Correct answers: ${this.correctAnswers}`;
     } else {
       entity.quizState.answered = true;
       entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
@@ -603,44 +645,50 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   hideQuizDialogue(entity) {
+    console.log("hideQuizDialogue");
     if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
       entity.quizState.gameObjects.container.destroy();
       entity.quizState.gameObjects = null;
+      this.applyCameraAdditionalZoom(0);
     }
     entity.quizState.shown = false;
   }
 
   showQuizLine(entity, line) {
     const container = this.add.container(0, 0);
-    const lineText = this.add
-      .text(15, 0, line, {
+    const lineText = this.add.rexBBCodeText({
+      x: 0,
+      y: 0,
+      text: line,
+      origin: { x: 0, y: 0.5 },
+      style: {
         fontFamily: "DigitalStrip",
         fontSize: 16,
         lineSpacing: 10,
         color: "#000",
-        wordWrap: { width: 385, useAdvancedWrap: true },
-      })
-      .setOrigin(0, 0.5);
+        // wordWrap: { width: 385, useAdvancedWrap: true },
+        wrap: {
+          mode: "word",
+          width: 385,
+        },
+      },
+    });
     const bubbleSpriteKey =
       lineText.getBounds().height < 38
         ? "bubble-line"
         : lineText.getBounds().height < 86
-        ? "bubble-speech"
-        : "bubble-speech-large";
-    const textOffsetY =
-      lineText.getBounds().height < 38
-        ? 0
-        : lineText.getBounds().height < 86
-        ? -20
-        : -35;
+        ? "bubble-medium"
+        : "bubble-large";
     const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
-    lineText.setPosition(25, lineBubble.getBounds().centerY + textOffsetY);
+    lineText.setPosition(25, lineBubble.getBounds().centerY);
     container.add(lineBubble);
     container.add(lineText);
     container.setPosition(
-      entity.getBounds().centerX - container.getBounds().width / 2,
-      entity.getBounds().y - container.getBounds().height - 25
+      entity.quizData.x -
+        container.getBounds().width * entity.quizData.origin?.x ?? 0,
+      entity.quizData.y -
+        container.getBounds().height * entity.quizData.origin?.y ?? 0
     );
     entity.quizState.gameObjects = {
       container: container,
@@ -653,36 +701,38 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.popupState.gameObjects) {
       return;
     }
-    const bubbleData = entity.popupData.bubble;
-    const container = this.add.container(bubbleData.x, bubbleData.y);
-    const lineText = this.add
-      .text(15, 0, entity.popupData.bubble.text, {
+    const popupData = entity.popupData;
+    const container = this.add.container(popupData.x, popupData.y);
+    const lineText = this.add.rexBBCodeText({
+      x: 0,
+      y: 0,
+      text: popupData.text,
+      origin: { x: 0, y: 0.5 },
+      style: {
         fontFamily: "DigitalStrip",
         fontSize: 16,
         lineSpacing: 10,
         color: "#000",
-        wordWrap: { width: 385, useAdvancedWrap: true },
-      })
-      .setOrigin(0, 0.5);
+        // wordWrap: { width: 385, useAdvancedWrap: true },
+        wrap: {
+          mode: "word",
+          width: 385,
+        },
+      },
+    });
     const bubbleSpriteKey =
       lineText.getBounds().height < 38
         ? "bubble-line"
         : lineText.getBounds().height < 86
-        ? "bubble-speech"
-        : "bubble-speech-large";
-    const textOffsetY =
-      lineText.getBounds().height < 38
-        ? 0
-        : lineText.getBounds().height < 86
-        ? -20
-        : -35;
+        ? "bubble-medium"
+        : "bubble-large";
     const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
-    lineText.setPosition(25, lineBubble.getBounds().centerY + textOffsetY);
+    lineText.setPosition(25, lineBubble.getBounds().centerY);
     container.add(lineBubble);
     container.add(lineText);
     container.setPosition(
-      entity.getBounds().centerX - container.getBounds().width / 2,
-      entity.getBounds().y - container.getBounds().height - 25
+      popupData.x - container.getBounds().width * popupData.origin?.x ?? 0,
+      popupData.y - container.getBounds().height * popupData.origin?.y ?? 0
     );
     entity.popupState.gameObjects = {
       container: container,
@@ -690,14 +740,12 @@ export default class LevelScene extends Phaser.Scene {
       lineText: lineText,
     };
     entity.popupState.shown = true;
-    this.applyCameraAdditionalZoom(DIALOG_ZOOM_AMOUNT);
   }
 
   hidePopup(entity) {
     if (entity.popupState.gameObjects) {
       entity.popupState.gameObjects.container.destroy();
       entity.popupState.gameObjects = null;
-      this.applyCameraAdditionalZoom(0);
     }
     entity.popupState.shown = false;
   }
@@ -720,60 +768,70 @@ export default class LevelScene extends Phaser.Scene {
       const line = lines[currentLine];
       console.log(`showDialogueLine ${currentLine}`);
       this.showDialogueLine(entity, line);
+      entity.dialogueState.isPlayer = line.player;
       entity.dialogueState.currentLine = currentLine + 1;
       entity.dialogueState.shown = true;
       this.applyCameraAdditionalZoom(DIALOG_ZOOM_AMOUNT);
     } else {
       console.log("No more lines of dialogue");
+      entity.dialogueState.started = false;
       entity.dialogueState.finished = true;
       entity.dialogueState.shown = false;
+      entity.dialogueState.currentLine = null;
       this.applyCameraAdditionalZoom(0);
     }
     console.log("advanceDialogue end");
   }
 
   hideDialogue(entity) {
+    console.log("hideDialogue");
     if (entity.dialogueState.gameObjects) {
       console.log("cleanup gameObjects");
       // cleanup previous text bubbles
       entity.dialogueState.gameObjects.container.destroy();
       entity.dialogueState.gameObjects = null;
+      this.applyCameraAdditionalZoom(0);
     }
     entity.dialogueState.shown = false;
   }
 
   showDialogueLine(entity, line) {
     const container = this.add.container(0, 0);
-    const lineText = this.add
-      .text(15, 0, line.text, {
+    const lineText = this.add.rexBBCodeText({
+      x: 0,
+      y: 0,
+      text: line.text,
+      origin: { x: 0, y: 0.5 },
+      style: {
         fontFamily: "DigitalStrip",
         fontSize: 16,
         lineSpacing: 10,
         color: "#000",
-        wordWrap: { width: 385, useAdvancedWrap: true },
-      })
-      .setOrigin(0, 0.5);
+        // wordWrap: { width: 385, useAdvancedWrap: true },
+        wrap: {
+          mode: "word",
+          width: 385,
+        },
+      },
+    });
     const bubbleSpriteKey =
       lineText.getBounds().height < 38
         ? "bubble-line"
         : lineText.getBounds().height < 86
-        ? "bubble-speech"
-        : "bubble-speech-large";
-    const textOffsetY =
-      lineText.getBounds().height < 38
-        ? 0
-        : lineText.getBounds().height < 86
-        ? -20
-        : -35;
+        ? "bubble-medium"
+        : "bubble-large";
     const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
-    lineText.setPosition(25, lineBubble.getBounds().centerY + textOffsetY);
+    lineText.setPosition(25, lineBubble.getBounds().centerY);
     container.add(lineBubble);
     container.add(lineText);
-    const speaker = line.player ? this.player : entity;
-    container.setPosition(
-      speaker.getBounds().centerX - container.getBounds().width / 2,
-      speaker.getBounds().y - container.getBounds().height - 25
-    );
+    if (!line.player) {
+      container.setPosition(
+        entity.dialogueData.x -
+          container.getBounds().width * entity.dialogueData.origin?.x ?? 0,
+        entity.dialogueData.y -
+          container.getBounds().height * entity.dialogueData.origin?.y ?? 0
+      );
+    }
     entity.dialogueState.gameObjects = {
       container: container,
       lineBubble: lineBubble,
@@ -838,12 +896,10 @@ export default class LevelScene extends Phaser.Scene {
           }
         }
       } else if (nearbyEntity.dialogueData) {
-        if (!nearbyEntity.dialogueState.finished) {
-          if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-            this.player.setVelocityX(0);
-            this.player.play("thinking");
-            this.advanceDialogue(nearbyEntity);
-          }
+        if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+          this.player.setVelocityX(0);
+          this.player.play("thinking");
+          this.advanceDialogue(nearbyEntity);
         }
       }
     }
@@ -924,23 +980,57 @@ export default class LevelScene extends Phaser.Scene {
         }
       }
 
-      if (entity.quizArea) {
-        if (
-          entity.quizState &&
-          entity.quizState.started &&
-          !entity.quizState.finished &&
-          entity.quizArea.body.touching.none
-        ) {
+      if (entity.quizArea && entity.quizState) {
+        if (entity.quizState.shown && entity.quizArea.body.touching.none) {
           // out of range of active quiz area
           if (!entity.quizState.answered) {
-            // hide quiz
+            this.hideQuiz(entity);
           } else {
-            // hide quiz dialogue
+            this.hideQuizDialogue(entity);
+          }
+        } else if (
+          entity.quizState.started &&
+          !entity.quizState.finished &&
+          !entity.quizState.shown &&
+          !entity.quizArea.body.touching.none
+        ) {
+          // in range if active quiz
+          if (!entity.quizState.answered) {
+            this.showQuiz(entity);
+          } else {
+            if (entity.quizState.currentLine > 0) {
+              entity.quizState.currentLine--;
+            }
+            this.advanceQuizDialogue(entity);
           }
         }
       }
 
-      if (entity.dialogueArea) {
+      if (entity.dialogueArea && entity.dialogueState) {
+        if (
+          entity.dialogueState.shown &&
+          entity.dialogueArea.body.touching.none
+        ) {
+          this.hideDialogue(entity);
+        } else if (
+          entity.dialogueState.started &&
+          !entity.dialogueState.shown &&
+          !entity.dialogueArea.body.touching.none
+        ) {
+          if (entity.dialogueState.currentLine > 0) {
+            entity.dialogueState.currentLine--;
+          }
+          this.advanceDialogue(entity);
+        }
+
+        if (entity.dialogueState.shown && entity.dialogueState.isPlayer) {
+          const container = entity.dialogueState.gameObjects.container;
+          container.setPosition(
+            this.player.getBounds().centerX -
+              Math.round(container.getBounds().width / 2),
+            this.player.getBounds().y - container.getBounds().height - 15
+          );
+        }
       }
     });
 
@@ -955,7 +1045,9 @@ export default class LevelScene extends Phaser.Scene {
     const showQuest =
       nearbyEntity &&
       ((nearbyEntity.quizState && !nearbyEntity.quizState.started) ||
-        (nearbyEntity.dialogueState && !nearbyEntity.dialogueState.started));
+        (nearbyEntity.dialogueState &&
+          !nearbyEntity.dialogueState.started &&
+          !nearbyEntity.dialogueState.finished));
     if (showQuest) {
       this.quest.setPosition(
         this.player.getBounds().centerX,
@@ -1019,6 +1111,8 @@ export default class LevelScene extends Phaser.Scene {
 
     this.bg.mountains.setSize(camWidth, this.bg.mountains.height);
     this.bg.mountains.setPosition(topX, this.bg.mountains.y);
+
+    this.correctAnswersText.setPosition(topX + 15, topY + 15);
 
     this.controls.layer.each((item) => {
       item.setScale(0.5 / camZoom);

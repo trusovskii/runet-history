@@ -1,5 +1,7 @@
 import LevelScene from "./scenes/LevelScene";
 import LoadingScene from "./scenes/LoadingScene";
+import BBCodeTextPlugin from "phaser3-rex-plugins/plugins/bbcodetext-plugin.js";
+import ButtonPlugin from "phaser3-rex-plugins/plugins/button-plugin.js";
 
 const gameConfig = {
   title: "Meme Game",
@@ -45,6 +47,20 @@ const gameConfig = {
     disableWebAudio: false,
   },
   scene: [LoadingScene, LevelScene],
+  plugins: {
+    global: [
+      {
+        key: "rexBBCodeTextPlugin",
+        plugin: BBCodeTextPlugin,
+        start: true,
+      },
+      {
+        key: "rexButton",
+        plugin: ButtonPlugin,
+        start: true,
+      },
+    ],
+  },
 };
 
 window.sizeChanged = () => {
@@ -55,7 +71,7 @@ window.sizeChanged = () => {
     //   `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
     // );
     const levelScene = game.scene.getScene("level-scene");
-    console.log('emit resize');
+    console.log("emit resize");
     levelScene.events.emit("resize");
   }
 };
