@@ -47,6 +47,9 @@ const gameConfig = {
     disableWebAudio: false,
   },
   scene: [LoadingScene, LevelScene],
+  input: {
+    activePointers: 4,
+  },
   plugins: {
     global: [
       {

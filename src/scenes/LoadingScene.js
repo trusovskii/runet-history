@@ -4,7 +4,7 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    const cb = 16; // cache buster
+    const cb = 17; // cache buster
 
     this.load.spritesheet("player", `assets/sprites/player.png?cb=${cb}`, {
       frameWidth: 284,
@@ -25,11 +25,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("wall-right", `assets/sprites/wall--right.png?cb=${cb}`);
     this.load.image("wall", `assets/sprites/floor-inner.png?cb=${cb}`);
 
-    this.load.image("mountains", `assets/bg/mountains.png?cb=${cb}`);
     this.load.image("year_1990", `assets/sprites/year_1990.png?cb=${cb}`);
-    this.load.image("cloud", `assets/sprites/cloud.png?cb=${cb}`);
-    this.load.image("cloud2", `assets/sprites/cloud2.png?cb=${cb}`);
-
     this.load.image("some_place", `assets/sprites/some_place.png?cb=${cb}`);
     this.load.image("doggo", `assets/sprites/doggo.png?cb=${cb}`);
     this.load.image("anek", `assets/sprites/anek.png?cb=${cb}`);
@@ -168,6 +164,15 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("durov_way_out_2014", `assets/sprites/durov_way_out_2014.png?cb=${cb}`);
     this.load.image("paket_yrovoy_2016", `assets/sprites/paket_yrovoy_2016.png?cb=${cb}`);
     this.load.image("alisa_2017", `assets/sprites/alisa_2017.png?cb=${cb}`);
+
+    // #region Background
+
+    this.load.image("clouds", `assets/bg/clouds.png?cb=${cb}`);
+    this.load.image("bg-layer-1", `assets/bg/bg-layer-1.png?cb=${cb}`);
+    this.load.image("bg-layer-2", `assets/bg/bg-layer-2.png?cb=${cb}`);
+    this.load.image("bg-layer-3", `assets/bg/bg-layer-3.png?cb=${cb}`);
+
+    //#endregion Background
 
     // #region Bubbles
 
