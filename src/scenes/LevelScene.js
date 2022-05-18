@@ -246,7 +246,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2000, 230 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(2100, 230 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -385,6 +385,7 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 10900, 510, 1); /** Ру центр */
     this.createLargePlatform(platforms, 11600, 650, 1); /** Яндекс */
     this.createLargePlatform(platforms, 13300, 650, 1); /** Кинопоиск */
+    this.createLargePlatform(platforms, 12170, 350, 1); /** Википедиа */
     this.createLargePlatform(platforms, 12850, 350, 1); /** Мамба */
     this.createLargePlatform(platforms, 14600, 650, 1); /** Лепрозорий */
     this.createLargePlatform(platforms, 16400, 500, 4); /** Хабр */

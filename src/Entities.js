@@ -316,8 +316,8 @@ export default {
     sprite: "yandex_2000",
   },
   wiki_2001: {
-    x: 12200,
-    y: 750,
+    x: 12350,
+    y: 370,
     sprite: "wiki_2001",
   },
   mas_2001: {
