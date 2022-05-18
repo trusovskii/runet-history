@@ -1,6 +1,6 @@
 import Entities from "../Entities";
 
-const VERTICAL_OFFSET = 1080;
+const VERTICAL_OFFSET = Math.ceil(1080 * 0.15);
 const WORLD_WIDTH = 36000;
 const WORLD_HEIGHT = 1080 + VERTICAL_OFFSET;
 
@@ -19,10 +19,13 @@ const DIALOG_ZOOM_AMOUNT = 0.3;
 const DIALOG_ZOOM_DURATION = 500;
 const DIALOG_ZOOM_EASING = "Cubic";
 
-const JUMP_ZOOM_AMOUNT = -0.1;
-const JUMP_ZOOM_DURATION = 400;
-const JUMP_ZOOM_UP_EASING = "Linear";
+const JUMP_ZOOM_AMOUNT = -0.03;
+const JUMP_ZOOM_DURATION = 800;
+const JUMP_ZOOM_UP_EASING = "Cubic";
 const JUMP_ZOOM_DOWN_EASING = "Linear";
+
+const JUMP_ZOOM_AMOUNT_MOBILE = -0.15;
+const JUMP_ZOOM_DURATION_MOBILE = 700;
 
 export default class LevelScene extends Phaser.Scene {
   constructor() {
@@ -173,26 +176,37 @@ export default class LevelScene extends Phaser.Scene {
     });
     this.events.once("postupdate", () => {
       console.log("scene postupdate");
-      this.onResize();
+      this.events.once("postupdate", () => {
+        console.log("scene postupdate 2");
+        this.onResize();
+        this.updateCameraFollowOffset();
+      });
     });
   }
 
   updateCameraFollowOffset() {
-    const entity = this.nearbyEntityName
-      ? this.entities[this.nearbyEntityName]
-      : null;
-    const hasActiveBubbles =
-      entity &&
-      (entity.quizState?.shown ||
-        entity.popupState?.shown ||
-        entity.dialogueState?.shown);
-    let offsetY = 0;
-    if (!this.isMobile && !hasActiveBubbles) {
-      offsetY = Math.round(-VERTICAL_OFFSET / this.cameras.main.zoom);
-    }
-    if (this.cameras.main.followOffset.y !== offsetY) {
-      this.cameras.main.setFollowOffset(0, offsetY);
-    }
+    this.events.once("postupdate", () => {
+      const entity = this.nearbyEntityName
+        ? this.entities[this.nearbyEntityName]
+        : null;
+      const hasActiveBubbles =
+        entity &&
+        (entity.quizState?.shown ||
+          entity.popupState?.shown ||
+          entity.dialogueState?.shown);
+      let offsetY = 0;
+      if (this.isMobile && !hasActiveBubbles) {
+        offsetY = Math.round(this.cameras.main.worldView.height * -0.2);
+      } else if (!this.isMobile && !hasActiveBubbles) {
+        offsetY = Math.round(this.cameras.main.worldView.height * -0.2);
+      }
+      console.log("nearbyEntityName", this.nearbyEntityName);
+      console.log("hasActiveBubbles", hasActiveBubbles);
+      if (this.cameras.main.followOffset.y !== offsetY) {
+        console.log("setFollowOffset", offsetY);
+        this.cameras.main.setFollowOffset(0, offsetY);
+      }
+    });
   }
 
   onResize() {
@@ -200,8 +214,7 @@ export default class LevelScene extends Phaser.Scene {
     this.isLandscape = window.innerWidth > window.innerHeight;
     this.isMobile = this.isLandscape && window.innerWidth <= 1024;
 
-    this.cameras.main.zoom =
-      this.getScaledZoom() + this.dialogZoom + this.jumpZoom;
+    this.cameras.main.zoom = this.getFullZoom();
 
     this.updateCameraFollowOffset();
 
@@ -221,6 +234,10 @@ export default class LevelScene extends Phaser.Scene {
     this.shouldResizeStaticObjects = true;
   }
 
+  getFullZoom() {
+    return this.getScaledZoom() + this.dialogZoom + this.jumpZoom;
+  }
+
   getScaledZoom() {
     return (
       Math.round((window.innerHeight / 1080) * (this.isMobile ? 2 : 1) * 128) /
@@ -229,7 +246,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(20000, 230 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(2000, 230 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -333,13 +350,13 @@ export default class LevelScene extends Phaser.Scene {
       )
       .setOrigin(0, 1)
       .setScrollFactor(0, 1);
-    bgLayer.add([bg3, bg2, bg1, clouds]);
+    bgLayer.add([clouds, bg3, bg2, bg1]);
     this.bg = {
       layer: bgLayer,
+      clouds,
       bg3,
       bg2,
       bg1,
-      clouds,
     };
   }
 
@@ -645,6 +662,7 @@ export default class LevelScene extends Phaser.Scene {
     };
     entity.quizState.started = true;
     entity.quizState.shown = true;
+    this.updateCameraFollowOffset();
     if (!this.isMobile) {
       this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
     }
@@ -659,6 +677,7 @@ export default class LevelScene extends Phaser.Scene {
       this.applyDialogZoom(0);
     }
     entity.quizState.shown = false;
+    this.updateCameraFollowOffset();
   }
 
   applyDialogZoom(dialogZoom) {
@@ -668,13 +687,16 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   applyJumpZoom(jumpZoom, easing) {
-    console.log("applyJumpZoom:", jumpZoom);
+    // console.log("applyJumpZoom:", jumpZoom);
     this.jumpZoom = jumpZoom;
-    this.applyCameraZoom(JUMP_ZOOM_DURATION, easing);
+    const jumpZoomDuration = this.isMobile
+      ? JUMP_ZOOM_DURATION_MOBILE
+      : JUMP_ZOOM_DURATION;
+    this.applyCameraZoom(jumpZoomDuration, easing);
   }
 
   applyCameraZoom(duration, easing) {
-    const zoom = this.getScaledZoom() + this.dialogZoom + this.jumpZoom;
+    const zoom = this.getFullZoom();
     this.cameras.main.zoomEffect.reset();
     this.cameras.main.zoomTo(
       zoom,
@@ -683,6 +705,9 @@ export default class LevelScene extends Phaser.Scene {
       false,
       (camera, progress, camX, camY) => {
         this.resizeStaticObjects();
+        // if (progress === 1) {
+        this.updateCameraFollowOffset();
+        // }
       }
     );
   }
@@ -727,6 +752,7 @@ export default class LevelScene extends Phaser.Scene {
       console.log(`showQuizLine ${currentLine}`);
       this.showQuizLine(entity, line);
       entity.quizState.currentLine = currentLine + 1;
+      this.updateCameraFollowOffset();
       if (!this.isMobile) {
         this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
       }
@@ -749,6 +775,7 @@ export default class LevelScene extends Phaser.Scene {
       this.applyDialogZoom(0);
     }
     entity.quizState.shown = false;
+    this.updateCameraFollowOffset();
   }
 
   showQuizLine(entity, line) {
@@ -870,6 +897,7 @@ export default class LevelScene extends Phaser.Scene {
       entity.dialogueState.isPlayer = line.player;
       entity.dialogueState.currentLine = currentLine + 1;
       entity.dialogueState.shown = true;
+      this.updateCameraFollowOffset();
       if (!this.isMobile) {
         this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
       }
@@ -991,7 +1019,10 @@ export default class LevelScene extends Phaser.Scene {
         } else {
           if (!nearbyEntity.quizState.answered) {
             [1, 2, 3, 4].forEach((number) => {
-              if (Phaser.Input.Keyboard.JustDown(this[`key${number}`]) || this.touchState[`answer${number}`]) {
+              if (
+                Phaser.Input.Keyboard.JustDown(this[`key${number}`]) ||
+                this.touchState[`answer${number}`]
+              ) {
                 this.touchState[`answer${number}`] = false;
                 this.answerQuiz(nearbyEntity, number);
               }
@@ -1074,8 +1105,11 @@ export default class LevelScene extends Phaser.Scene {
       }
     }
 
-    if (this.player.body.velocity.y < 0 && this.jumpZoom !== JUMP_ZOOM_AMOUNT) {
-      this.applyJumpZoom(JUMP_ZOOM_AMOUNT, JUMP_ZOOM_UP_EASING);
+    const jumpZoomAmount = this.isMobile
+      ? JUMP_ZOOM_AMOUNT_MOBILE
+      : JUMP_ZOOM_AMOUNT;
+    if (this.player.body.velocity.y < 0 && this.jumpZoom !== jumpZoomAmount) {
+      this.applyJumpZoom(jumpZoomAmount, JUMP_ZOOM_UP_EASING);
     } else if (
       Math.abs(this.player.body.velocity.y) < 0.01 &&
       this.jumpZoom !== 0
@@ -1182,6 +1216,12 @@ export default class LevelScene extends Phaser.Scene {
       this.quest.setVisible(showQuest);
     }
 
+    this.bg.clouds.setTilePosition(
+      this.cameras.main.scrollX * 0.6 -
+        500 / this.cameras.main.zoom -
+        this.cloudsPosition,
+      0
+    );
     this.bg.bg1.setTilePosition(
       this.cameras.main.scrollX * 0.5 - 500 / this.cameras.main.zoom,
       0
@@ -1194,14 +1234,8 @@ export default class LevelScene extends Phaser.Scene {
       this.cameras.main.scrollX * 0.125 - 500 / this.cameras.main.zoom,
       0
     );
-    this.bg.clouds.setTilePosition(
-      this.cameras.main.scrollX * 0.6 -
-        500 / this.cameras.main.zoom -
-        this.cloudsPosition,
-      0
-    );
 
-    this.cloudsPosition += 0.5;
+    this.cloudsPosition -= 0.5;
 
     if (
       this.cameras.main.worldView.width > 0 &&
@@ -1231,13 +1265,11 @@ export default class LevelScene extends Phaser.Scene {
       this.controls.layer.setVisible(false);
     }
 
-    this.updateCameraFollowOffset();
-
     this.handleInput();
   }
 
   resizeStaticObjects() {
-    console.log("resizeStaticObjects");
+    // console.log("resizeStaticObjects");
     const camZoom = this.cameras.main.zoom;
     const camWidth = Math.ceil(this.cameras.main.worldView.width);
     const camHeight = Math.ceil(this.cameras.main.worldView.height);
@@ -1254,14 +1286,14 @@ export default class LevelScene extends Phaser.Scene {
     // console.log("topX:", topX);
     // console.log("topY:", topY);
 
+    this.bg.clouds.width = camWidth;
+    this.bg.clouds.x = topX;
     this.bg.bg1.width = camWidth;
     this.bg.bg1.x = topX;
     this.bg.bg2.width = camWidth;
     this.bg.bg2.x = topX;
     this.bg.bg3.width = camWidth;
     this.bg.bg3.x = topX;
-    this.bg.clouds.width = camWidth;
-    this.bg.clouds.x = topX;
 
     this.correctAnswersText.setPosition(topX + 15, topY + 15);
 
