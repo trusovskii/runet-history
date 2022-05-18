@@ -59,7 +59,6 @@ export default class LevelScene extends Phaser.Scene {
         x: 0,
         y: 0,
         text: "debug",
-        origin: { x: 0, y: 0 },
         style: {
           fontFamily: "DigitalStrip",
           fontSize: 20,
@@ -74,6 +73,7 @@ export default class LevelScene extends Phaser.Scene {
           strokeThickness: 4,
         },
       })
+      .setOrigin(0, 0)
       .setDepth(9999)
       .setVisible(false);
     this.pointerDebugX = this.add
@@ -91,7 +91,6 @@ export default class LevelScene extends Phaser.Scene {
         x: 15,
         y: 15,
         text: "Correct answers: 0",
-        origin: { x: 0, y: 0 },
         style: {
           fontFamily: "DigitalStrip",
           fontSize: 16,
@@ -106,6 +105,7 @@ export default class LevelScene extends Phaser.Scene {
           strokeThickness: 4,
         },
       })
+      .setOrigin(0, 0)
       .setDepth(9999)
       .setScrollFactor(0, 0);
 
@@ -780,23 +780,24 @@ export default class LevelScene extends Phaser.Scene {
 
   showQuizLine(entity, line) {
     const container = this.add.container(0, 0);
-    const lineText = this.add.rexBBCodeText({
-      x: 0,
-      y: 0,
-      text: line,
-      origin: { x: 0, y: 0.5 },
-      style: {
-        fontFamily: "DigitalStrip",
-        fontSize: 16,
-        lineSpacing: 10,
-        color: "#000",
-        // wordWrap: { width: 385, useAdvancedWrap: true },
-        wrap: {
-          mode: "word",
-          width: 385,
+    const lineText = this.add
+      .rexBBCodeText({
+        x: 0,
+        y: 0,
+        text: line,
+        style: {
+          fontFamily: "DigitalStrip",
+          fontSize: 16,
+          lineSpacing: 10,
+          color: "#000",
+          // wordWrap: { width: 385, useAdvancedWrap: true },
+          wrap: {
+            mode: "word",
+            width: 385,
+          },
         },
-      },
-    });
+      })
+      .setOrigin(0, 0.5);
     const bubbleSpriteKey =
       lineText.getBounds().height < 38
         ? "bubble-line"
@@ -827,23 +828,24 @@ export default class LevelScene extends Phaser.Scene {
     }
     const popupData = entity.popupData;
     const container = this.add.container(0, 0);
-    const lineText = this.add.rexBBCodeText({
-      x: 0,
-      y: 0,
-      text: popupData.text,
-      origin: { x: 0, y: 0.5 },
-      style: {
-        fontFamily: "DigitalStrip",
-        fontSize: 16,
-        lineSpacing: 10,
-        color: "#000",
-        // wordWrap: { width: 385, useAdvancedWrap: true },
-        wrap: {
-          mode: "word",
-          width: 385,
+    const lineText = this.add
+      .rexBBCodeText({
+        x: 0,
+        y: 0,
+        text: popupData.text,
+        style: {
+          fontFamily: "DigitalStrip",
+          fontSize: 16,
+          lineSpacing: 10,
+          color: "#000",
+          // wordWrap: { width: 385, useAdvancedWrap: true },
+          wrap: {
+            mode: "word",
+            width: 385,
+          },
         },
-      },
-    });
+      })
+      .setOrigin(0, 0.5);
     const bubbleSpriteKey =
       lineText.getBounds().height < 38
         ? "bubble-line"
@@ -926,23 +928,24 @@ export default class LevelScene extends Phaser.Scene {
 
   showDialogueLine(entity, line) {
     const container = this.add.container(0, 0);
-    const lineText = this.add.rexBBCodeText({
-      x: 0,
-      y: 0,
-      text: line.text,
-      origin: { x: 0, y: 0.5 },
-      style: {
-        fontFamily: "DigitalStrip",
-        fontSize: 16,
-        lineSpacing: 10,
-        color: "#000",
-        // wordWrap: { width: 385, useAdvancedWrap: true },
-        wrap: {
-          mode: "word",
-          width: 385,
+    const lineText = this.add
+      .rexBBCodeText({
+        x: 0,
+        y: 0,
+        text: line.text,
+        style: {
+          fontFamily: "DigitalStrip",
+          fontSize: 16,
+          lineSpacing: 10,
+          color: "#000",
+          // wordWrap: { width: 385, useAdvancedWrap: true },
+          wrap: {
+            mode: "word",
+            width: 385,
+          },
         },
-      },
-    });
+      })
+      .setOrigin(0, 0.5);
     const bubbleSpriteKey =
       lineText.getBounds().height < 38
         ? "bubble-line"
