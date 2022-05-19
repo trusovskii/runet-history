@@ -47,6 +47,8 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
+    this.sound.play('bgm');
+
     this.createBackground();
     this.createFloor();
     this.createPlatforms();

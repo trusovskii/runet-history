@@ -4,7 +4,61 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    const cb = 19; // cache buster
+    const cb = 20; // cache buster
+
+    this.cameras.main.setBackgroundColor("#000000");
+    this.progressBar = this.add
+      .rectangle(
+        this.cameras.main.midPoint.x - 200,
+        this.cameras.main.midPoint.y - 25,
+        400,
+        50,
+        0xffffff,
+        1
+      )
+      .setOrigin(0, 0);
+    this.progressBarFill = this.add
+      .rectangle(
+        this.cameras.main.midPoint.x - 200 + 5,
+        this.cameras.main.midPoint.y - 25 + 5,
+        0,
+        40,
+        0x3587e2,
+        1
+      )
+      .setOrigin(0, 0);
+    this.progressFile = this.add
+      .text(
+        this.cameras.main.midPoint.x,
+        this.cameras.main.midPoint.y + 25 + 5,
+        "Loaing",
+        {
+          fontSize: 18,
+          color: "#ffffff",
+        }
+      )
+      .setOrigin(0.5, 0);
+
+    const onProgress = (value) => {
+      this.progressBarFill.width = Math.round(390 * value);
+    };
+
+    const onFileprogress = (file) => {
+      this.progressFile.setText(`Loading: ${file.src}`);
+    };
+
+    const onComplete = () => {
+      this.progressBar.destroy();
+      this.progressBarFill.destroy();
+    };
+
+    this.load.on("progress", onProgress);
+    this.load.on("fileprogress", onFileprogress);
+    this.load.on("complete", onComplete);
+
+    this.load.audio("bgm", [`assets/audio/bgm.mp3?cb=${cb}`], {
+      stream: true,
+    });
 
     this.load.spritesheet("player", `assets/sprites/player.png?cb=${cb}`, {
       frameWidth: 284,
@@ -122,9 +176,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("youtube_2007", `assets/sprites/youtube_2007.png?cb=${cb}`);
     this.load.image("dvd_2007", `assets/sprites/dvd_2007.png?cb=${cb}`);
     this.load.image("penek_2007", `assets/sprites/penek_2007.png?cb=${cb}`);
-    this.load.image(
-      "lurk_2007", 
-      `assets/sprites/lurk_2007.png?cb=${cb}`);
+    this.load.image("lurk_2007", `assets/sprites/lurk_2007.png?cb=${cb}`);
     this.load.image(
       "who_are_you_2007",
       `assets/sprites/who_are_you_2007.png?cb=${cb}`
@@ -147,22 +199,40 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("medved", `assets/sprites/medved.png?cb=${cb}`);
     this.load.image("ch_2", `assets/sprites/ch_2.png?cb=${cb}`);
     this.load.image("meme_face", `assets/sprites/meme_face.png?cb=${cb}`);
-    this.load.image("tochka_ru_2010", `assets/sprites/tochka_ru_2010.png?cb=${cb}`);
+    this.load.image(
+      "tochka_ru_2010",
+      `assets/sprites/tochka_ru_2010.png?cb=${cb}`
+    );
     this.load.image("afisha_2010", `assets/sprites/afisha_2010.png?cb=${cb}`);
     this.load.image("kianu_2010", `assets/sprites/kianu_2010.png?cb=${cb}`);
     this.load.image("lentach_2011", `assets/sprites/lentach_2011.png?cb=${cb}`);
     this.load.image("lol", `assets/sprites/lol.png?cb=${cb}`);
     this.load.image("selfie", `assets/sprites/selfie.png?cb=${cb}`);
     this.load.image("cat", `assets/sprites/cat.png?cb=${cb}`);
-    this.load.image("reestr_site_2012", `assets/sprites/reestr_site_2012.png?cb=${cb}`);
+    this.load.image(
+      "reestr_site_2012",
+      `assets/sprites/reestr_site_2012.png?cb=${cb}`
+    );
     this.load.image("lisa", `assets/sprites/lisa.png?cb=${cb}`);
     this.load.image("tg_2013", `assets/sprites/tg_2013.png?cb=${cb}`);
     this.load.image("free_2013", `assets/sprites/free_2013.png?cb=${cb}`);
-    this.load.image("people_internet_2014", `assets/sprites/people_internet_2014.png?cb=${cb}`);
+    this.load.image(
+      "people_internet_2014",
+      `assets/sprites/people_internet_2014.png?cb=${cb}`
+    );
     this.load.image("meduza_2014", `assets/sprites/meduza_2014.png?cb=${cb}`);
-    this.load.image("gold_site_2014", `assets/sprites/gold_site_2014.png?cb=${cb}`);
-    this.load.image("durov_way_out_2014", `assets/sprites/durov_way_out_2014.png?cb=${cb}`);
-    this.load.image("paket_yrovoy_2016", `assets/sprites/paket_yrovoy_2016.png?cb=${cb}`);
+    this.load.image(
+      "gold_site_2014",
+      `assets/sprites/gold_site_2014.png?cb=${cb}`
+    );
+    this.load.image(
+      "durov_way_out_2014",
+      `assets/sprites/durov_way_out_2014.png?cb=${cb}`
+    );
+    this.load.image(
+      "paket_yrovoy_2016",
+      `assets/sprites/paket_yrovoy_2016.png?cb=${cb}`
+    );
     this.load.image("alisa_2017", `assets/sprites/alisa_2017.png?cb=${cb}`);
 
     // #region Background
