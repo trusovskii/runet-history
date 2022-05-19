@@ -252,7 +252,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2100, 230 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(2600, 230 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -808,8 +808,8 @@ export default class LevelScene extends Phaser.Scene {
         text: line,
         style: {
           fontFamily: "Onest",
-          fontSize: 16,
-          lineSpacing: 10,
+          fontSize: 14,
+          lineSpacing: 6,
           color: "#000",
           // wordWrap: { width: 385, useAdvancedWrap: true },
           wrap: {
