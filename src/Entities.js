@@ -319,6 +319,19 @@ export default {
     x: 8800,
     y: 270,
     sprite: "TV_1999",
+    popup: {
+      x: 8700,
+      y: 100,
+      origin: { x: 0, y: 1 },
+      text: "Я устал, я ухожу, и ты тоже уходи.",
+      area: {
+        x: 8700,
+        y: 240,
+        width: 350,
+        height: 100,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   explorer_1999: {
     x: 9700,
@@ -364,6 +377,19 @@ export default {
     x: 12900,
     y: 953,
     sprite: "mas_2001",
+    popup: {
+      x: 12780,
+      y: 714,
+      origin: { x: 0, y: 1 },
+      text: "Оттопыриваешься тут? Пойдём-ка, покурим-ка?",
+      area: {
+        x: 12830,
+        y: 900,
+        width: 350,
+        height: 100,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   kinopoisk_2003: {
     x: 13430,
@@ -412,6 +438,19 @@ export default {
     x: 16850,
     y: 970,
     sprite: "not_bag_2006",
+    popup: {
+      x: 16720,
+      y: 820,
+      origin: { x: 0, y: 1 },
+      text: "Все проблемы в игре это не баги, это фичи, друг.",
+      area: {
+        x: 16800,
+        y: 900,
+        width: 250,
+        height: 100,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   durov_2006: {
     x: 17600,
@@ -438,6 +477,7 @@ export default {
     x: 18800,
     y: 820,
     sprite: "raek_2006",
+    colliders: [{ x: 18800, y: 770, width: 500, height: 70 }],
   },
   youtube_2007: {
     x: 19700,
@@ -455,8 +495,8 @@ export default {
     y: 510,
     sprite: "penek_2007",
     dialogue: {
-      x: 19600,
-      y: 510,
+      x: 19580,
+      y: 330,
       origin: { x: 0, y: 1 },
       area: {
         x: 19600,
@@ -470,7 +510,7 @@ export default {
           text: "На пенёк сел? Должен был косарь отдать. А тут чего так мало?",
           player: false,
         },
-        { text: "Кажется, мне тут не рады", player: true },
+        { text: "Кажется, мне тут не рады. Извините, я пойду.", player: true },
       ],
     },
   },
@@ -483,6 +523,26 @@ export default {
     x: 21650,
     y: 955,
     sprite: "who_are_you_2007",
+    dialogue: {
+      x: 21550,
+      y: 650,
+      origin: { x: 0, y: 1 },
+      area: {
+        x: 21600,
+        y: 950,
+        width: 450,
+        height: 300,
+        origin: { x: 0, y: 1 },
+      },
+      lines: [
+        {
+          text: "Здравствуйте дедушка.",
+          player: true,
+        },
+        { text: "Вы кто такие? Я вас не звал! Идите дальше.", player: false },
+        { text: "Ой, извините, до свидания.", player: true },
+      ],
+    },
   },
   ypychka_2007: {
     x: 20700,
@@ -494,8 +554,8 @@ export default {
     y: 580,
     sprite: "putin_krab_2008",
     popup: {
-      x: 22730,
-      y: 370,
+      x: 22470,
+      y: 390,
       origin: { x: 0, y: 1 },
       text: "Восемь лет я пахал, как краб на галерах, с утра до ночи, и делал это с полной отдачей сил!",
       area: {
@@ -533,8 +593,8 @@ export default {
     y: 970,
     sprite: "medved",
     dialogue: {
-      x: 24500,
-      y: 970,
+      x: 24570,
+      y: 570,
       origin: { x: 0, y: 1 },
     area: {
       x: 24500,
@@ -545,10 +605,10 @@ export default {
     },
     lines: [
       {
-        text: "Превед, медвед",
+        text: "О, превед, медвед",
         player: true,
       },
-      { text: "Превед", player: false },
+      { text: "Превееед", player: false },
     ],
   }
   },
@@ -581,24 +641,63 @@ export default {
     x: 26900,
     y: 970,
     sprite: "kianu_2010",
+    popup: {
+      x: 26830,
+      y: 690,
+      origin: { x: 0, y: 1 },
+      text: "Я просто сижу и ем свой сэндвич...",
+      area: {
+        x: 26780,
+        y: 950,
+        width: 320,
+        height: 250,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   lentach_2011: {
-    x: 27760,
+    x: 27730,
     y: 540,
     sprite: "lentach_2011",
     colliders: [
-      { x: 27760, y: 540, width: 340, height: 90 },
+      { x: 27730, y: 540, width: 340, height: 90 },
     ],
   },
   lol: {
-    x: 28000,
-    y: 956,
+    x: 28250,
+    y: 950,
     sprite: "lol",
+    colliders: [
+      { x: 28260, y: 700, width: 110, height: 60 },
+    ],
   },
   selfie: {
-    x: 28230,
+    x: 28550,
     y: 956,
     sprite: "selfie",
+    dialogue: {
+      x: 28450,
+      y: 600,
+      origin: { x: 0, y: 1 },
+    area: {
+      x: 28500,
+      y: 970,
+      width: 400,
+      height: 280,
+      origin: { x: 0, y: 1 },
+    },
+    lines: [
+      {
+        text: "Привет, а вы чего тут делаете?",
+        player: true,
+      },
+      { text: "Привеееет, давай делать селфи вместе!", player: false },
+      {
+        text: "Нет, спасибо, я не из этих.",
+        player: true,
+      },
+    ],
+  }
   },
   cat: {
     x: 28400,
@@ -617,6 +716,19 @@ export default {
     x: 29950,
     y: 330,
     sprite: "lisa",
+    popup: {
+      x: 29830,
+      y: 115,
+      origin: { x: 0, y: 1 },
+      text: "Выгляжу как драный веник, зачем так жить, а?",
+      area: {
+        x: 29830,
+        y: 260,
+        width: 320,
+        height: 150,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   tg_2013: {
     x: 30570,
@@ -657,9 +769,214 @@ export default {
     sprite: "paket_yrovoy_2016",
   },
   alisa_2017: {
-    x: 33490,
+    x: 33720,
     y: 350,
     sprite: "alisa_2017",
+  },
+  dud_2017: {
+    x: 35700,
+    y: 960,
+    sprite: "dud_2017",
+    popup: {
+      x: 35700,
+      y: 655,
+      origin: { x: 0, y: 1 },
+      text: "Сколько ты зарабатываешь?",
+      area: {
+        x: 35650,
+        y: 950,
+        width: 320,
+        height: 250,
+        origin: { x: 0, y: 1 },
+      },
+    },
+  },
+  inagent_2017: {
+    x: 34390,
+    y: 220,
+    sprite: "inagent_2017",
+  },
+  kvadro_2017: {
+    x: 35600,
+    y: 170,
+    sprite: "kvardo_2017",
+  },
+  remote_2017: {
+    x: 35260,
+    y: 475,
+    sprite: "remote_2017",
+  },
+  tg_ban_2018: {
+    x: 36400,
+    y: 690,
+    sprite: "tg_ban_2018",
+  },
+  tiktok_2019: {
+    x: 36950,
+    y: 963,
+    sprite: "tiktok_2019",
+    colliders: [
+      { x: 36980, y: 950, width: 215, height: 290 },
+    ],
+  },
+  bitcoin_2020: {
+    x: 37480,
+    y: 530,
+    sprite: "bitcoin_2020",
+    colliders: [
+      { x: 37482, y: 530, width: 215, height: 150 },
+    ],
+  },
+  cat_uyu_2020: {
+    x: 38180,
+    y: 965,
+    sprite: "cat_uyu_2020",
+  },
+  ioda_2020: {
+    x: 38890,
+    y: 550,
+    sprite: "ioda_2020",
+  },
+  delivery_2020: {
+    x: 39600,
+    y: 955,
+    sprite: "delivery_2020",
+    colliders: [
+      { x: 39635, y: 680, width: 60, height: 20 },
+    ],
+  },
+  medal_2020: {
+    x: 40200,
+    y: 960,
+    sprite: "medal_2020",
+  },
+  g5_2020: {
+    x: 40800,
+    y: 953,
+    sprite: "g5_2020",
+  },
+  qr_2020: {
+    x: 43900,
+    y: 960,
+    sprite: "qr_2020",
+    colliders: [
+      { x: 43980, y: 708, width: 110, height: 110 },
+    ],
+  },
+  delivery2_2020: {
+    x: 41230,
+    y: 955,
+    sprite: "delivery2_2020",
+  },
+  ironov_2020: {
+    x: 44790,
+    y: 511,
+    sprite: "ironov_2020",
+  },
+  holiday_2020: {
+    x: 45500,
+    y: 800,
+    sprite: "holiday_2020",
+    colliders: [
+      { x: 45500, y: 800, width: 230, height: 190 },
+    ],
+  },
+  vse_yronili_2020: {
+    x: 45950,
+    y: 550,
+    sprite: "vse_yronili_2020",
+    colliders: [
+      { x: 45950, y: 550, width: 190, height: 265 },
+    ],
+  },
+  e_voting_2021: {
+    x: 46820,
+    y: 525,
+    sprite: "e-voting_2021",
+  },
+  doctor_2020: {
+    x: 44260,
+    y: 959,
+    sprite: "doctor_2020",
+  },
+  zk_2021: {
+    x: 47640,
+    y: 738,
+    sprite: "zk_2021",
+    dialogue: {
+      x: 47520,
+      y: 470,
+      origin: { x: 0, y: 1 },
+    area: {
+      x: 47520,
+      y: 710,
+      width: 400,
+      height: 280,
+      origin: { x: 0, y: 1 },
+    },
+    lines: [
+      {
+        text: "Алло, здравствуйте, а вы чего хотите?",
+        player: true,
+      },
+      { text: "Вечер в хату, вас банк беспокоит, есть деньги?", player: false },
+      {
+        text: "Денег нет, до свидания, извините.",
+        player: true,
+      },
+    ],
+  }
+  },
+  sell_fishes_2021: {
+    x: 46320,
+    y: 970,
+    sprite: "sell_fishes_2021",
+  },
+  steal_2021: {
+    x: 48200,
+    y: 960,
+    sprite: "steal_2021",
+  },
+  hasbik_2021: {
+    x: 48800,
+    y: 960,
+    sprite: "hasbik_2021",
+    popup: {
+      x: 48700,
+      y: 720,
+      origin: { x: 0, y: 1 },
+      text: "Я часто дрался — уличные кипиши. Но не помню, чтобы я проигрывал.",
+      area: {
+        x: 48700,
+        y: 950,
+        width: 300,
+        height: 150,
+        origin: { x: 0, y: 1 },
+      },
+    },
+  },
+  ban_social_2022: {
+    x: 49180,
+    y: 998,
+    sprite: "ban_social_2022",
+  },
+  maestro_2022: {
+    x: 50500,
+    y: 987,
+    sprite: "maestro_2022",
+    popup: {
+      x: 50400,
+      y: 440,
+      origin: { x: 0, y: 1 },
+      text: "Вы думаете, я вас не переиграю? Я вас не уничтожу? Я вас уничтожу.",
+      area: {
+        x: 50450,
+        y: 950,
+        width: 320,
+        height: 250,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
 };
 

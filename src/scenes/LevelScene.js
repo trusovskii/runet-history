@@ -1,7 +1,7 @@
 import Entities from "../Entities";
 
 const VERTICAL_OFFSET = Math.ceil(1080 * 0.15);
-const WORLD_WIDTH = 36000;
+const WORLD_WIDTH = 51000;
 const WORLD_HEIGHT = 1080 + VERTICAL_OFFSET;
 
 const layers = {
@@ -252,7 +252,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2600, 230 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(50000, 730 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -310,7 +310,7 @@ export default class LevelScene extends Phaser.Scene {
    */
   createFloor() {
     const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 350);
+    this.createLargePlatform(floor, 0, 930, 423);
     this.floor = floor;
   }
 
@@ -412,6 +412,14 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(platforms, 32400, 630, 1); /** Золотой сайт */
     this.createLargePlatform(platforms, 32900, 340, 1);
     this.createLargePlatform(platforms, 33600, 340, 1); /** Алиса */
+    this.createLargePlatform(platforms, 34300, 180, 1); /** Иностранный агент */
+    this.createLargePlatform(platforms, 34300, 640, 1);
+    this.createLargePlatform(platforms, 34900, 450, 5); /** Удалёнщик */
+    this.createLargePlatform(platforms, 38060, 332, 1);
+    this.createLargePlatform(platforms, 38750, 520, 2); /** Малыш йода */
+    this.createLargePlatform(platforms, 44550, 480, 4); /** Иронов */
+    this.createLargePlatform(platforms, 46550, 500, 3); /** Электронное голосование */
+    this.createLargePlatform(platforms, 47480, 700, 2); /** Банк беспокоит> */
 
     this.platforms = platforms;
   }

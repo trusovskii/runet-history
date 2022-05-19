@@ -236,6 +236,31 @@ export default class LoadingScene extends Phaser.Scene {
       `assets/sprites/paket_yrovoy_2016.png?cb=${cb}`
     );
     this.load.image("alisa_2017", `assets/sprites/alisa_2017.png?cb=${cb}`);
+    this.load.image("dud_2017", `assets/sprites/dud_2017.png?cb=${cb}`);
+    this.load.image("inagent_2017", `assets/sprites/inagent_2017.png?cb=${cb}`);
+    this.load.image("kvardo_2017", `assets/sprites/kvadro_2017.png?cb=${cb}`);
+    this.load.image("remote_2017", `assets/sprites/remote_2017.png?cb=${cb}`);
+    this.load.image("tg_ban_2018", `assets/sprites/tg_ban_2018.png?cb=${cb}`);
+    this.load.image("tiktok_2019", `assets/sprites/tiktok_2019.png?cb=${cb}`);
+    this.load.image("bitcoin_2020", `assets/sprites/bitcoin_2020.png?cb=${cb}`);
+    this.load.image("cat_uyu_2020", `assets/sprites/cat_uyu_2020.png?cb=${cb}`);
+    this.load.image("ioda_2020", `assets/sprites/ioda_2020.png?cb=${cb}`);
+    this.load.image("delivery_2020", `assets/sprites/delivery_2020.png?cb=${cb}`);
+    this.load.image("medal_2020", `assets/sprites/medal_2020.png?cb=${cb}`);
+    this.load.image("g5_2020", `assets/sprites/g5_2020.png?cb=${cb}`);
+    this.load.image("qr_2020", `assets/sprites/qr_2020.png?cb=${cb}`);
+    this.load.image("delivery2_2020", `assets/sprites/delivery2_2020.png?cb=${cb}`);
+    this.load.image("ironov_2020", `assets/sprites/ironov_2020.png?cb=${cb}`);
+    this.load.image("holiday_2020", `assets/sprites/holiday_2020.png?cb=${cb}`);
+    this.load.image("vse_yronili_2020", `assets/sprites/vse_yronili_2020.png?cb=${cb}`);
+    this.load.image("e-voting_2021", `assets/sprites/e-voting_2021.png?cb=${cb}`);
+    this.load.image("doctor_2020", `assets/sprites/doctor_2020.png?cb=${cb}`);
+    this.load.image("zk_2021", `assets/sprites/zk_2021.png?cb=${cb}`);
+    this.load.image("sell_fishes_2021", `assets/sprites/sell_fishes_2021.png?cb=${cb}`);
+    this.load.image("steal_2021", `assets/sprites/steal_2021.png?cb=${cb}`);
+    this.load.image("hasbik_2021", `assets/sprites/hasbik_2021.png?cb=${cb}`);
+    this.load.image("ban_social_2022", `assets/sprites/ban_social_2022.png?cb=${cb}`);
+    this.load.image("maestro_2022", `assets/sprites/maestro_2022.png?cb=${cb}`);
 
     // #region Background
 
