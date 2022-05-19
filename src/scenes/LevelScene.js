@@ -60,7 +60,7 @@ export default class LevelScene extends Phaser.Scene {
         y: 0,
         text: "debug",
         style: {
-          fontFamily: "DigitalStrip",
+          fontFamily: "Onest",
           fontSize: 20,
           lineSpacing: 8,
           color: "#404",
@@ -92,7 +92,7 @@ export default class LevelScene extends Phaser.Scene {
         y: 15,
         text: "Correct answers: 0",
         style: {
-          fontFamily: "DigitalStrip",
+          fontFamily: "Onest",
           fontSize: 16,
           lineSpacing: 8,
           color: "#404",
@@ -584,19 +584,22 @@ export default class LevelScene extends Phaser.Scene {
    */
   showQuiz(entity) {
     const container = this.add.container(0, 0);
-    const questionBubble = this.add.image(0, 0, "bubble-line").setOrigin(0, 0);
     const questionText = this.add
-      .text(15, questionBubble.getBounds().centerY, entity.quizData.quiestion, {
-        fontFamily: "DigitalStrip",
-        fontSize: 16,
-        lineSpacing: 10,
-        color: "#000",
+      .rexBBCodeText({
+        x: 0,
+        y: 0,
+        text: entity.quizData.quiestion,
+        style: {
+          fontFamily: "ComicCat",
+          fontSize: 28,
+          lineSpacing: 4,
+          color: "#000000",
+        },
       })
-      .setOrigin(0, 0.5);
-    container.add(questionBubble);
+      .setOrigin(0, 0);
     container.add(questionText);
     let offsetX = 0;
-    let offsetY = questionBubble.getBounds().height + 15;
+    let offsetY = questionText.getBounds().bottom + 15;
 
     const answers = [];
     entity.quizData.answers.forEach((answer, answerIndex) => {
@@ -604,30 +607,30 @@ export default class LevelScene extends Phaser.Scene {
         .image(offsetX, offsetY, `answer-${answerIndex + 1}`)
         .setOrigin(0, 0);
       const answerNumberText = this.add
-        .text(
-          offsetX + 15,
-          offsetY + Math.round(answerBubble.getBounds().height / 2),
-          answerIndex + 1,
-          {
-            fontFamily: "DigitalStrip",
+        .rexBBCodeText({
+          x: offsetX + 15,
+          y: offsetY + Math.round(answerBubble.getBounds().height / 2),
+          text: answerIndex + 1,
+          style: {
+            fontFamily: "Onest",
             fontSize: 16,
-            lineSpacing: 10,
-            color: "#666",
-          }
-        )
+            lineSpacing: 4,
+            color: "#E13914",
+          },
+        })
         .setOrigin(0, 0.5);
       const answerText = this.add
-        .text(
-          offsetX + answerNumberText.getBounds().width + 30,
-          offsetY + Math.round(answerBubble.getBounds().height / 2),
-          answer,
-          {
-            fontFamily: "DigitalStrip",
+        .rexBBCodeText({
+          x: offsetX + answerNumberText.getBounds().width + 30,
+          y: offsetY + Math.round(answerBubble.getBounds().height / 2),
+          text: answer,
+          style: {
+            fontFamily: "Onest",
             fontSize: 16,
-            lineSpacing: 10,
-            color: "#000",
-          }
-        )
+            lineSpacing: 4,
+            color: "#000000",
+          },
+        })
         .setOrigin(0, 0.5);
       container.add(answerBubble);
       container.add(answerNumberText);
@@ -657,7 +660,6 @@ export default class LevelScene extends Phaser.Scene {
     );
     entity.quizState.gameObjects = {
       container: container,
-      questionBubble: questionBubble,
       questionText: questionText,
       answers: answers,
     };
@@ -717,17 +719,29 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.quizData.correctNumber === number) {
       entity.quizState.answered = true;
       entity.quizState.solved = true;
-      entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
-        "#3F3"
+      entity.quizState.gameObjects.answers[number - 1].answerBubble.setTexture(
+        `answer-${number}-correct`
       );
+      entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
+        "#FFFFFF"
+      );
+      entity.quizState.gameObjects.answers[
+        number - 1
+      ].answerNumberText.setColor("#FFFFFF");
       console.log("correct!");
       this.correctAnswers++;
       this.correctAnswersText.text = `Correct answers: ${this.correctAnswers}`;
     } else {
       entity.quizState.answered = true;
-      entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
-        "#F33"
+      entity.quizState.gameObjects.answers[number - 1].answerBubble.setTexture(
+        `answer-${number}-wrong`
       );
+      entity.quizState.gameObjects.answers[number - 1].answerText.setColor(
+        "#FFFFFF"
+      );
+      entity.quizState.gameObjects.answers[
+        number - 1
+      ].answerNumberText.setColor("#FFFFFF");
       console.log("fail!!!");
     }
     setTimeout(() => {
@@ -787,7 +801,7 @@ export default class LevelScene extends Phaser.Scene {
         y: 0,
         text: line,
         style: {
-          fontFamily: "DigitalStrip",
+          fontFamily: "Onest",
           fontSize: 16,
           lineSpacing: 10,
           color: "#000",
@@ -835,7 +849,7 @@ export default class LevelScene extends Phaser.Scene {
         y: 0,
         text: popupData.text,
         style: {
-          fontFamily: "DigitalStrip",
+          fontFamily: "Onest",
           fontSize: 16,
           lineSpacing: 10,
           color: "#000",
@@ -935,7 +949,7 @@ export default class LevelScene extends Phaser.Scene {
         y: 0,
         text: line.text,
         style: {
-          fontFamily: "DigitalStrip",
+          fontFamily: "Onest",
           fontSize: 16,
           lineSpacing: 10,
           color: "#000",

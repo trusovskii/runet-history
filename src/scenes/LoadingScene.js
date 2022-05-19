@@ -4,7 +4,7 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    const cb = 17; // cache buster
+    const cb = 19; // cache buster
 
     this.load.spritesheet("player", `assets/sprites/player.png?cb=${cb}`, {
       frameWidth: 284,
