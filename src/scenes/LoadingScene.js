@@ -56,9 +56,11 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.on("fileprogress", onFileprogress);
     this.load.on("complete", onComplete);
 
-    this.load.audio("bgm", [`assets/audio/bgm.mp3?cb=${cb}`], {
+    this.load.audio("bgm", `assets/audio/bgm.mp3?cb=${cb}`, {
       stream: true,
     });
+    this.load.audio("sfx:run", `assets/audio/run.mp3?cb=${cb}`);
+    this.load.audio("sfx:land", `assets/audio/land.mp3?cb=${cb}`);
 
     this.load.spritesheet("player", `assets/sprites/player.png?cb=${cb}`, {
       frameWidth: 284,

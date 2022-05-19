@@ -47,7 +47,11 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
-    this.sound.play('bgm');
+    this.bgm = this.sound.add("bgm");
+    this.bgm.play(null, { loop: true });
+    // this.bgm.stop();
+
+    this.sfxRun = this.sound.add("sfx:run");
 
     this.createBackground();
     this.createFloor();
@@ -1109,17 +1113,27 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   update() {
+    const currentAnimKey = this.player.anims.currentAnim.key;
     if (this.player.body.velocity.y < 0) {
+      this.sfxRun.pause();
       this.player.play("jump", true);
     } else if (this.player.body.velocity.y > 100) {
+      this.sfxRun.pause();
       this.player.play("fall", true);
-    } else {
+    } else if (this.player.body.touching.down) {
+      if (["fall", "jump"].includes(currentAnimKey)) {
+        this.sound.play("sfx:land");
+      }
       if (Math.abs(this.player.body.velocity.x) > 0) {
+        if (!this.sfxRun.isPlaying) {
+          this.sfxRun.play(null, { loop: true });
+        }
         this.player.play("run", true);
       } else {
-        if (
-          ["jump", "fall", "run"].includes(this.player.anims.currentAnim.key)
-        ) {
+        if (["jump", "fall", "run"].includes(currentAnimKey)) {
+          if (currentAnimKey !== "still") {
+            this.sfxRun.pause();
+          }
           this.player.play("still", true);
         }
       }
