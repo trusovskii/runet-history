@@ -4,16 +4,14 @@ const VERTICAL_OFFSET = Math.ceil(1080 * 0.15);
 const WORLD_WIDTH = 51000;
 const WORLD_HEIGHT = 1080 + VERTICAL_OFFSET;
 
-const layers = {
-  BACKGROUND: 1000,
-  FLOOR: 1010,
-  PLATFORMS: 1020,
-  ENTITIES: 1030,
-  BUBBLES: 1040,
-  PLAYER: 1050,
-  QUEST: 1060,
-  CONTROLS: 1070,
-};
+const DEPTH_BACKGROUND = 100;
+const DEPTH_FLOOR = 110;
+const DEPTH_PLATFORMS = 120;
+const DEPTH_ENTITIES = 130;
+const DEPTH_BUBBLES = 140;
+const DEPTH_PLAYER = 150;
+const DEPTH_QUEST = 160;
+const DEPTH_CONTROLS = 170;
 
 const DIALOG_ZOOM_AMOUNT = 0.3;
 const DIALOG_ZOOM_DURATION = 500;
@@ -34,6 +32,16 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   create() {
+    this.mainCamera = this.cameras.main;
+    this.uiCamera = this.cameras.add(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight,
+      false,
+      "ui"
+    );
+
     this.isLandscape = false;
     this.isMobile = false;
     this.shouldResizeStaticObjects = true;
@@ -45,7 +53,7 @@ export default class LevelScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.physics.world.setBoundsCollision(true, true, false, true);
-    this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+    this.mainCamera.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
     this.bgm = this.sound.add("bgm");
     this.bgm.play(null, { loop: true });
@@ -59,6 +67,13 @@ export default class LevelScene extends Phaser.Scene {
     this.createPlayer();
     this.createEntities();
     this.createControls();
+
+    this.bubblesLayer = this.add.layer();
+
+    this.quest = this.add
+      .sprite(0, 0, "quest")
+      .setOrigin(0.5, 1)
+      .setVisible(false);
 
     this.pointerDebugText = this.add
       .rexBBCodeText({
@@ -115,19 +130,34 @@ export default class LevelScene extends Phaser.Scene {
       .setDepth(9999)
       .setScrollFactor(0, 0);
 
-    this.floor.children.iterate((entry) => {
-      this.children.bringToTop(entry);
-    });
-    Object.values(this.entities).forEach((entry) => {
-      this.children.bringToTop(entry);
-    });
-    this.children.bringToTop(this.player);
-    this.children.bringToTop(this.quest);
+    this.bg.layer.setDepth(DEPTH_BACKGROUND);
+    this.floorLayer.setDepth(DEPTH_FLOOR);
+    this.platformsLayer.setDepth(DEPTH_PLATFORMS);
+    this.entitiesLayer.setDepth(DEPTH_ENTITIES);
+    this.bubblesLayer.setDepth(DEPTH_BUBBLES);
+    this.player.setDepth(DEPTH_PLAYER);
+    this.quest.setDepth(DEPTH_QUEST);
+    this.controls.layer.setDepth(DEPTH_CONTROLS);
 
-    this.physics.add.collider(this.player, this.platforms);
-    this.physics.add.collider(this.player, this.floor);
+    this.mainCamera.ignore([this.controls.layer]);
+    this.uiCamera.ignore([
+      this.bg.layer,
+      this.floorLayer,
+      this.platformsLayer,
+      this.entitiesLayer,
+      this.bubblesLayer,
+      this.player,
+      this.quest,
+      this.pointerDebugText,
+      this.pointerDebugX,
+      this.pointerDebugY,
+      this.correctAnswersText,
+    ]);
 
-    this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
+    this.physics.add.collider(this.player, this.platformsGroup);
+    this.physics.add.collider(this.player, this.floorGroup);
+
+    this.mainCamera.startFollow(this.player, true, 0.08, 0.08);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -173,7 +203,7 @@ export default class LevelScene extends Phaser.Scene {
     this.safeAreaLeft = 0;
     this.safeAreaRight = 0;
 
-    this.cameras.main.setBackgroundColor("#c5c5c5");
+    this.mainCamera.setBackgroundColor("#c5c5c5");
 
     console.log("listen to resize");
     this.events.on("resize", () => {
@@ -202,15 +232,15 @@ export default class LevelScene extends Phaser.Scene {
           entity.dialogueState?.shown);
       let offsetY = 0;
       if (this.isMobile && !hasActiveBubbles) {
-        offsetY = Math.round(this.cameras.main.worldView.height * -0.2);
+        offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
       } else if (!this.isMobile && !hasActiveBubbles) {
-        offsetY = Math.round(this.cameras.main.worldView.height * -0.2);
+        offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
       }
       console.log("nearbyEntityName", this.nearbyEntityName);
       console.log("hasActiveBubbles", hasActiveBubbles);
-      if (this.cameras.main.followOffset.y !== offsetY) {
+      if (this.mainCamera.followOffset.y !== offsetY) {
         console.log("setFollowOffset", offsetY);
-        this.cameras.main.setFollowOffset(0, offsetY);
+        this.mainCamera.setFollowOffset(0, offsetY);
       }
     });
   }
@@ -220,7 +250,7 @@ export default class LevelScene extends Phaser.Scene {
     this.isLandscape = window.innerWidth > window.innerHeight;
     this.isMobile = this.isLandscape && window.innerWidth <= 1024;
 
-    this.cameras.main.zoom = this.getFullZoom();
+    this.mainCamera.zoom = this.getFullZoom();
 
     this.updateCameraFollowOffset();
 
@@ -297,11 +327,6 @@ export default class LevelScene extends Phaser.Scene {
 
     player.play("still");
 
-    this.quest = this.add
-      .sprite(0, 0, "quest")
-      .setOrigin(0.5, 1)
-      .setVisible(false);
-
     this.player = player;
   }
 
@@ -309,9 +334,11 @@ export default class LevelScene extends Phaser.Scene {
    * @returns {Phaser.Physics.Arcade.StaticGroup}
    */
   createFloor() {
-    const floor = this.physics.add.staticGroup();
-    this.createLargePlatform(floor, 0, 930, 423);
-    this.floor = floor;
+    const layer = this.add.layer();
+    const group = this.physics.add.staticGroup();
+    this.floorLayer = layer;
+    this.floorGroup = group;
+    this.createLargePlatform(layer, group, 0, 930, 423);
   }
 
   createBackground() {
@@ -367,89 +394,127 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlatforms() {
-    const platforms = this.physics.add.staticGroup();
+    const layer = this.add.layer();
+    const group = this.physics.add.staticGroup();
+    this.platformsLayer = layer;
+    this.platformsGroup = group;
     this.createLargePlatform(
-      platforms,
+      layer,
+      group,
       310,
       190,
       1
     ); /** Место для самолюбования */
 
-    this.createLargePlatform(platforms, 1140, 400, 3); /** Бабули */
+    this.createLargePlatform(layer, group, 1140, 400, 3); /** Бабули */
 
-    this.createLargePlatform(platforms, 3050, 300, 1); /** Свинка */
-    this.createLargePlatform(platforms, 5060, 200, 1); /** Тетрис */
+    this.createLargePlatform(layer, group, 3050, 300, 1); /** Свинка */
+    this.createLargePlatform(layer, group, 5060, 200, 1); /** Тетрис */
 
-    this.createLargePlatform(platforms, 5800, 400, 2); /** Касперский */
-    this.createLargePlatform(platforms, 6600, 600, 1); /** Около Рифа */
+    this.createLargePlatform(layer, group, 5800, 400, 2); /** Касперский */
+    this.createLargePlatform(layer, group, 6600, 600, 1); /** Около Рифа */
 
-    this.createLargePlatform(platforms, 7400, 350, 1); /** Мейл.ру */
+    this.createLargePlatform(layer, group, 7400, 350, 1); /** Мейл.ру */
 
-    this.createLargePlatform(platforms, 8700, 250, 1); /** Телевизор */
-    this.createLargePlatform(platforms, 9500, 450, 1); /** Интернет Эксплорер */
-    this.createLargePlatform(platforms, 10250, 250, 1); /** Живой журнал */
-    this.createLargePlatform(platforms, 10900, 510, 1); /** Ру центр */
-    this.createLargePlatform(platforms, 11600, 650, 1); /** Яндекс */
-    this.createLargePlatform(platforms, 13300, 650, 1); /** Кинопоиск */
-    this.createLargePlatform(platforms, 12170, 350, 1); /** Википедиа */
-    this.createLargePlatform(platforms, 12850, 350, 1); /** Мамба */
-    this.createLargePlatform(platforms, 14600, 650, 1); /** Лепрозорий */
-    this.createLargePlatform(platforms, 16400, 500, 4); /** Хабр */
-    this.createLargePlatform(platforms, 18200, 440, 1); /** Одноклассники */
-    this.createLargePlatform(platforms, 18900, 290, 1); /** Тэглайн */
-    this.createLargePlatform(platforms, 19600, 480, 1); /** На пенёк сел */
-    this.createLargePlatform(platforms, 20600, 400, 2); /** Упячка */
-    this.createLargePlatform(platforms, 21500, 300, 2);
-    this.createLargePlatform(platforms, 22400, 500, 2); /** Путин краб */
-    this.createLargePlatform(platforms, 23300, 340, 2); /** Госуслуги */
-    this.createLargePlatform(platforms, 24400, 340, 2); /** Трольфейс */
-    this.createLargePlatform(platforms, 25250, 480, 1);
-    this.createLargePlatform(platforms, 26300, 500, 1); /** Точка рф */
-    this.createLargePlatform(platforms, 29100, 520, 1);
-    this.createLargePlatform(platforms, 29770, 700, 3); /** Тян РНК */
-    this.createLargePlatform(platforms, 29700, 250, 1); /** Лиса */
-    this.createLargePlatform(platforms, 31680, 350, 1); /** Медуза */
-    this.createLargePlatform(platforms, 32400, 630, 1); /** Золотой сайт */
-    this.createLargePlatform(platforms, 32900, 340, 1);
-    this.createLargePlatform(platforms, 33600, 340, 1); /** Алиса */
-    this.createLargePlatform(platforms, 34300, 180, 1); /** Иностранный агент */
-    this.createLargePlatform(platforms, 34300, 640, 1);
-    this.createLargePlatform(platforms, 34900, 450, 5); /** Удалёнщик */
-    this.createLargePlatform(platforms, 38060, 332, 1);
-    this.createLargePlatform(platforms, 38750, 520, 2); /** Малыш йода */
-    this.createLargePlatform(platforms, 44550, 480, 4); /** Иронов */
-    this.createLargePlatform(platforms, 46550, 500, 3); /** Электронное голосование */
-    this.createLargePlatform(platforms, 47480, 700, 2); /** Банк беспокоит> */
-
-    this.platforms = platforms;
+    this.createLargePlatform(layer, group, 8700, 250, 1); /** Телевизор */
+    this.createLargePlatform(
+      layer,
+      group,
+      9500,
+      450,
+      1
+    ); /** Интернет Эксплорер */
+    this.createLargePlatform(layer, group, 10250, 250, 1); /** Живой журнал */
+    this.createLargePlatform(layer, group, 10900, 510, 1); /** Ру центр */
+    this.createLargePlatform(layer, group, 11600, 650, 1); /** Яндекс */
+    this.createLargePlatform(layer, group, 13300, 650, 1); /** Кинопоиск */
+    this.createLargePlatform(layer, group, 12170, 350, 1); /** Википедиа */
+    this.createLargePlatform(layer, group, 12850, 350, 1); /** Мамба */
+    this.createLargePlatform(layer, group, 14600, 650, 1); /** Лепрозорий */
+    this.createLargePlatform(layer, group, 16400, 500, 4); /** Хабр */
+    this.createLargePlatform(layer, group, 18200, 440, 1); /** Одноклассники */
+    this.createLargePlatform(layer, group, 18900, 290, 1); /** Тэглайн */
+    this.createLargePlatform(layer, group, 19600, 480, 1); /** На пенёк сел */
+    this.createLargePlatform(layer, group, 20600, 400, 2); /** Упячка */
+    this.createLargePlatform(layer, group, 21500, 300, 2);
+    this.createLargePlatform(layer, group, 22400, 500, 2); /** Путин краб */
+    this.createLargePlatform(layer, group, 23300, 340, 2); /** Госуслуги */
+    this.createLargePlatform(layer, group, 24400, 340, 2); /** Трольфейс */
+    this.createLargePlatform(layer, group, 25250, 480, 1);
+    this.createLargePlatform(layer, group, 26300, 500, 1); /** Точка рф */
+    this.createLargePlatform(layer, group, 29100, 520, 1);
+    this.createLargePlatform(layer, group, 29770, 700, 3); /** Тян РНК */
+    this.createLargePlatform(layer, group, 29700, 250, 1); /** Лиса */
+    this.createLargePlatform(layer, group, 31680, 350, 1); /** Медуза */
+    this.createLargePlatform(layer, group, 32400, 630, 1); /** Золотой сайт */
+    this.createLargePlatform(layer, group, 32900, 340, 1);
+    this.createLargePlatform(layer, group, 33600, 340, 1); /** Алиса */
+    this.createLargePlatform(
+      layer,
+      group,
+      34300,
+      180,
+      1
+    ); /** Иностранный агент */
+    this.createLargePlatform(layer, group, 34300, 640, 1);
+    this.createLargePlatform(layer, group, 34900, 450, 5); /** Удалёнщик */
+    this.createLargePlatform(layer, group, 38060, 332, 1);
+    this.createLargePlatform(layer, group, 38750, 520, 2); /** Малыш йода */
+    this.createLargePlatform(layer, group, 44550, 480, 4); /** Иронов */
+    this.createLargePlatform(
+      layer,
+      group,
+      46550,
+      500,
+      3
+    ); /** Электронное голосование */
+    this.createLargePlatform(
+      layer,
+      group,
+      47480,
+      700,
+      2
+    ); /** Банк беспокоит> */
   }
 
-  createLargePlatform(group, x, y, width = 0, height = 0) {
+  createLargePlatform(layer, group, x, y, width = 0, height = 0) {
     let offsetX = 0;
     let offsetY = 0;
-    this.createPlatform(group, x + offsetX, y + offsetY, "floor-left");
+    this.createPlatform(layer, group, x + offsetX, y + offsetY, "floor-left");
     offsetX += 115;
     for (let i = 0; i < width; i++) {
-      this.createPlatform(group, x + offsetX, y + offsetY, "floor");
+      this.createPlatform(layer, group, x + offsetX, y + offsetY, "floor");
       offsetX += 120;
     }
-    this.createPlatform(group, x + offsetX, y + offsetY, "floor-right");
+    this.createPlatform(layer, group, x + offsetX, y + offsetY, "floor-right");
     offsetY += 66;
 
     for (let i = 0; i < height; i++) {
       let wallOffsetX = 0;
-      this.createPlatform(group, x + wallOffsetX, y + offsetY, "wall-left");
+      this.createPlatform(
+        layer,
+        group,
+        x + wallOffsetX,
+        y + offsetY,
+        "wall-left"
+      );
       wallOffsetX += 115;
       for (let i = 0; i < width; i++) {
-        this.createPlatform(group, x + wallOffsetX, y + offsetY, "wall");
+        this.createPlatform(layer, group, x + wallOffsetX, y + offsetY, "wall");
         wallOffsetX += 120;
       }
-      this.createPlatform(group, x + wallOffsetX, y + offsetY, "wall-right");
+      this.createPlatform(
+        layer,
+        group,
+        x + wallOffsetX,
+        y + offsetY,
+        "wall-right"
+      );
       offsetY += 60;
     }
   }
 
-  createPlatform(group, x, y, key) {
+  createPlatform(layer, group, x, y, key) {
     /** @type {Phaser.Physics.Arcade.Sprite} */
     const platform = group.create(x, y + VERTICAL_OFFSET, key);
     platform.setOrigin(0, 0);
@@ -473,10 +538,12 @@ export default class LevelScene extends Phaser.Scene {
       platform.body.setSize(120, 60);
       platform.body.setOffset(0, 0);
     }
+    layer.add(platform);
     return platform;
   }
 
   createEntities() {
+    const entitiesLayer = this.add.layer();
     const entities = {};
     Object.entries(Entities).forEach(([entityName, entityData]) => {
       const entity = this.physics.add
@@ -589,8 +656,10 @@ export default class LevelScene extends Phaser.Scene {
       }
 
       entities[entityName] = entity;
+      entitiesLayer.add(entity);
     });
     this.entities = entities;
+    this.entitiesLayer = entitiesLayer;
   }
 
   /**
@@ -672,11 +741,13 @@ export default class LevelScene extends Phaser.Scene {
         VERTICAL_OFFSET -
         container.getBounds().height * entity.quizData.origin?.y ?? 0
     );
+    this.bubblesLayer.add(container);
     entity.quizState.gameObjects = {
       container: container,
       questionText: questionText,
       answers: answers,
     };
+
     entity.quizState.started = true;
     entity.quizState.shown = true;
     this.updateCameraFollowOffset();
@@ -689,6 +760,7 @@ export default class LevelScene extends Phaser.Scene {
     console.log("hideQuiz");
     if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
+      this.bubblesLayer.remove(entity.quizState.gameObjects.container);
       entity.quizState.gameObjects.container.destroy();
       entity.quizState.gameObjects = null;
       this.applyDialogZoom(0);
@@ -714,17 +786,15 @@ export default class LevelScene extends Phaser.Scene {
 
   applyCameraZoom(duration, easing) {
     const zoom = this.getFullZoom();
-    this.cameras.main.zoomEffect.reset();
-    this.cameras.main.zoomTo(
+    this.mainCamera.zoomEffect.reset();
+    this.mainCamera.zoomTo(
       zoom,
       duration,
       easing,
       false,
-      (camera, progress, camX, camY) => {
+      (camera, progress) => {
         this.resizeStaticObjects();
-        // if (progress === 1) {
         this.updateCameraFollowOffset();
-        // }
       }
     );
   }
@@ -768,6 +838,7 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
       // cleanup previous text bubbles
+      this.bubblesLayer.remove(entity.quizState.gameObjects.container);
       entity.quizState.gameObjects.container.destroy();
       entity.quizState.gameObjects = null;
     }
@@ -799,6 +870,7 @@ export default class LevelScene extends Phaser.Scene {
     console.log("hideQuizDialogue");
     if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
+      this.bubblesLayer.remove(entity.quizState.gameObjects.container);
       entity.quizState.gameObjects.container.destroy();
       entity.quizState.gameObjects = null;
       this.applyDialogZoom(0);
@@ -844,6 +916,7 @@ export default class LevelScene extends Phaser.Scene {
         VERTICAL_OFFSET -
         container.getBounds().height * entity.quizData.origin?.y ?? 0
     );
+    this.bubblesLayer.add(container);
     entity.quizState.gameObjects = {
       container: container,
       lineBubble: lineBubble,
@@ -891,6 +964,7 @@ export default class LevelScene extends Phaser.Scene {
         VERTICAL_OFFSET -
         container.getBounds().height * popupData.origin?.y ?? 0
     );
+    this.bubblesLayer.add(container);
     entity.popupState.gameObjects = {
       container: container,
       lineBubble: lineBubble,
@@ -901,6 +975,7 @@ export default class LevelScene extends Phaser.Scene {
 
   hidePopup(entity) {
     if (entity.popupState.gameObjects) {
+      this.bubblesLayer.remove(entity.popupState.gameObjects.container);
       entity.popupState.gameObjects.container.destroy();
       entity.popupState.gameObjects = null;
     }
@@ -913,6 +988,7 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.dialogueState.gameObjects) {
       console.log("cleanup gameObjects");
       // cleanup previous text bubbles
+      this.bubblesLayer.remove(entity.dialogueState.gameObjects.container);
       entity.dialogueState.gameObjects.container.destroy();
       entity.dialogueState.gameObjects = null;
     }
@@ -948,6 +1024,7 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.dialogueState.gameObjects) {
       console.log("cleanup gameObjects");
       // cleanup previous text bubbles
+      this.bubblesLayer.remove(entity.dialogueState.gameObjects.container);
       entity.dialogueState.gameObjects.container.destroy();
       entity.dialogueState.gameObjects = null;
       this.applyDialogZoom(0);
@@ -994,6 +1071,7 @@ export default class LevelScene extends Phaser.Scene {
           container.getBounds().height * entity.dialogueData.origin?.y ?? 0
       );
     }
+    this.bubblesLayer.add(container);
     entity.dialogueState.gameObjects = {
       container: container,
       lineBubble: lineBubble,
@@ -1087,14 +1165,14 @@ export default class LevelScene extends Phaser.Scene {
       (this.keyPlus.isDown &&
         !Phaser.Input.Keyboard.DownDuration(this.keyPlus, 500))
     ) {
-      this.cameras.main.zoom += 0.1;
+      this.mainCamera.zoom += 0.1;
       this.shouldResizeStaticObjects = true;
     } else if (
       Phaser.Input.Keyboard.JustDown(this.keyMinus) ||
       (this.keyMinus.isDown &&
         !Phaser.Input.Keyboard.DownDuration(this.keyMinus, 500))
     ) {
-      this.cameras.main.zoom -= 0.1;
+      this.mainCamera.zoom -= 0.1;
       this.shouldResizeStaticObjects = true;
     }
 
@@ -1259,39 +1337,36 @@ export default class LevelScene extends Phaser.Scene {
     }
 
     this.bg.clouds.setTilePosition(
-      this.cameras.main.scrollX * 0.6 -
-        500 / this.cameras.main.zoom -
+      this.mainCamera.scrollX * 0.6 -
+        500 / this.mainCamera.zoom -
         this.cloudsPosition,
       0
     );
     this.bg.bg1.setTilePosition(
-      this.cameras.main.scrollX * 0.5 - 500 / this.cameras.main.zoom,
+      this.mainCamera.scrollX * 0.5 - 500 / this.mainCamera.zoom,
       0
     );
     this.bg.bg2.setTilePosition(
-      this.cameras.main.scrollX * 0.25 - 500 / this.cameras.main.zoom,
+      this.mainCamera.scrollX * 0.25 - 500 / this.mainCamera.zoom,
       0
     );
     this.bg.bg3.setTilePosition(
-      this.cameras.main.scrollX * 0.125 - 500 / this.cameras.main.zoom,
+      this.mainCamera.scrollX * 0.125 - 500 / this.mainCamera.zoom,
       0
     );
 
     this.cloudsPosition -= 0.5;
 
-    if (
-      this.cameras.main.worldView.width > 0 &&
-      this.shouldResizeStaticObjects
-    ) {
+    if (this.mainCamera.worldView.width > 0 && this.shouldResizeStaticObjects) {
       this.resizeStaticObjects();
       this.shouldResizeStaticObjects = false;
     }
 
     const pointerX = this.input.mousePointer.positionToCamera(
-      this.cameras.main
+      this.mainCamera
     ).x;
     const pointerY = this.input.mousePointer.positionToCamera(
-      this.cameras.main
+      this.mainCamera
     ).y;
     this.pointerDebugText.setText([
       `X: ${pointerX.toFixed(2)}`,
@@ -1312,13 +1387,13 @@ export default class LevelScene extends Phaser.Scene {
 
   resizeStaticObjects() {
     // console.log("resizeStaticObjects");
-    const camZoom = this.cameras.main.zoom;
-    const camWidth = Math.ceil(this.cameras.main.worldView.width);
-    const camHeight = Math.ceil(this.cameras.main.worldView.height);
-    const unscaledWidth = Math.ceil(camWidth * camZoom);
-    const unscaledHeight = Math.ceil(camHeight * camZoom);
-    const topX = Math.round((unscaledWidth - camWidth) / 2);
-    const topY = Math.round((unscaledHeight - camHeight) / 2);
+    const camZoom = this.mainCamera.zoom;
+    const camWidth = this.mainCamera.worldView.width;
+    const camHeight = this.mainCamera.worldView.height;
+    const unscaledWidth = camWidth * camZoom;
+    const unscaledHeight = camHeight * camZoom;
+    const topX = (unscaledWidth - camWidth) / 2;
+    const topY = (unscaledHeight - camHeight) / 2;
 
     // console.log("camZoom:", camZoom);
     // console.log("camWidth:", camWidth);
@@ -1328,39 +1403,35 @@ export default class LevelScene extends Phaser.Scene {
     // console.log("topX:", topX);
     // console.log("topY:", topY);
 
-    this.bg.clouds.width = camWidth;
-    this.bg.clouds.x = topX;
-    this.bg.bg1.width = camWidth;
-    this.bg.bg1.x = topX;
-    this.bg.bg2.width = camWidth;
-    this.bg.bg2.x = topX;
-    this.bg.bg3.width = camWidth;
-    this.bg.bg3.x = topX;
+    this.bg.clouds.width = Math.ceil(camWidth);
+    this.bg.clouds.x = Math.round(topX);
+    this.bg.bg1.width = Math.ceil(camWidth);
+    this.bg.bg1.x = Math.round(topX);
+    this.bg.bg2.width = Math.ceil(camWidth);
+    this.bg.bg2.x = Math.round(topX);
+    this.bg.bg3.width = Math.ceil(camWidth);
+    this.bg.bg3.x = Math.round(topX);
 
     this.correctAnswersText.setPosition(topX + 15, topY + 15);
 
+    const uiCamWidth = this.uiCamera.worldView.width;
+    const uiCamHeight = this.uiCamera.worldView.height;
+
     this.controls.layer.each((item) => {
-      item.setScale(0.5 / camZoom);
+      item.setScale(0.5);
     });
-    this.controls.left.setPosition(
-      topX + this.safeAreaLeft * camZoom + 32,
-      topY + camHeight - 32
-    );
+    this.controls.left.setPosition(this.safeAreaLeft + 32, uiCamHeight - 32);
     this.controls.right.setPosition(
-      topX +
-        this.safeAreaLeft * camZoom +
-        32 +
-        this.controls.left.displayWidth +
-        32,
-      topY + camHeight - 32
+      this.safeAreaLeft + 32 + this.controls.left.displayWidth + 32,
+      uiCamHeight - 32
     );
     this.controls.jump.setPosition(
-      topX + camWidth - this.safeAreaRight * camZoom - 32,
-      topY + camHeight - 32
+      uiCamWidth - this.safeAreaRight - 32,
+      uiCamHeight - 32
     );
     this.controls.speak.setPosition(
-      topX + camWidth - this.safeAreaRight * camZoom - 32,
-      topY + camHeight - 32 - this.controls.jump.displayHeight - 32
+      uiCamWidth - this.safeAreaRight - 32,
+      uiCamHeight - 32 - this.controls.jump.displayHeight - 32
     );
   }
 
@@ -1383,7 +1454,6 @@ export default class LevelScene extends Phaser.Scene {
       item.setScrollFactor(0, 0);
       item.setInteractive();
     });
-    controlsLayer.setDepth(layers.CONTROLS);
     const buttons = { left, right, jump, speak };
     const pointers = {};
     Object.entries(buttons).forEach(([keyName, key]) => {
