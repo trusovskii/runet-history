@@ -253,7 +253,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("ironov_2020", `assets/sprites/ironov_2020.png?cb=${cb}`);
     this.load.image("holiday_2020", `assets/sprites/holiday_2020.png?cb=${cb}`);
     this.load.image("vse_yronili_2020", `assets/sprites/vse_yronili_2020.png?cb=${cb}`);
-    this.load.image("e-voting_2021", `assets/sprites/e-voting_2021.png?cb=${cb}`);
+    this.load.image("e-voting_2021", `assets/sprites/e_voting_2021.png?cb=${cb}`);
     this.load.image("doctor_2020", `assets/sprites/doctor_2020.png?cb=${cb}`);
     this.load.image("zk_2021", `assets/sprites/zk_2021.png?cb=${cb}`);
     this.load.image("sell_fishes_2021", `assets/sprites/sell_fishes_2021.png?cb=${cb}`);
