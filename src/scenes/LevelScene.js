@@ -282,7 +282,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(50000, 730 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(13500, 730 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -412,10 +412,10 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(layer, group, 5060, 200, 1); /** Тетрис */
 
     this.createLargePlatform(layer, group, 5800, 400, 2); /** Касперский */
-    this.createLargePlatform(layer, group, 6600, 600, 1); /** Около Рифа */
+    this.createLargePlatform(layer, group, 6600, 600, 2); /** Около Рифа */
 
     this.createLargePlatform(layer, group, 7400, 350, 1); /** Мейл.ру */
-
+    this.createLargePlatform(layer, group, 8050, 190, 1); /** Гопники */
     this.createLargePlatform(layer, group, 8700, 250, 1); /** Телевизор */
     this.createLargePlatform(
       layer,
@@ -431,7 +431,7 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(layer, group, 12170, 350, 1); /** Википедиа */
     this.createLargePlatform(layer, group, 12850, 350, 1); /** Мамба */
     this.createLargePlatform(layer, group, 14600, 650, 1); /** Лепрозорий */
-    this.createLargePlatform(layer, group, 16400, 500, 4); /** Хабр */
+    this.createLargePlatform(layer, group, 16480, 500, 4); /** Хабр */
     this.createLargePlatform(layer, group, 18200, 440, 1); /** Одноклассники */
     this.createLargePlatform(layer, group, 18900, 290, 1); /** Тэглайн */
     this.createLargePlatform(layer, group, 19600, 480, 1); /** На пенёк сел */

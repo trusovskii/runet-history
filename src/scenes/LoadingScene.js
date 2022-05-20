@@ -98,7 +98,6 @@ export default class LoadingScene extends Phaser.Scene {
       "opera.com_1996",
       `assets/sprites/opera.com_1996.png?cb=${cb}`
     );
-    this.load.image("year_1996", `assets/sprites/year_1996.png?cb=${cb}`);
     this.load.image(
       "yabloko_ru_1996",
       `assets/sprites/yabloko_ru_1996.png?cb=${cb}`
@@ -119,10 +118,11 @@ export default class LoadingScene extends Phaser.Scene {
       "Kaspersky_ru_1997",
       `assets/sprites/Kaspersky_ru_1997.png?cb=${cb}`
     );
-    this.load.image("year_1997", `assets/sprites/year_1997.png?cb=${cb}`);
-
+    this.load.image(
+      "gopstop_1998",
+      `assets/sprites/gopstop_1998.png?cb=${cb}`
+    );
     this.load.image("mail_ru_1998", `assets/sprites/mail_ru_1998.png?cb=${cb}`);
-    this.load.image("year_1998", `assets/sprites/year_1998.png?cb=${cb}`);
     this.load.image("pepsi_1998", `assets/sprites/pepsi_1998.png?cb=${cb}`);
     this.load.image(
       "Webmoney_1998",
@@ -130,26 +130,25 @@ export default class LoadingScene extends Phaser.Scene {
     );
     this.load.image("fuck_ru_1998", `assets/sprites/fuck_ru_1998.png?cb=${cb}`);
     this.load.image("TV_1999", `assets/sprites/TV_1999.png?cb=${cb}`);
-
-    /** this.load.image("bazar_1997", `assets/sprites/bazar_1997.png?cb=${cb}`); */
-
     this.load.image("router_1996", `assets/sprites/router_1996.png?cb=${cb}`);
     this.load.image(
       "explorer_1999",
       `assets/sprites/explorer_1999.png?cb=${cb}`
     );
-    this.load.image("year_1999", `assets/sprites/year_1999.png?cb=${cb}`);
     this.load.image(
       "live-journal-1999",
       `assets/sprites/live-journal-1999.png?cb=${cb}`
     );
     this.load.image("nosik_1999", `assets/sprites/nosik_1999.png?cb=${cb}`);
     this.load.image("hh_2000", `assets/sprites/hh_2000.png?cb=${cb}`);
+    this.load.image("year_2000", `assets/sprites/year_2000.png?cb=${cb}`);
     this.load.image(
       "ru_center_2000",
       `assets/sprites/ru_center_2000.png?cb=${cb}`
     );
     this.load.image("yandex_2000", `assets/sprites/yandex_2000.png?cb=${cb}`);
+    this.load.image("tsy_thsy", `assets/sprites/tsy_thsy.png?cb=${cb}`);
+    this.load.image("witness_2006", `assets/sprites/witness_2006.png?cb=${cb}`);
     this.load.image("wiki_2001", `assets/sprites/wiki_2001.png?cb=${cb}`);
     this.load.image("mas_2001", `assets/sprites/mas_2001.png?cb=${cb}`);
     this.load.image(

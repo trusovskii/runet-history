@@ -216,11 +216,6 @@ export default {
     sprite: "opera.com_1996",
     colliders: [{ x: 4210, y: 720, width: 70, height: 100 }],
   },
-  year_1996: {
-    x: 4220,
-    y: 1060,
-    sprite: "year_1996",
-  },
   yabloko_ru_1996: {
     x: 3700,
     y: 965,
@@ -267,19 +262,11 @@ export default {
     y: 425,
     sprite: "Kaspersky_ru_1997",
   },
-  year_1997: {
-    x: 6100,
-    y: 1060,
-    sprite: "year_1997",
+  gopstop_1998: {
+    x: 8110,
+    y: 250,
+    sprite: "gopstop_1998",
   },
-
-  /* 
-  bazar_1997: {
-    x: 5100,
-    y: 970,
-    sprite: "bazar_1997",
-  },
-  */
   router_1996: {
     x: 5200,
     y: 970,
@@ -299,11 +286,6 @@ export default {
     x: 7885,
     y: 960,
     sprite: "mail_ru_1998",
-  },
-  year_1998: {
-    x: 7700,
-    y: 1060,
-    sprite: "year_1998",
   },
   Webmoney_1998: {
     x: 7550,
@@ -338,11 +320,6 @@ export default {
     y: 470,
     sprite: "explorer_1999",
   },
-  year_1999: {
-    x: 9700,
-    y: 1060,
-    sprite: "year_1999",
-  },
   live_journal_1999: {
     x: 10450,
     y: 270,
@@ -368,22 +345,37 @@ export default {
     y: 670,
     sprite: "yandex_2000",
   },
+  year_2000: {
+    x: 10550,
+    y: 1060,
+    sprite: "year_2000",
+  },
+  tsy_thsy: {
+    x: 12270,
+    y: 957,
+    sprite: "tsy_thsy",
+  },
+  witness_2006: {
+    x: 13070,
+    y: 968,
+    sprite: "witness_2006",
+  },
   wiki_2001: {
     x: 12350,
     y: 370,
     sprite: "wiki_2001",
   },
   mas_2001: {
-    x: 12900,
+    x: 14000,
     y: 953,
     sprite: "mas_2001",
     popup: {
-      x: 12780,
+      x: 13900,
       y: 714,
       origin: { x: 0, y: 1 },
       text: "Оттопыриваешься тут? Пойдём-ка, покурим-ка?",
       area: {
-        x: 12830,
+        x: 13920,
         y: 900,
         width: 350,
         height: 100,
@@ -425,7 +417,7 @@ export default {
     colliders: [{ x: 15798, y: 530, width: 200, height: 115 }],
   },
   habr_2006: {
-    x: 16500,
+    x: 16580,
     y: 500,
     sprite: "habr_2006",
   },
