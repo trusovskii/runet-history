@@ -4,7 +4,7 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    const cb = 20; // cache buster
+    const cb = 22; // cache buster
 
     this.cameras.main.setBackgroundColor("#000000");
     this.progressBar = this.add
