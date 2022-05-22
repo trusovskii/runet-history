@@ -13,7 +13,7 @@ const DEPTH_PLAYER = 150;
 const DEPTH_QUEST = 160;
 const DEPTH_CONTROLS = 170;
 
-const DIALOG_ZOOM_AMOUNT = 0.3;
+const DIALOG_ZOOM_AMOUNT = 0;
 const DIALOG_ZOOM_DURATION = 500;
 const DIALOG_ZOOM_EASING = "Cubic";
 
@@ -282,7 +282,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(13500, 730 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(6200, 730 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -456,7 +456,6 @@ export default class LevelScene extends Phaser.Scene {
       180,
       1
     ); /** Иностранный агент */
-    this.createLargePlatform(layer, group, 34300, 640, 1);
     this.createLargePlatform(layer, group, 34900, 450, 5); /** Удалёнщик */
     this.createLargePlatform(layer, group, 38060, 332, 1);
     this.createLargePlatform(layer, group, 38750, 520, 2); /** Малыш йода */
