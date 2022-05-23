@@ -198,7 +198,6 @@ export default class LoadingScene extends Phaser.Scene {
       `assets/sprites/demotivator_2008.png?cb=${cb}`
     );
     this.load.image("gos_2009", `assets/sprites/gos_2009.png?cb=${cb}`);
-    this.load.image("year_2009", `assets/sprites/year_2009.png?cb=${cb}`);
     this.load.image("medved", `assets/sprites/medved.png?cb=${cb}`);
     this.load.image("ch_2", `assets/sprites/ch_2.png?cb=${cb}`);
     this.load.image("meme_face", `assets/sprites/meme_face.png?cb=${cb}`);

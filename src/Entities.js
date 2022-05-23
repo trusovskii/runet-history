@@ -906,7 +906,7 @@ export default {
       x: 24500,
       y: 970,
       width: 320,
-      height: 500,
+      height: 550,
       origin: { x: 0, y: 1 },
     },
     lines: [
@@ -1095,7 +1095,7 @@ export default {
     sprite: "dud_2017",
     popup: {
       x: 35700,
-      y: 655,
+      y: 635,
       origin: { x: 0, y: 1 },
       text: "Сколько ты зарабатываешь?",
       area: {
@@ -1141,14 +1141,6 @@ export default {
     x: 36950,
     y: 963,
     sprite: "tiktok_2019",
-    colliders: [
-      { x: 36980, y: 950, width: 215, height: 290 },
-    ],
-  },
-  smartphone_2020: {
-    x: 36950,
-    y: 963,
-    sprite: "smartphone_2020",
     colliders: [
       { x: 36980, y: 950, width: 215, height: 290 },
     ],
