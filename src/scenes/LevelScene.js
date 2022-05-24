@@ -1280,18 +1280,24 @@ export default class LevelScene extends Phaser.Scene {
     let nearbyEntityName = null;
     Object.entries(this.entities).forEach(([entityName, entity]) => {
       if (
-        (entity.quizArea && !entity.quizArea.body.touching.none) ||
-        (entity.popupArea && !entity.popupArea.body.touching.none) ||
-        (entity.dialogueArea && !entity.dialogueArea.body.touching.none)
+        (entity.quizArea &&
+          this.physics.world.overlap(this.player, entity.quizArea)) ||
+        (entity.popupArea &&
+          this.physics.world.overlap(this.player, entity.popupArea)) ||
+        (entity.dialogueArea &&
+          this.physics.world.overlap(this.player, entity.dialogueArea))
       ) {
         nearbyEntityName = entityName;
       }
 
       if (entity.popupArea) {
-        if (!entity.popupArea.body.touching.none && !entity.popupState.shown) {
+        if (
+          this.physics.world.overlap(this.player, entity.popupArea) &&
+          !entity.popupState.shown
+        ) {
           this.showPopup(entity);
         } else if (
-          entity.popupArea.body.touching.none &&
+          !this.physics.world.overlap(this.player, entity.popupArea) &&
           entity.popupState.shown
         ) {
           this.hidePopup(entity);
@@ -1299,8 +1305,12 @@ export default class LevelScene extends Phaser.Scene {
       }
 
       if (entity.quizArea && entity.quizState) {
-        if (entity.quizState.shown && entity.quizArea.body.touching.none) {
+        if (
+          entity.quizState.shown &&
+          !this.physics.world.overlap(this.player, entity.quizArea)
+        ) {
           // out of range of active quiz area
+          console.log("out of range of active quiz area");
           if (!entity.quizState.answered) {
             this.hideQuiz(entity);
           } else {
@@ -1310,7 +1320,7 @@ export default class LevelScene extends Phaser.Scene {
           entity.quizState.started &&
           !entity.quizState.finished &&
           !entity.quizState.shown &&
-          !entity.quizArea.body.touching.none
+          this.physics.world.overlap(this.player, entity.quizArea)
         ) {
           // in range if active quiz
           if (!entity.quizState.answered) {
@@ -1327,13 +1337,13 @@ export default class LevelScene extends Phaser.Scene {
       if (entity.dialogueArea && entity.dialogueState) {
         if (
           entity.dialogueState.shown &&
-          entity.dialogueArea.body.touching.none
+          !this.physics.world.overlap(this.player, entity.dialogueArea)
         ) {
           this.hideDialogue(entity);
         } else if (
           entity.dialogueState.started &&
           !entity.dialogueState.shown &&
-          !entity.dialogueArea.body.touching.none
+          this.physics.world.overlap(this.player, entity.dialogueArea)
         ) {
           if (entity.dialogueState.currentLine > 0) {
             entity.dialogueState.currentLine--;
