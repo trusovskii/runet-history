@@ -4,57 +4,84 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    const cb = 23; // cache buster
+    this.cameras.main.setBackgroundColor("#FAFAFA");
 
-    this.cameras.main.setBackgroundColor("#000000");
-    this.progressBar = this.add
-      .rectangle(
-        this.cameras.main.midPoint.x - 200,
-        this.cameras.main.midPoint.y - 25,
-        400,
-        50,
-        0xffffff,
-        1
-      )
-      .setOrigin(0, 0);
-    this.progressBarFill = this.add
-      .rectangle(
-        this.cameras.main.midPoint.x - 200 + 5,
-        this.cameras.main.midPoint.y - 25 + 5,
-        0,
-        40,
-        0x3587e2,
-        1
-      )
-      .setOrigin(0, 0);
-    this.progressFile = this.add
+    const boy = this.add
+      .sprite(this.cameras.main.midPoint.x - 30, this.cameras.main.midPoint.y, "boy")
+      .setOrigin(0.5, 0.5);
+    boy.scale = 0.5;
+    this.anims.create({
+      key: "dance",
+      frames: this.anims.generateFrameNumbers("boy", {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      }),
+      repeat: -1,
+      frameRate: 6,
+    });
+    boy.play("dance");
+
+    const loadingTitle = this.add
       .text(
         this.cameras.main.midPoint.x,
-        this.cameras.main.midPoint.y + 25 + 5,
-        "Loaing",
+        this.cameras.main.midPoint.y + 165,
+        "Игра загружается...",
         {
-          fontSize: 18,
-          color: "#ffffff",
+          fontFamily: "ComicCat",
+          fontSize: 20,
+          color: "#000000",
         }
       )
-      .setOrigin(0.5, 0);
+      .setOrigin(0.5, 0.5);
 
-    const onProgress = (value) => {
-      this.progressBarFill.width = Math.round(390 * value);
-    };
+    // this.progressBar = this.add
+    //   .rectangle(
+    //     this.cameras.main.midPoint.x - 200,
+    //     this.cameras.main.midPoint.y - 25,
+    //     400,
+    //     50,
+    //     0xffffff,
+    //     1
+    //   )
+    //   .setOrigin(0, 0);
+    // this.progressBarFill = this.add
+    //   .rectangle(
+    //     this.cameras.main.midPoint.x - 200 + 5,
+    //     this.cameras.main.midPoint.y - 25 + 5,
+    //     0,
+    //     40,
+    //     0x3587e2,
+    //     1
+    //   )
+    //   .setOrigin(0, 0);
+    // this.progressFile = this.add
+    //   .text(
+    //     this.cameras.main.midPoint.x,
+    //     this.cameras.main.midPoint.y + 25 + 5,
+    //     "Loaing",
+    //     {
+    //       fontSize: 18,
+    //       color: "#ffffff",
+    //     }
+    //   )
+    //   .setOrigin(0.5, 0);
 
-    const onFileprogress = (file) => {
-      this.progressFile.setText(`Loading: ${file.src}`);
-    };
+    // const onProgress = (value) => {
+    //   if (document.fonts.check('bold 16px Roboto'))
+    //   this.progressBarFill.width = Math.round(390 * value);
+    // };
 
-    const onComplete = () => {
-      this.progressBar.destroy();
-      this.progressBarFill.destroy();
-    };
+    // const onFileprogress = (file) => {
+    //   this.progressFile.setText(`Loading: ${file.src}`);
+    // };
 
-    this.load.on("progress", onProgress);
-    this.load.on("fileprogress", onFileprogress);
-    this.load.on("complete", onComplete);
+    // const onComplete = () => {
+    //   this.progressBar.destroy();
+    //   this.progressBarFill.destroy();
+    // };
+
+    // this.load.on("progress", onProgress);
+    // this.load.on("fileprogress", onFileprogress);
+    // this.load.on("complete", onComplete);
 
     this.load.audio("bgm", `assets/audio/bgm.mp3?cb=${cb}`, {
       stream: true,
@@ -118,10 +145,7 @@ export default class LoadingScene extends Phaser.Scene {
       "Kaspersky_ru_1997",
       `assets/sprites/Kaspersky_ru_1997.png?cb=${cb}`
     );
-    this.load.image(
-      "gopstop_1998",
-      `assets/sprites/gopstop_1998.png?cb=${cb}`
-    );
+    this.load.image("gopstop_1998", `assets/sprites/gopstop_1998.png?cb=${cb}`);
     this.load.image("mail_ru_1998", `assets/sprites/mail_ru_1998.png?cb=${cb}`);
     this.load.image("pepsi_1998", `assets/sprites/pepsi_1998.png?cb=${cb}`);
     this.load.image(
@@ -235,7 +259,10 @@ export default class LoadingScene extends Phaser.Scene {
       "paket_yrovoy_2016",
       `assets/sprites/paket_yrovoy_2016.png?cb=${cb}`
     );
-    this.load.image("smartphone_2015", `assets/sprites/smartphone_2015.png?cb=${cb}`);
+    this.load.image(
+      "smartphone_2015",
+      `assets/sprites/smartphone_2015.png?cb=${cb}`
+    );
     this.load.image("alisa_2017", `assets/sprites/alisa_2017.png?cb=${cb}`);
     this.load.image("dud_2017", `assets/sprites/dud_2017.png?cb=${cb}`);
     this.load.image("inagent_2017", `assets/sprites/inagent_2017.png?cb=${cb}`);
@@ -248,23 +275,41 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("bitcoin_2020", `assets/sprites/bitcoin_2020.png?cb=${cb}`);
     this.load.image("cat_uyu_2020", `assets/sprites/cat_uyu_2020.png?cb=${cb}`);
     this.load.image("ioda_2020", `assets/sprites/ioda_2020.png?cb=${cb}`);
-    this.load.image("delivery_2020", `assets/sprites/delivery_2020.png?cb=${cb}`);
+    this.load.image(
+      "delivery_2020",
+      `assets/sprites/delivery_2020.png?cb=${cb}`
+    );
     this.load.image("medal_2020", `assets/sprites/medal_2020.png?cb=${cb}`);
     this.load.image("g5_2020", `assets/sprites/g5_2020.png?cb=${cb}`);
     this.load.image("qr_2020", `assets/sprites/qr_2020.png?cb=${cb}`);
-    this.load.image("delivery2_2020", `assets/sprites/delivery2_2020.png?cb=${cb}`);
+    this.load.image(
+      "delivery2_2020",
+      `assets/sprites/delivery2_2020.png?cb=${cb}`
+    );
     this.load.image("ironov_2020", `assets/sprites/ironov_2020.png?cb=${cb}`);
     this.load.image("holiday_2020", `assets/sprites/holiday_2020.png?cb=${cb}`);
-    this.load.image("vse_yronili_2020", `assets/sprites/vse_yronili_2020.png?cb=${cb}`);
-    this.load.image("e-voting_2021", `assets/sprites/e_voting_2021.png?cb=${cb}`);
+    this.load.image(
+      "vse_yronili_2020",
+      `assets/sprites/vse_yronili_2020.png?cb=${cb}`
+    );
+    this.load.image(
+      "e-voting_2021",
+      `assets/sprites/e_voting_2021.png?cb=${cb}`
+    );
     this.load.image("wb_2020", `assets/sprites/wb_2020.png?cb=${cb}`);
 
     this.load.image("doctor_2020", `assets/sprites/doctor_2020.png?cb=${cb}`);
     this.load.image("zk_2021", `assets/sprites/zk_2021.png?cb=${cb}`);
-    this.load.image("sell_fishes_2021", `assets/sprites/sell_fishes_2021.png?cb=${cb}`);
+    this.load.image(
+      "sell_fishes_2021",
+      `assets/sprites/sell_fishes_2021.png?cb=${cb}`
+    );
     this.load.image("steal_2021", `assets/sprites/steal_2021.png?cb=${cb}`);
     this.load.image("hasbik_2021", `assets/sprites/hasbik_2021.png?cb=${cb}`);
-    this.load.image("ban_social_2022", `assets/sprites/ban_social_2022.png?cb=${cb}`);
+    this.load.image(
+      "ban_social_2022",
+      `assets/sprites/ban_social_2022.png?cb=${cb}`
+    );
     this.load.image("maestro_2022", `assets/sprites/maestro_2022.png?cb=${cb}`);
 
     // #region Background

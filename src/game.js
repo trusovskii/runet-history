@@ -1,5 +1,6 @@
-import LevelScene from "./scenes/LevelScene";
+import BootScene from "./scenes/BootScene";
 import LoadingScene from "./scenes/LoadingScene";
+import LevelScene from "./scenes/LevelScene";
 import BBCodeTextPlugin from "phaser3-rex-plugins/plugins/bbcodetext-plugin.js";
 import ButtonPlugin from "phaser3-rex-plugins/plugins/button-plugin.js";
 
@@ -46,7 +47,7 @@ const gameConfig = {
   audio: {
     disableWebAudio: false,
   },
-  scene: [LoadingScene, LevelScene],
+  scene: [BootScene, LoadingScene, LevelScene],
   input: {
     activePointers: 4,
   },

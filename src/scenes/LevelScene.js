@@ -1548,4 +1548,19 @@ export default class LevelScene extends Phaser.Scene {
     });
     this.controls = { layer: controlsLayer, left, right, jump, speak, enter };
   }
+
+  panToFitBubbles() {
+    const nearbyEntity = this.nearbyEntityName
+      ? this.entities[this.nearbyEntityName]
+      : null;
+
+    if (nearbyEntity) {
+      if (nearbyEntity.quizState.shown) {
+        const bubbleNW = {
+          x: nearbyEntity.quizState.gameObjects.container.getBounds().left,
+          y: nearbyEntity.quizState.gameObjects.container.getBounds().top,
+        }
+      }
+    }
+  }
 }
