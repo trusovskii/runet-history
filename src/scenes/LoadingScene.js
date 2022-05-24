@@ -328,6 +328,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("control-right", `assets/controls/right.png?cb=${cb}`);
     this.load.image("control-jump", `assets/controls/jump.png?cb=${cb}`);
     this.load.image("control-speak", `assets/controls/scream.png?cb=${cb}`);
+    this.load.image("control-enter", `assets/controls/enter.png?cb=${cb}`);
 
     //#endregion Bubbles
   }

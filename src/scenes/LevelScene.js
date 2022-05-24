@@ -1,6 +1,6 @@
 import Entities from "../Entities";
 
-const VERTICAL_OFFSET = Math.ceil(1080 * 0.15);
+const VERTICAL_OFFSET = Math.ceil(1080 * 0.2);
 const WORLD_WIDTH = 51000;
 const WORLD_HEIGHT = 1080 + VERTICAL_OFFSET;
 
@@ -49,6 +49,7 @@ export default class LevelScene extends Phaser.Scene {
     this.dialogZoom = 0;
     this.jumpZoom = 0;
     this.correctAnswers = 0;
+    this.interactedObjects = 0;
     this.cloudsPosition = 0;
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -127,8 +128,28 @@ export default class LevelScene extends Phaser.Scene {
         },
       })
       .setOrigin(0, 0)
-      .setDepth(9999)
-      .setScrollFactor(0, 0);
+      .setDepth(9999);
+    this.interactedObjectsText = this.add
+      .rexBBCodeText({
+        x: 15,
+        y: 40,
+        text: "Interacted objects: 0",
+        style: {
+          fontFamily: "Onest",
+          fontSize: 16,
+          lineSpacing: 8,
+          color: "#404",
+          // wordWrap: { width: 400, useAdvancedWrap: true },
+          wrap: {
+            mode: "word",
+            width: 400,
+          },
+          stroke: "#ffffff",
+          strokeThickness: 4,
+        },
+      })
+      .setOrigin(0, 0)
+      .setDepth(9999);
 
     this.bg.layer.setDepth(DEPTH_BACKGROUND);
     this.floorLayer.setDepth(DEPTH_FLOOR);
@@ -139,7 +160,11 @@ export default class LevelScene extends Phaser.Scene {
     this.quest.setDepth(DEPTH_QUEST);
     this.controls.layer.setDepth(DEPTH_CONTROLS);
 
-    this.mainCamera.ignore([this.controls.layer]);
+    this.mainCamera.ignore([
+      this.controls.layer,
+      this.correctAnswersText,
+      this.interactedObjectsText,
+    ]);
     this.uiCamera.ignore([
       this.bg.layer,
       this.floorLayer,
@@ -151,16 +176,17 @@ export default class LevelScene extends Phaser.Scene {
       this.pointerDebugText,
       this.pointerDebugX,
       this.pointerDebugY,
-      this.correctAnswersText,
     ]);
 
     this.physics.add.collider(this.player, this.platformsGroup);
     this.physics.add.collider(this.player, this.floorGroup);
 
-    this.mainCamera.startFollow(this.player, true, 0.08, 0.08);
+    this.mainCamera.startFollow(this.player, true, 0.08, 1);
 
     this.cursors = this.input.keyboard.createCursorKeys();
-
+    this.keyEnter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER
+    );
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -182,16 +208,7 @@ export default class LevelScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.MINUS
     );
 
-    this.touchState = {
-      left: false,
-      right: false,
-      jump: false,
-      action: false,
-      answer1: false,
-      answer2: false,
-      answer3: false,
-      answer4: false,
-    };
+    this.touchState = {};
 
     this.playerFlags = {
       canMove: true,
@@ -221,34 +238,34 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   updateCameraFollowOffset() {
-    this.events.once("postupdate", () => {
-      const entity = this.nearbyEntityName
-        ? this.entities[this.nearbyEntityName]
-        : null;
-      const hasActiveBubbles =
-        entity &&
-        (entity.quizState?.shown ||
-          entity.popupState?.shown ||
-          entity.dialogueState?.shown);
-      let offsetY = 0;
-      if (this.isMobile && !hasActiveBubbles) {
-        offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
-      } else if (!this.isMobile && !hasActiveBubbles) {
-        offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
-      }
-      console.log("nearbyEntityName", this.nearbyEntityName);
-      console.log("hasActiveBubbles", hasActiveBubbles);
-      if (this.mainCamera.followOffset.y !== offsetY) {
-        console.log("setFollowOffset", offsetY);
-        this.mainCamera.setFollowOffset(0, offsetY);
-      }
-    });
+    // this.events.once("postupdate", () => {
+    //   const entity = this.nearbyEntityName
+    //     ? this.entities[this.nearbyEntityName]
+    //     : null;
+    //   const hasActiveBubbles =
+    //     entity &&
+    //     (entity.quizState?.shown ||
+    //       entity.popupState?.shown ||
+    //       entity.dialogueState?.shown);
+    //   let offsetY = 0;
+    //   if (this.isMobile && !hasActiveBubbles) {
+    //     offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
+    //   } else if (!this.isMobile && !hasActiveBubbles) {
+    //     offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
+    //   }
+    //   console.log("nearbyEntityName", this.nearbyEntityName);
+    //   console.log("hasActiveBubbles", hasActiveBubbles);
+    //   if (this.mainCamera.followOffset.y !== offsetY) {
+    //     console.log("setFollowOffset", offsetY);
+    //     this.mainCamera.setFollowOffset(0, offsetY);
+    //   }
+    // });
   }
 
   onResize() {
     console.log("scene on resize");
     this.isLandscape = window.innerWidth > window.innerHeight;
-    this.isMobile = this.isLandscape && window.innerWidth <= 1024;
+    this.isMobile = this.isLandscape && window.innerWidth <= 896;
 
     this.mainCamera.zoom = this.getFullZoom();
 
@@ -665,6 +682,11 @@ export default class LevelScene extends Phaser.Scene {
    * @param {Phaser.Physics.Arcade.Sprite} entity
    */
   showQuiz(entity) {
+    if (!entity.quizState.interacted) {
+      entity.quizState.interacted = true;
+      this.interactedObjects++;
+      this.interactedObjectsText.text = `Interacted objects: ${this.interactedObjects}`;
+    }
     const container = this.add.container(0, 0);
     const questionText = this.add
       .rexBBCodeText({
@@ -927,6 +949,11 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.popupState.gameObjects) {
       return;
     }
+    if (!entity.popupState.interacted) {
+      entity.popupState.interacted = true;
+      this.interactedObjects++;
+      this.interactedObjectsText.text = `Interacted objects: ${this.interactedObjects}`;
+    }
     const popupData = entity.popupData;
     const container = this.add.container(0, 0);
     const lineText = this.add
@@ -984,6 +1011,11 @@ export default class LevelScene extends Phaser.Scene {
   advanceDialogue(entity) {
     console.log("advanceDialogue start");
     entity.dialogueState.started = true;
+    if (!entity.dialogueState.interacted) {
+      entity.dialogueState.interacted = true;
+      this.interactedObjects++;
+      this.interactedObjectsText.text = `Interacted objects: ${this.interactedObjects}`;
+    }
     if (entity.dialogueState.gameObjects) {
       console.log("cleanup gameObjects");
       // cleanup previous text bubbles
@@ -1102,7 +1134,10 @@ export default class LevelScene extends Phaser.Scene {
         this.player.setVelocityX(0);
       }
       if (
-        (this.cursors.up.isDown || this.keyW.isDown || this.touchState.jump) &&
+        (this.cursors.up.isDown ||
+          this.cursors.space.isDown ||
+          this.keyW.isDown ||
+          this.touchState.jump) &&
         this.player.body.blocked.down
       ) {
         this.player.setVelocityY(-1200);
@@ -1117,10 +1152,12 @@ export default class LevelScene extends Phaser.Scene {
       if (nearbyEntity.quizData) {
         if (!nearbyEntity.quizState.started) {
           if (
-            Phaser.Input.Keyboard.JustDown(this.cursors.space) ||
-            this.touchState.speak
+            Phaser.Input.Keyboard.JustDown(this.keyEnter) ||
+            this.touchState.speak ||
+            this.touchState.enter
           ) {
             this.touchState.speak = false;
+            this.touchState.enter = false;
             this.player.setVelocityX(0);
             this.player.play("thinking");
             this.showQuiz(nearbyEntity);
@@ -1138,20 +1175,24 @@ export default class LevelScene extends Phaser.Scene {
             });
           } else {
             if (
-              Phaser.Input.Keyboard.JustDown(this.cursors.space) ||
-              this.touchState.speak
+              Phaser.Input.Keyboard.JustDown(this.keyEnter) ||
+              this.touchState.speak ||
+              this.touchState.enter
             ) {
               this.touchState.speak = false;
+              this.touchState.enter = false;
               this.advanceQuizDialogue(nearbyEntity);
             }
           }
         }
       } else if (nearbyEntity.dialogueData) {
         if (
-          Phaser.Input.Keyboard.JustDown(this.cursors.space) ||
-          this.touchState.speak
+          Phaser.Input.Keyboard.JustDown(this.keyEnter) ||
+          this.touchState.speak ||
+          this.touchState.enter
         ) {
           this.touchState.speak = false;
+          this.touchState.enter = false;
           this.player.setVelocityX(0);
           this.player.play("thinking");
           this.advanceDialogue(nearbyEntity);
@@ -1335,6 +1376,20 @@ export default class LevelScene extends Phaser.Scene {
       this.quest.setVisible(showQuest);
     }
 
+    const showSpeak =
+      nearbyEntity &&
+      ((nearbyEntity.quizState &&
+        !nearbyEntity.quizState.finished &&
+        (!nearbyEntity.quizState.started || nearbyEntity.quizState.answered)) ||
+        nearbyEntity.dialogueState);
+    if (this.isMobile && this.controls.speak.visible !== showSpeak) {
+      this.controls.speak.setVisible(showSpeak);
+      this.controls.enter.setVisible(false);
+    } else if (!this.isMobile && this.controls.enter.visible !== showSpeak) {
+      this.controls.enter.setVisible(showSpeak);
+      this.controls.speak.setVisible(false);
+    }
+
     this.bg.clouds.setTilePosition(
       this.mainCamera.scrollX * 0.6 -
         500 / this.mainCamera.zoom -
@@ -1375,11 +1430,11 @@ export default class LevelScene extends Phaser.Scene {
     this.pointerDebugX.setTo(pointerX, 0, pointerX, WORLD_HEIGHT);
     this.pointerDebugY.setTo(0, pointerY, WORLD_WIDTH, pointerY);
 
-    if (this.isMobile && !this.controls.layer.visible) {
-      this.controls.layer.setVisible(true);
-    } else if (!this.isMobile && this.controls.layer.visible) {
-      this.controls.layer.setVisible(false);
-    }
+    // if (this.isMobile && !this.controls.layer.visible) {
+    //   this.controls.layer.setVisible(true);
+    // } else if (!this.isMobile && this.controls.layer.visible) {
+    //   this.controls.layer.setVisible(false);
+    // }
 
     this.handleInput();
   }
@@ -1411,7 +1466,7 @@ export default class LevelScene extends Phaser.Scene {
     this.bg.bg3.width = Math.ceil(camWidth);
     this.bg.bg3.x = Math.round(topX);
 
-    this.correctAnswersText.setPosition(topX + 15, topY + 15);
+    // this.correctAnswersText.setPosition(topX + 15, topY + 15);
 
     const uiCamWidth = this.uiCamera.worldView.width;
     const uiCamHeight = this.uiCamera.worldView.height;
@@ -1432,6 +1487,12 @@ export default class LevelScene extends Phaser.Scene {
       uiCamWidth - this.safeAreaRight - 32,
       uiCamHeight - 32 - this.controls.jump.displayHeight - 32
     );
+    this.controls.speak.setVisible(false);
+    this.controls.enter.setPosition(
+      uiCamWidth - this.safeAreaRight - 32,
+      uiCamHeight - 32 - this.controls.jump.displayHeight - 32
+    );
+    this.controls.enter.setVisible(false);
   }
 
   checkFlip(sprite) {
@@ -1448,12 +1509,13 @@ export default class LevelScene extends Phaser.Scene {
     const right = this.add.image(0, 0, "control-right").setOrigin(0, 1);
     const jump = this.add.image(0, 0, "control-jump").setOrigin(1, 1);
     const speak = this.add.image(0, 0, "control-speak").setOrigin(1, 1);
-    controlsLayer.add([left, right, jump, speak]);
+    const enter = this.add.image(0, 0, "control-enter").setOrigin(1, 1);
+    controlsLayer.add([left, right, jump, speak, enter]);
     controlsLayer.each((item) => {
       item.setScrollFactor(0, 0);
       item.setInteractive();
     });
-    const buttons = { left, right, jump, speak };
+    const buttons = { left, right, jump, speak, enter };
     const pointers = {};
     Object.entries(buttons).forEach(([keyName, key]) => {
       key.on("pointerdown", (pointer) => {
@@ -1474,6 +1536,6 @@ export default class LevelScene extends Phaser.Scene {
         delete pointers[pointer.id];
       }
     });
-    this.controls = { layer: controlsLayer, left, right, jump, speak };
+    this.controls = { layer: controlsLayer, left, right, jump, speak, enter };
   }
 }

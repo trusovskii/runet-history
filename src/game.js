@@ -32,10 +32,10 @@ const gameConfig = {
       debug: true,
     },
   },
-  // render: {
-  //   antialiasGL: false,
-  //   pixelArt: true,
-  // },
+  render: {
+    antialiasGL: true,
+    pixelArt: false,
+  },
   // callbacks: {
   //   postBoot: () => {
   //     window.sizeChanged();
