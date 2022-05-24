@@ -27,8 +27,10 @@ export default class LoadingScene extends Phaser.Scene {
         "Игра загружается...",
         {
           fontFamily: "ComicCat",
-          fontSize: 20,
+          fontSize: 22,
           color: "#000000",
+          stroke: "#fff",  // null, css string, or number
+          strokeThickness: 4,
         }
       )
       .setOrigin(0.5, 0.5);
