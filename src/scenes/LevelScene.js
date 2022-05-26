@@ -9,7 +9,7 @@ const DEPTH_BACKGROUND = 100;
 const DEPTH_FLOOR = 110;
 const DEPTH_PLATFORMS = 120;
 const DEPTH_ENTITIES = 130;
-const DEPTH_PLAYER = 140;
+const DEPTH_PLAYER = 180;
 const DEPTH_QUEST = 150;
 const DEPTH_CONTROLS = 160;
 const DEPTH_BUBBLES = 170;
@@ -303,7 +303,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2160, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(46650, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -700,8 +700,7 @@ export default class LevelScene extends Phaser.Scene {
         style: {
           fontFamily: "ComicCat",
           fontSize: 28,
-          lineSpacing: 8,
-          letterSpacing: 4,
+          lineSpacing: 10,
           color: "#000000",
           stroke: "#fff",  // null, css string, or number
           strokeThickness: 5,
