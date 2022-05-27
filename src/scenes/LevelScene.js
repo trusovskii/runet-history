@@ -114,7 +114,7 @@ export default class LevelScene extends Phaser.Scene {
       .rexBBCodeText({
         x: 15,
         y: 15,
-        text: "[stroke]Правильных ответов: 0 из 60[/stroke]",
+        text: "[stroke]Правильных ответов: 0 из 65[/stroke]",
         style: {
           fontFamily: "ComicCat",
           fontSize: 24,
@@ -303,7 +303,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(46650, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(15700, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -857,7 +857,7 @@ export default class LevelScene extends Phaser.Scene {
       ].answerNumberText.setColor("#FFFFFF");
       console.log("correct!");
       this.correctAnswers++;
-      this.correctAnswersText.text = `[stroke]Правильных ответов: ${this.correctAnswers}[/stroke]`;
+      this.correctAnswersText.text = `[stroke]Правильных ответов: ${this.correctAnswers} из 65[/stroke]`;
     } else {
       entity.quizState.answered = true;
       entity.quizState.gameObjects.answers[number - 1].answerBubble.setTexture(

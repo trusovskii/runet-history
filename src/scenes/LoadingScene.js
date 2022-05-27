@@ -232,6 +232,7 @@ export default class LoadingScene extends Phaser.Scene {
       `assets/sprites/tochka_ru_2010.png?cb=${cb}`
     );
     this.load.image("afisha_2010", `assets/sprites/afisha_2010.png?cb=${cb}`);
+    this.load.image("year_2010", `assets/sprites/year_2010.png?cb=${cb}`);
     this.load.image("kianu_2010", `assets/sprites/kianu_2010.png?cb=${cb}`);
     this.load.image("lentach_2011", `assets/sprites/lentach_2011.png?cb=${cb}`);
     this.load.image("lol", `assets/sprites/lol.png?cb=${cb}`);
@@ -244,6 +245,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("lisa", `assets/sprites/lisa.png?cb=${cb}`);
     this.load.image("tg_2013", `assets/sprites/tg_2013.png?cb=${cb}`);
     this.load.image("free_2013", `assets/sprites/free_2013.png?cb=${cb}`);
+    this.load.image("dissernet_2013", `assets/sprites/dissernet_2013.png?cb=${cb}`);
     this.load.image(
       "people_internet_2014",
       `assets/sprites/people_internet_2014.png?cb=${cb}`
@@ -256,6 +258,14 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image(
       "durov_way_out_2014",
       `assets/sprites/durov_way_out_2014.png?cb=${cb}`
+    );
+    this.load.image(
+      "year_2015",
+      `assets/sprites/year_2015.png?cb=${cb}`
+    );
+    this.load.image(
+      "gidra_2015",
+      `assets/sprites/gidra_2015.png?cb=${cb}`
     );
     this.load.image(
       "paket_yrovoy_2016",
@@ -271,9 +281,13 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("kvardo_2017", `assets/sprites/kvadro_2017.png?cb=${cb}`);
     this.load.image("remote_2017", `assets/sprites/remote_2017.png?cb=${cb}`);
     this.load.image("boar_2017", `assets/sprites/boar_2017.png?cb=${cb}`);
-    this.load.image("tg_ban_2018", `assets/sprites/tg_ban_2018.png?cb=${cb}`);
+    this.load.image("mobile_2019", `assets/sprites/mobile_2019.png?cb=${cb}`);
     this.load.image("ilona_2018", `assets/sprites/ilona_2018.png?cb=${cb}`);
     this.load.image("tiktok_2019", `assets/sprites/tiktok_2019.png?cb=${cb}`);
+    this.load.image(
+      "year_2020",
+      `assets/sprites/year_2020.png?cb=${cb}`
+    );
     this.load.image("bitcoin_2020", `assets/sprites/bitcoin_2020.png?cb=${cb}`);
     this.load.image("cat_uyu_2020", `assets/sprites/cat_uyu_2020.png?cb=${cb}`);
     this.load.image("ioda_2020", `assets/sprites/ioda_2020.png?cb=${cb}`);
@@ -311,6 +325,10 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image(
       "ban_social_2022",
       `assets/sprites/ban_social_2022.png?cb=${cb}`
+    );
+    this.load.image(
+      "year_2022",
+      `assets/sprites/year_2022.png?cb=${cb}`
     );
     this.load.image("maestro_2022", `assets/sprites/maestro_2022.png?cb=${cb}`);
 
