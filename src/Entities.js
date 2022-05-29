@@ -908,6 +908,20 @@ export default {
     x: 13070,
     y: 968,
     sprite: "witness_2006",
+    popup: {
+      x: 12910,
+      y: 668,
+      origin: { x: 0, y: 1 },
+      text: "Я слежу за тобой. И ты мне нравишься.",
+      area: {
+        x: 13000,
+        y: 957,
+        width: 219,
+        height: 350,
+        origin: { x: 0, y: 1 },
+      },
+    },
+
   },
   glamor_2007: {
     x: 12880,
@@ -1477,6 +1491,22 @@ export default {
     x: 20700,
     y: 430,
     sprite: "ypychka_2007",
+    dialogue: {
+      x: 20580,
+      y: 140,
+      origin: { x: 0, y: 0 },
+      area: {
+        x: 20640,
+        y: 425,
+        width: 350,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+      lines: [
+        { text: "ОЛОЛО, это прачечная?", player: true },
+        { text: "Упячечная", player: false },
+      ],
+    },
   },
   putin_krab_2008: {
     x: 22530,
@@ -1486,7 +1516,7 @@ export default {
       x: 22470,
       y: 390,
       origin: { x: 0, y: 1 },
-      text: "Восемь лет я пахал, как краб на галерах, с утра до ночи, и делал это с полной отдачей сил!",
+      text: "А Ленин — Гриб",
       area: {
         x: 22500,
         y: 560,
@@ -1506,6 +1536,19 @@ export default {
     y: 800,
     sprite: "demotivator_2008",
     colliders: [{ x: 24030, y: 800, width: 190, height: 150 }],
+    popup: {
+      x: 23870,
+      y: 640,
+      origin: { x: 0, y: 1 },
+      text: "Я айтишник, работаю три дня… Без зарплаты…",
+      area: {
+        x: 24030,
+        y: 650,
+        width: 190,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   gos_2009: {
     x: 23500,
@@ -1598,6 +1641,24 @@ export default {
     x: 24500,
     y: 365,
     sprite: "meme_face",
+    dialogue: {
+      x: 24366,
+      y: 130,
+      origin: { x: 0, y: 1 },
+      area: {
+        x: 24440,
+        y: 360,
+        width: 350,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+      lines: [
+        { text: "трололололо-лололо-лололо", player: true },
+        { text: "трололололо", player: false },
+        { text: "тралалалала-тралала-тралала", player: true },
+        { text: "трололололо", player: false },
+      ],
+    },
   },
   tochka_ru_2010: {
     x: 26380,
@@ -1747,12 +1808,7 @@ export default {
     },
     lines: [
       {
-        text: "Привет, а вы чего тут делаете?",
-        player: true,
-      },
-      { text: "Привеееет, давай делать селфи вместе!", player: false },
-      {
-        text: "Нет, спасибо, я не из этих.",
+        text: "Пацаны ваще ребята! Чётко!",
         player: true,
       },
     ],
@@ -1836,7 +1892,7 @@ export default {
       x: 29830,
       y: 115,
       origin: { x: 0, y: 1 },
-      text: "Выгляжу как драный веник, зачем так жить, а?",
+      text: "Все что вы сдесь видете, далжно оставатся сикретам",
       area: {
         x: 29740,
         y: 269,
@@ -1915,6 +1971,19 @@ export default {
     x: 31720,
     y: 960,
     sprite: "people_internet_2014",
+    popup: {
+      x: 31560,
+      y: 604,
+      origin: { x: 0, y: 1 },
+      text: "Половина России уже в интернете!",
+      area: {
+        x: 31650,
+        y: 950,
+        width: 350,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   meduza_2014: {
     x: 31770,
@@ -2033,6 +2102,19 @@ export default {
       { x: 34340, y: 965, width: 200, height: 180 },
       { x: 34526, y: 965, width: 165, height: 285 },
     ],
+    popup: {
+      x: 34390,
+      y: 600,
+      origin: { x: 0, y: 1 },
+      text: " В Рунете уже 80 миллионов человек! Ничоси!",
+      area: {
+        x: 34330,
+        y: 770,
+        width: 350,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   alisa_2017: {
     x: 35030,
@@ -2115,6 +2197,19 @@ export default {
     x: 32955,
     y: 364,
     sprite: "boar_2017",
+    popup: {
+      x: 32830,
+      y: 230,
+      origin: { x: 0, y: 1 },
+      text: "Здарова, бандит! А ты парень смекалистый",
+      area: {
+        x: 32940,
+        y: 360,
+        width: 300,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   mobile_2019: {
     x: 36320,
@@ -2234,6 +2329,19 @@ export default {
     x: 38890,
     y: 550,
     sprite: "ioda_2020",
+    popup: {
+      x: 38760,
+      y: 363,
+      origin: { x: 0, y: 1 },
+      text: "Да пребудет с тобой сила Рунета",
+      area: {
+        x: 38790,
+        y: 540,
+        width: 350,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   delivery_2020: {
     x: 39600,
@@ -2282,7 +2390,7 @@ export default {
       x: 42462,
       y: 680,
       origin: { x: 0, y: 1 },
-      text: "Нельзя просто так взять, привиться и не пошутить про 5G",
+      text: "Нельзя просто так взять, привиться\nи не пошутить про 5G",
       area: {
         x: 42450,
         y: 950,
@@ -2333,6 +2441,19 @@ export default {
     colliders: [
       { x: 41280, y: 710, width: 60, height: 20 },
     ],
+    popup: {
+      x: 41180,
+      y: 660,
+      origin: { x: 0, y: 1 },
+      text: "Если я еду на велике, это не ещё не значит,\nчто я из «Яндекса» или «Деливери»",
+      area: {
+        x: 41180,
+        y: 950,
+        width: 400,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   ironov_2020: {
     x: 44790,
@@ -2631,7 +2752,7 @@ export default {
       x: 50400,
       y: 440,
       origin: { x: 0, y: 1 },
-      text: "Вы думаете, я вас не переиграю? Я вас не уничтожу? Я вас уничтожу.",
+      text: "Завершим путешествие?",
       area: {
         x: 50450,
         y: 950,
