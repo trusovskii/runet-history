@@ -1,0 +1,64 @@
+@import '_normalize.scss';
+
+@import '_fonts.scss';
+@import '_buttons.scss';
+
+@import 'sections/_header.scss';
+@import 'sections/_play.scss';
+@import 'sections/_about.scss';
+@import 'sections/_planet.scss';
+@import 'sections/_footer.scss';
+
+@import 'sections/_results.scss';
+@import 'sections/_share.scss';
+@import 'sections/_stickers.scss';
+@import 'sections/_history.scss';
+@import 'sections/_authors.scss';
+
+.container {
+  padding: 0 10px;
+
+  @media screen and (min-width: 768px) {
+    padding: 0 40px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    padding: 0 80px;
+  }
+
+  @media screen and (min-width: 1600px) {
+    padding: 0 90px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    padding: 0 110px;
+  }
+}
+
+.container-win {
+  padding: 0 20px;
+
+  @media screen and (min-width: 480px) {
+    padding: 0 30px;
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 0 65px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    padding: 0 85px;
+  }
+
+  @media screen and (min-width: 1600px) {
+    padding: 0 100px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    padding: 0 120px;
+  }
+}
+
+.content-wrapper {
+  position: relative;
+}

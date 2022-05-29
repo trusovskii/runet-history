@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>История Рунета</title>
+    <meta name="description" content="Веб-игра про историю Рунета. На одном таймлайне собраны главные символы Рунета. Набирайте очки, правильно отвечая на вопросы об истории русскоязычной сети: её ключевых событиях, мемах и лицах.">
+
+	  <meta property="og:title" content="История Рунета">
+	  <meta name="twitter:title" content="История Рунета">
+
+	  <meta property="og:image" content="./assets/opengraph.png">
+	  <meta name="twitter:image" content="./assets/opengraph.png">
+
+	  <meta name="twitter:card" content="summary_large_image">
+
+	  <meta property="og:description" content="Веб-игра про историю Рунета. На одном таймлайне собраны главные символы Рунета. Набирайте очки, правильно отвечая на вопросы об истории русскоязычной сети: её ключевых событиях, мемах и лицах.">
+	  <meta property="og:url" content="https://runet-history.ru/">
+
+    <link rel="shortcut icon" href="./assets/favicon.png?cb=cb26" type="image/png">
+    <style media='screen' type='text/css'>
+      @font-face {
+        font-family: "DigitalStrip";
+        src: url('./assets/fonts/DigitalStrip.ttf');
+      }
+      @font-face {
+        font-family: "ComicCat";
+        src: url("./assets/fonts/Comic_CAT.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Onest";
+        src: url("./assets/fonts/OnestRegular1602-hint.ttf");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: "Onest";
+        src: url("./assets/fonts/OnestBold1602-hint.ttf");
+        font-weight: bold;
+      }
+      :root {
+        --safe-area-top: env(safe-area-inset-top);
+        --safe-area-right: env(safe-area-inset-right);
+        --safe-area-bottom: env(safe-area-inset-bottom);
+        --safe-area-left: env(safe-area-inset-left);
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        /* filter: saturate(0); */
+      }
+      .rotate-your-phone {
+        display: none;
+      }
+      @media (orientation: portrait) and (max-width: 1023px) {
+        .rotate-your-phone {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'ComicCat';
+          font-weight: 400;
+          font-size: 28px;
+          line-height: 32px;
+          background: #232323;
+          color: #FFFFFF;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div style="font-family:'DigitalStrip'; color: transparent; pointer-events: none; position: absolute;">DigitalStrip</div>
+    <div style="font-family:'ComicCat'; color: transparent; pointer-events: none; position: absolute;">ComicCat</div>
+    <div style="font-family:'Onest'; font-weight: normal; color: transparent; pointer-events: none; position: absolute;">Onest Regular</div>
+    <div style="font-family:'Onest'; font-weight: bold; color: transparent; pointer-events: none; position: absolute;">Onest Bold</div>
+    <div class="rotate-your-phone"><span>Переверните экран</span></div>
+    <div id="game"></div>
+    <script>
+      window.cb = 'cb26';
+    </script>
+    <script src="./js/game.js?cb=cb26"></script>
+  </body>
+</html>

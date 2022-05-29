@@ -1,89 +1,151 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>История Рунета</title>
-    <meta name="description" content="Веб-игра про историю Рунета. На одном таймлайне собраны главные символы Рунета. Набирайте очки, правильно отвечая на вопросы об истории русскоязычной сети: её ключевых событиях, мемах и лицах.">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>История Рунета. Старт</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
 
-	  <meta property="og:title" content="История Рунета">
-	  <meta name="twitter:title" content="История Рунета">
+<header class="header">
+    <div class="header__container">
+        <a class="header__link" href="/">
+            <img class="logo logo--main" src="./assets/img/head.svg" alt="logo">
+        </a>
+    </div>
+</header>
 
-	  <meta property="og:image" content="./assets/opengraph.png">
-	  <meta name="twitter:image" content="./assets/opengraph.png">
+<div class="content-wrapper">
+    <div id="playButton" class="play-button">
+        <div class="play-button__wrapper" onclick="window.location.href = '/game.html'">
+            <img class="play-button__img" src="./assets/img/play-button.svg" alt="Играть!">
+            <span class="play-button__text">Играть!</span>
+        </div>
+    </div>
+    <section class="play">
+        <div class="play-virus">
+            <img class="play-virus__icon play-virus__icon--left" src="./assets/img/virus.svg" alt="virus">
+            <img class="play-virus__icon play-virus__icon--right" src="./assets/img/virus.svg" alt="virus">
+        </div>
+    </section>
 
-	  <meta name="twitter:card" content="summary_large_image">
+    <section class="about">
+        <div class="container">
+            <div class="about-item about-item_fawkes">
+                <div class="about-item__img about-item__img_fox">
+                    <img src="./assets/img/about/fox.svg" alt="Лиса">
+                </div>
+                <div class="about-item__wrapper">
+                    <div class="about-item__title">
+                        <img class="about-item__title-icon" src="./assets/img/about/guyfawkes.svg"
+                             alt="Guy Fawkes">
+                        <h2 class="about-item__title-text">О чём игра</h2>
+                    </div>
+                    <p class="about-item__text">
+                        Рунету скоро тридцать лет. Когда-то пользователи качали по модему две картинки в час.
+                        Сегодня подростки тренируют нейросетки, пока их бабушки осваивают маркетплейсы.
+                    </p>
+                    <p class="about-item__text">
+                        Эта игра — о яркой истории русскоязычной сети: её ключевых событиях, мемах и лицах.
+                    </p>
+                </div>
+            </div>
+            <div class="about-item about-item_lebedev">
+                <div class="about-item__img">
+                    <img src="./assets/img/about/guysitting.svg" alt="Лиса">
+                </div>
+                <div class="about-item__wrapper">
+                    <div class="about-item__title">
+                        <h2 class="about-item__title-text">Что вы узнаете</h2>
+                    </div>
+                    <p class="about-item__text">
+                        На одном таймлайне собраны главные символы Рунета. Игра расскажет, откуда пошёл «язык
+                        падонкафф», где раньше люди искали любовь и кто такие Аська с Иркой. Вы и так в
+                        курсе? Значит, наберёте больше очков и обойдёте других игроков.
+                    </p>
+                </div>
 
-	  <meta property="og:description" content="Веб-игра про историю Рунета. На одном таймлайне собраны главные символы Рунета. Набирайте очки, правильно отвечая на вопросы об истории русскоязычной сети: её ключевых событиях, мемах и лицах.">
-	  <meta property="og:url" content="https://runet-history.ru/">
 
-    <link rel="shortcut icon" href="./assets/favicon.png?cb=cb26" type="image/png">
-    <style media='screen' type='text/css'>
-      @font-face {
-        font-family: "DigitalStrip";
-        src: url('assets/fonts/DigitalStrip.ttf');
-      }
-      @font-face {
-        font-family: "ComicCat";
-        src: url("assets/fonts/Comic_CAT.otf") format("opentype");
-      }
-      @font-face {
-        font-family: "Onest";
-        src: url("assets/fonts/OnestRegular1602-hint.ttf");
-        font-weight: normal;
-      }
-      @font-face {
-        font-family: "Onest";
-        src: url("assets/fonts/OnestBold1602-hint.ttf");
-        font-weight: bold;
-      }
-      :root {
-        --safe-area-top: env(safe-area-inset-top);
-        --safe-area-right: env(safe-area-inset-right);
-        --safe-area-bottom: env(safe-area-inset-bottom);
-        --safe-area-left: env(safe-area-inset-left);
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      canvas {
-        /* filter: saturate(0); */
-      }
-      .rotate-your-phone {
-        display: none;
-      }
-      @media (orientation: portrait) and (max-width: 1023px) {
-        .rotate-your-phone {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: 'ComicCat';
-          font-weight: 400;
-          font-size: 28px;
-          line-height: 32px;
-          background: #232323;
-          color: #FFFFFF;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div style="font-family:'DigitalStrip'; color: transparent; pointer-events: none; position: absolute;">DigitalStrip</div>
-    <div style="font-family:'ComicCat'; color: transparent; pointer-events: none; position: absolute;">ComicCat</div>
-    <div style="font-family:'Onest'; font-weight: normal; color: transparent; pointer-events: none; position: absolute;">Onest Regular</div>
-    <div style="font-family:'Onest'; font-weight: bold; color: transparent; pointer-events: none; position: absolute;">Onest Bold</div>
-    <div class="rotate-your-phone"><span>Переверните экран</span></div>
-    <div id="game"></div>
-    <script>
-      window.cb = 'cb26';
-    </script>
-    <script src="./js/game.js?cb=cb26"></script>
-  </body>
+                <div class="about-item__img about-item__img_tower">
+                    <img src="./assets/img/about/tower.svg" alt="5G">
+                </div>
+            </div>
+            <div class="about-item about-item_devil">
+                <div class="about-item__img">
+                    <img src="./assets/img/about/devilsmile.svg" alt="Devil">
+                </div>
+                <div class="about-item__wrapper">
+                    <div class="about-item__title">
+                        <h2 class="about-item__title-text">Как играть</h2>
+                        <img class="about-item__title-image" src="./assets/img/about/devilsmile.svg"
+                             alt="Devil">
+                    </div>
+                    <p class="about-item__text">
+                        Управлять главным персонажем — Точкой Ру — и бежать по таймлайну, отвечая на вопросы
+                        об истории Рунета. Сможете пройти игру без ошибок? Сейчас проверим.
+                    </p>
+                    <p class="about-item__text about-item__text_red">
+                        Лучшие игроки получат авторский стикерпак для Телеграм в подарок!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="planet">
+        <div class="planet__wrapper">
+            <img class="planet__img" src="./assets/img/planet.png" alt="Planet">
+            <img class="planet__timeline" src="./assets/img/timeline.svg" alt="TimeLine">
+            <img class="planet__img planet__img_small" src="./assets/img/planet-small.png" alt="Planet">
+        </div>
+    </section>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-images">
+            <img class="footer-images__grogu" src="./assets/img/footer/grogu.svg" alt="Baby Yoda">
+            <img class="footer-images__seeds" src="./assets/img/footer/seeds.svg" alt="Seeds">
+            <img class="footer-images__callcenter" src="./assets/img/footer/callcenter.svg"
+                 alt="Call Center">
+        </div>
+        <div class="footer-share">
+            <div class="footer-share__text">Поделиться с друзьями:</div>
+            <div class="footer-share__wrapper">
+                <a class="footer-share__button button button_grey" href="#">Одноклассники</a>
+                <a class="footer-share__button button button_grey" href="#">Вконтакте</a>
+                <a class="footer-share__button button button_grey" href="#">Телеграм</a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+                <span class="footer-copyright__text">
+                    Проект Школы Бюро Горбунова, 2022
+                </span>
+        </div>
+    </div>
+</footer>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBNLfOriGZGZ2JQcP8cYMnBAKJvNgQc86g",
+        authDomain: "runet-history.firebaseapp.com",
+        projectId: "runet-history",
+        storageBucket: "runet-history.appspot.com",
+        messagingSenderId: "1046511742180",
+        appId: "1:1046511742180:web:d22034ae7a74fa7a8c10f1"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+</script>
+</body>
 </html>

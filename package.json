@@ -21,14 +21,15 @@
     "gulp-twig": "^1.2.0",
     "gulp-uglify": "^3.0.2",
     "webpack": "^4.42.1",
-    "webpack-stream": "^5.2.1"
-  },
-  "dependencies": {
+    "webpack-stream": "^5.2.1",
+    "browser-sync": "^2.27.10",
+    "gulp-sass": "^5.1.0",
     "normalize.css": "^8.0.1",
     "phaser": "^3.55.2",
     "phaser3-rex-plugins": "^1.1.69",
     "postcss-loader": "^6.2.0",
     "regenerator-runtime": "^0.13.9",
+    "sass": "^1.52.1",
     "style-loader": "^3.3.1"
   }
 }

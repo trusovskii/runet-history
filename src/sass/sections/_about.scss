@@ -1,0 +1,244 @@
+.about {
+  margin-top: 40px;
+
+
+  @media screen and (min-width: 768px) {
+    margin-top: 60px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  &-item {
+    position: relative;
+
+    @media screen and (min-width: 768px) {
+      display: flex;
+    }
+
+    @media screen and (min-width: 1280px) {
+      flex-direction: column;
+      max-width: 425px;
+    }
+
+    @media screen and (min-width: 1600px) {
+      max-width: 500px;
+    }
+
+    @media screen and (min-width: 1920px) {
+      max-width: 600px;
+    }
+
+    &__img {
+      display: flex;
+      justify-content: center;
+
+      @media screen and (min-width: 768px) {
+        display: inline;
+      }
+
+      &_fox {
+        position: absolute;
+        top: -130px;
+
+        @media screen and (min-width: 375px) {
+          left: -60px;
+        }
+
+        @media screen and (min-width: 425px) {
+          left: -60px;
+        }
+
+        @media screen and (min-width: 480px) {
+          left: -60px;
+        }
+
+        @media screen and (min-width: 768px) {
+          top: -270px;
+          left: 0;
+        }
+
+        @media screen and (min-width: 1280px) {
+          top: -144px;
+          left: 0;
+        }
+
+        img {
+          width: 144px;
+          height: 140px;
+
+          @media screen and (min-width: 1280px) {
+            width: 181px;
+            height: 175px;
+          }
+        }
+      }
+
+      &_tower {
+        display: none;
+
+        @media screen and (min-width: 768px) {
+          display: inline-flex;
+          position: absolute;
+          top: -480px;
+          right: 0;
+        }
+
+        @media screen and (min-width: 1280px) {
+          order: -1;
+          top: -40px;
+        }
+
+        img {
+          height: 382px;
+
+          @media screen and (min-width: 1280px) {
+            height: 231px;
+          }
+        }
+      }
+
+    }
+
+    &__title {
+      position: relative;
+
+      &:not(:first-child) {
+        margin-top: 28px;
+      }
+
+      @media screen and (min-width: 425px) {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+        justify-content: flex-end;
+        gap: 50px;
+      }
+
+      @media screen and (min-width: 480px) {
+        gap: 0;
+      }
+
+      @media screen and (min-width: 768px) {
+        gap: 100px;
+      }
+
+      @media screen and (min-width: 1280px) {
+        gap: 0;
+      }
+
+      &-text {
+        font-family: 'Comic CAT', sans-serif;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 120%;
+
+        @media screen and (min-width: 480px) {
+          font-size: 60px;
+          line-height: 110%;
+        }
+      }
+
+      &-icon {
+        position: relative;
+        left: 180px;
+
+        @media screen and (min-width: 425px) {
+          position: static;
+          left: 230px;
+        }
+      }
+    }
+
+    &__title-image {
+      display: none;
+    }
+
+    &__text {
+      font-family: 'Onest', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 130%;
+      color: #000000;
+      margin-top: 8px;
+
+      @media screen and (min-width: 425px) {
+        font-size: 28px;
+        line-height: 130%;
+      }
+
+      &_red {
+        color: #E13914;
+      }
+    }
+
+    &_fawkes {
+      @media screen and (min-width: 768px) {
+        padding-right: 140px;
+      }
+
+      @media screen and (min-width: 1280px) {
+        padding-right: 0;
+        margin-top: -155px;
+      }
+    }
+
+    &_lebedev {
+      margin-top: 48px;
+
+      @media screen and (min-width: 768px) {
+        margin-top: 100px;
+      }
+
+      @media screen and (min-width: 1280px) {
+        margin-left: auto;
+        margin-top: -320px;
+      }
+
+      @media screen and (min-width: 1920px) {
+        margin-top: -200px;
+      }
+    }
+
+    &_devil {
+      margin-top: 48px;
+
+      @media screen and (min-width: 768px) {
+        margin-top: 100px;
+        gap: 50px;
+        flex-direction: row-reverse;
+
+        > .about-item__img {
+          padding-top: 70px;
+        }
+      }
+
+      @media screen and (min-width: 1280px) {
+        flex-direction: column;
+        gap: 0;
+        margin-top: -290px;
+
+        .about-item__img {
+          display: none;
+        }
+
+        .about-item__title-image {
+          display: inline;
+        }
+
+        .about-item__title {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
+      }
+
+      @media screen and (min-width: 1600px) {
+        margin-top: -150px;
+      }
+    }
+  }
+}

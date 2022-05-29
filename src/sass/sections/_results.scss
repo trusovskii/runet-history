@@ -1,0 +1,107 @@
+.results {
+  margin-top: 25px;
+
+  @media screen and (min-width: 480px) {
+    margin-top: 50px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    margin-top: 25px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    margin-top: 0;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-family: 'Comic CAT', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 120%;
+    text-align: center;
+    text-transform: uppercase;
+
+    &--red {
+      color: #E13914;
+    }
+
+    @media screen and (min-width: 480px) {
+      font-size: 60px;
+      line-height: 110%;
+    }
+
+    @media screen and (min-width: 768px) {
+      text-align: left;
+    }
+
+    @media screen and (min-width: 1280px) {
+      font-size: 78px;
+    }
+  }
+
+  &__text {
+    font-family: 'Onest', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    color: #000000;
+    margin-top: 8px;
+
+    &:first-of-type {
+      margin-top: 25px;
+    }
+
+    @media screen and (min-width: 480px) {
+      font-size: 28px;
+      margin-top: 16px;
+    }
+
+    @media screen and (min-width: 1280px) {
+      max-width: 600px;
+    }
+
+    @media screen and (min-width: 1600px) {
+      max-width: 720px;
+    }
+  }
+}
+
+.results-img {
+  pointer-events: none;
+  display: none;
+  position: relative;
+
+  &__dance {
+    position: absolute;
+    top: -80px;
+    left: 0;
+  }
+
+  &__loader {
+    position: absolute;
+    left: 0;
+    animation: loader 3s infinite linear;
+  }
+
+  @keyframes loader {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    display: block;
+    min-width: 466px;
+    min-height: 466px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}

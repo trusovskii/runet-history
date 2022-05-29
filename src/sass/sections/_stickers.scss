@@ -1,0 +1,110 @@
+.stickers {
+  margin-top: 50px;
+  background: #EEEEEE;
+  border-radius: 48px;
+  padding: 40px 20px;
+  text-align: center;
+  max-width: 1856px;
+
+  @media screen and (min-width: 480px) {
+    padding: 65px 30px;
+    margin-top: 56px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 65px 100px;
+    margin: 100px 30px 0 30px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 65px 100px;
+    margin-top: 170px;
+  }
+
+  &__title {
+    font-family: 'Comic CAT', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 120%;
+    text-transform: uppercase;
+    color: #000000;
+
+    @media screen and (min-width: 480px) {
+      font-size: 40px;
+    }
+  }
+
+  &__text {
+    margin-top: 8px;
+    font-family: 'Onest', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    color: #000000;
+
+    @media screen and (min-width: 480px) {
+      font-size: 28px;
+    }
+  }
+
+  &__button {
+    margin-top: 28px;
+    max-width: 380px;
+    font-size: 20px;
+    z-index: 2;
+
+    @media screen and (min-width: 480px) {
+      font-size: 34px;
+    }
+  }
+}
+
+
+.stickers-text__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.stickers-images {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__top,
+  &__middle,
+  &__bottom {
+    display: none;
+    position: absolute;
+  }
+
+  &__top {
+    @media screen and (min-width: 1280px) {
+      display: flex;
+      top: -390px;
+      gap: 1000px;
+    }
+  }
+
+  &__middle {
+    @media screen and (min-width: 1600px) {
+      display: flex;
+      top: -200px;
+      gap: 1200px;
+    }
+  }
+
+  &__bottom {
+    @media screen and (min-width: 1024px) {
+      display: flex;
+      top: -70px;
+      gap: 510px;
+    }
+  }
+}

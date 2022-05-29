@@ -1,0 +1,64 @@
+.planet {
+  display: none;
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    display: block;
+    margin: 80px -50px 0 -50px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    margin: 0 -50px;
+  }
+
+  @media screen and (min-width: 1600px) {
+    margin: 0 -90px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    margin: 0 -100px;
+  }
+
+  &__wrapper {
+    width: 100%;
+  }
+
+  &__img {
+    display: none;
+    width: 100%;
+
+    @media screen and (min-width: 1025px) {
+      display: block;
+      width: 100%;
+    }
+
+    &_small {
+      display: none;
+
+      @media screen and (min-width: 768px) {
+        display: block;
+      }
+
+      @media screen and (min-width: 1025px) {
+        display: none;
+      }
+    }
+  }
+
+  &__timeline {
+    position: absolute;
+    display: none;
+    width: 100%;
+    top: -1150px;
+    z-index: -1;
+    pointer-events: none;
+
+    @media screen and (min-width: 1280px) {
+      display: block;
+    }
+
+    @media screen and (min-width: 1600px) {
+      top: -1200px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.share {
+  margin-top: 40px;
+
+  @media screen and (min-width: 480px) {
+    margin-top: 56px;
+  }
+
+  @media screen and (min-width: 768px) {
+    margin-top: 68px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    margin-top: 68px;
+  }
+
+  @media screen and (min-width: 1600px) {
+    margin-top: 60px;
+  }
+}
+
+.share-img {
+  width: 160px;
+  margin: 0 auto;
+
+  @media screen and (min-width: 480px) {
+    width: 240px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 290px;
+  }
+
+  &__seeds {
+    max-width: 100%;
+  }
+}
