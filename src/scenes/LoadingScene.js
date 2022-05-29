@@ -92,6 +92,9 @@ export default class LoadingScene extends Phaser.Scene {
     this.events.on("resize", () => {
       this.onResize();
     });
+    this.events.once('update', () => {
+      this.onResize();
+    });
 
     this.load.audio("bgm", `assets/audio/bgm.mp3?cb=${cb}`, {
       stream: true,
@@ -413,6 +416,15 @@ export default class LoadingScene extends Phaser.Scene {
   onResize() {
     if (!this.cameras.main) {
       return;
+    }
+
+    const isLandscape = window.innerWidth > window.innerHeight;
+    if (isLandscape) {
+      if (window.innerHeight <= 350) {
+        this.cameras.main.zoom = 0.8;
+      } else {
+        this.cameras.main.zoom = 1;
+      }
     }
 
     this.boy.setPosition(
