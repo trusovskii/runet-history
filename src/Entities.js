@@ -2749,6 +2749,9 @@ export default {
     y: 987,
     sprite: "maestro_2022",
     exit: {
+      x: 50250,
+      y: 618,
+      origin: { x: 0, y: 1 },
       text: "Завершим путешествие?",
       yes: 'Ага',
       no: 'Пока ещё нет',
