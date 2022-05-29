@@ -120,7 +120,7 @@ export default class LevelScene extends Phaser.Scene {
           fontSize: 24,
           lineSpacing: 8,
           color: "#000000",
-          stroke: "#fff",  // null, css string, or number
+          stroke: "#fff", // null, css string, or number
           strokeThickness: 6,
           // wordWrap: { width: 400, useAdvancedWrap: true },
           wrap: {
@@ -226,15 +226,11 @@ export default class LevelScene extends Phaser.Scene {
 
     this.mainCamera.setBackgroundColor("#c5c5c5");
 
-    console.log("listen to resize");
     this.events.on("resize", () => {
-      console.log("scene resize");
       this.onResize();
     });
     this.events.once("postupdate", () => {
-      console.log("scene postupdate");
       this.events.once("postupdate", () => {
-        console.log("scene postupdate 2");
         this.onResize();
         this.updateCameraFollowOffset();
       });
@@ -267,7 +263,10 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   onResize() {
-    console.log("scene on resize");
+    if (!this.cameras.main) {
+      return;
+    }
+
     this.isLandscape = window.innerWidth > window.innerHeight;
     this.isMobile = this.isLandscape && window.innerWidth <= 896;
 
@@ -703,7 +702,7 @@ export default class LevelScene extends Phaser.Scene {
           lineSpacing: 8,
           letterSpacing: 4,
           color: "#000000",
-          stroke: "#fff",  // null, css string, or number
+          stroke: "#fff", // null, css string, or number
           strokeThickness: 5,
           wrap: {
             mode: "word",
@@ -1412,12 +1411,13 @@ export default class LevelScene extends Phaser.Scene {
       this.nearbyEntityName = nearbyEntityName;
     }
 
-    const showQuest =
+    const showQuest = Boolean(
       nearbyEntity &&
-      ((nearbyEntity.quizState && !nearbyEntity.quizState.started) ||
-        (nearbyEntity.dialogueState &&
-          !nearbyEntity.dialogueState.started &&
-          !nearbyEntity.dialogueState.finished));
+        ((nearbyEntity.quizState && !nearbyEntity.quizState.started) ||
+          (nearbyEntity.dialogueState &&
+            !nearbyEntity.dialogueState.started &&
+            !nearbyEntity.dialogueState.finished))
+    );
     if (showQuest) {
       this.quest.setPosition(
         this.player.getBounds().centerX,
@@ -1428,18 +1428,26 @@ export default class LevelScene extends Phaser.Scene {
       this.quest.setVisible(showQuest);
     }
 
-    const showSpeak =
+    const showSpeak = Boolean(
       nearbyEntity &&
-      ((nearbyEntity.quizState &&
-        !nearbyEntity.quizState.finished &&
-        (!nearbyEntity.quizState.started || nearbyEntity.quizState.answered)) ||
-        nearbyEntity.dialogueState);
+        ((nearbyEntity.quizState &&
+          !nearbyEntity.quizState.finished &&
+          (!nearbyEntity.quizState.started ||
+            nearbyEntity.quizState.answered)) ||
+          nearbyEntity.dialogueState)
+    );
     if (this.isMobile && this.controls.speak.visible !== showSpeak) {
+      console.log("speak.setVisible:", showSpeak);
       this.controls.speak.setVisible(showSpeak);
-      this.controls.enter.setVisible(false);
+      if (this.controls.enter.visible) {
+        this.controls.enter.setVisible(false);
+      }
     } else if (!this.isMobile && this.controls.enter.visible !== showSpeak) {
       this.controls.enter.setVisible(showSpeak);
-      this.controls.speak.setVisible(false);
+      if (this.controls.speak.visible) {
+        console.log("speak.setVisible:", false);
+        this.controls.speak.setVisible(false);
+      }
     }
 
     this.bg.clouds.setTilePosition(
@@ -1539,12 +1547,10 @@ export default class LevelScene extends Phaser.Scene {
       uiCamWidth - this.safeAreaRight - 32,
       uiCamHeight - 32 - this.controls.jump.displayHeight - 32
     );
-    this.controls.speak.setVisible(false);
     this.controls.enter.setPosition(
       uiCamWidth - this.safeAreaRight - 32,
       uiCamHeight - 32 - this.controls.jump.displayHeight - 32
     );
-    this.controls.enter.setVisible(false);
   }
 
   checkFlip(sprite) {
@@ -1562,6 +1568,8 @@ export default class LevelScene extends Phaser.Scene {
     const jump = this.add.image(0, 0, "control-jump").setOrigin(1, 1);
     const speak = this.add.image(0, 0, "control-speak").setOrigin(1, 1);
     const enter = this.add.image(0, 0, "control-enter").setOrigin(1, 1);
+    speak.setVisible(false);
+    enter.setVisible(false);
     controlsLayer.add([left, right, jump, speak, enter]);
     controlsLayer.each((item) => {
       item.setScrollFactor(0, 0);

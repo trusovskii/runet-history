@@ -6,10 +6,14 @@ export default class LoadingScene extends Phaser.Scene {
   preload() {
     this.cameras.main.setBackgroundColor("#FAFAFA");
 
-    const boy = this.add
-      .sprite(this.cameras.main.midPoint.x - 30, this.cameras.main.midPoint.y, "boy")
+    this.boy = this.add
+      .sprite(
+        this.cameras.main.midPoint.x - 30,
+        this.cameras.main.midPoint.y,
+        "boy"
+      )
       .setOrigin(0.5, 0.5);
-    boy.scale = 0.5;
+    this.boy.scale = 0.5;
     this.anims.create({
       key: "dance",
       frames: this.anims.generateFrameNumbers("boy", {
@@ -18,9 +22,9 @@ export default class LoadingScene extends Phaser.Scene {
       repeat: -1,
       frameRate: 6,
     });
-    boy.play("dance");
+    this.boy.play("dance");
 
-    const loadingTitle = this.add
+    this.loadingTitle = this.add
       .text(
         this.cameras.main.midPoint.x,
         this.cameras.main.midPoint.y + 165,
@@ -29,7 +33,7 @@ export default class LoadingScene extends Phaser.Scene {
           fontFamily: "ComicCat",
           fontSize: 22,
           color: "#000000",
-          stroke: "#fff",  // null, css string, or number
+          stroke: "#fff", // null, css string, or number
           strokeThickness: 4,
         }
       )
@@ -84,6 +88,10 @@ export default class LoadingScene extends Phaser.Scene {
     // this.load.on("progress", onProgress);
     // this.load.on("fileprogress", onFileprogress);
     // this.load.on("complete", onComplete);
+
+    this.events.on("resize", () => {
+      this.onResize();
+    });
 
     this.load.audio("bgm", `assets/audio/bgm.mp3?cb=${cb}`, {
       stream: true,
@@ -382,5 +390,22 @@ export default class LoadingScene extends Phaser.Scene {
 
   create() {
     this.scene.start("level-scene");
+  }
+
+  onResize() {
+    if (!this.cameras.main) {
+      return;
+    }
+
+    this.boy.setPosition(
+      this.cameras.main.midPoint.x - 30,
+      this.cameras.main.midPoint.y,
+      "boy"
+    );
+
+    this.loadingTitle.setPosition(
+      this.cameras.main.midPoint.x,
+      this.cameras.main.midPoint.y + 165
+    );
   }
 }

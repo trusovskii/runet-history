@@ -74,8 +74,9 @@ window.sizeChanged = () => {
     //   "style",
     //   `display: block; width: ${window.innerWidth}px; height: ${window.innerHeight}px;`
     // );
+    const loadingScene = game.scene.getScene("loading-scene");
+    loadingScene.events.emit("resize");
     const levelScene = game.scene.getScene("level-scene");
-    console.log("emit resize");
     levelScene.events.emit("resize");
   }
 };
