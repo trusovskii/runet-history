@@ -2748,11 +2748,10 @@ export default {
     x: 50500,
     y: 987,
     sprite: "maestro_2022",
-    popup: {
-      x: 50400,
-      y: 440,
-      origin: { x: 0, y: 1 },
+    exit: {
       text: "Завершим путешествие?",
+      yes: 'Ага',
+      no: 'Пока ещё нет',
       area: {
         x: 50450,
         y: 950,

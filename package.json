@@ -11,6 +11,7 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "babel-loader": "^8.1.0",
+    "browser-sync": "^2.27.10",
     "core-js": "^3.6.4",
     "cross-env": "^6.0.3",
     "css-loader": "^3.4.2",
@@ -18,18 +19,20 @@
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
     "gulp-twig": "^1.2.0",
     "gulp-uglify": "^3.0.2",
-    "webpack": "^4.42.1",
-    "webpack-stream": "^5.2.1",
-    "browser-sync": "^2.27.10",
-    "gulp-sass": "^5.1.0",
     "normalize.css": "^8.0.1",
     "phaser": "^3.55.2",
     "phaser3-rex-plugins": "^1.1.69",
     "postcss-loader": "^6.2.0",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.52.1",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "webpack": "^4.42.1",
+    "webpack-stream": "^5.2.1"
+  },
+  "dependencies": {
+    "weird-json": "^2.0.2"
   }
 }

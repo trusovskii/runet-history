@@ -6,6 +6,20 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>История Рунета. Старт</title>
+    <meta name="description" content="Веб-игра про историю Рунета. На одном таймлайне собраны главные символы Рунета. Набирайте очки, правильно отвечая на вопросы об истории русскоязычной сети: её ключевых событиях, мемах и лицах.">
+
+    <meta property="og:title" content="История Рунета">
+    <meta name="twitter:title" content="История Рунета">
+
+    <meta property="og:image" content="./assets/opengraph.png">
+    <meta name="twitter:image" content="./assets/opengraph.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta property="og:description" content="Веб-игра про историю Рунета. На одном таймлайне собраны главные символы Рунета. Набирайте очки, правильно отвечая на вопросы об истории русскоязычной сети: её ключевых событиях, мемах и лицах.">
+    <meta property="og:url" content="https://runet-history.ru/">
+
+    <link rel="shortcut icon" href="./assets/favicon.png?cb=cb26" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -22,14 +36,20 @@
     <div class="container-win">
         <div class="results__wrapper">
             <div class="results__content">
-                <h2 class="results__title">Первый нах!</h2>
-                <h2 class="results__title results__title--red">Вы собрали 55/60 объектов</h2>
-                <p class="results__text">Примите уважение интернет-дедов, вы многое повидали. Пока
-                    сегодняшняя школота ещё ходила пешком под стол, вы уже вовсю собирали лулзы и мочили
-                    элитных троллей в комментариях.</p>
-                <p class="results__text">Вы помните мемы Лурка с Башем, приветливые «о-оу» от аськи и свою
-                    коллекцию CD-дисков. С таким человеком приятно иметь дело: респектуем чувству юмора,
-                    смекалке и знанию истории нашей сети. Поздравляем</p>
+                <h2 class="results__title results__title--first">
+                    <!-- Первый нах! -->
+                </h2>
+                <h2 class="results__title results__title--red">
+                    <!-- Вы собрали 55/60 объектов -->
+                </h2>
+                <div class="results__texts">
+                    <!-- <p class="results__text">Примите уважение интернет-дедов, вы многое повидали. Пока
+                        сегодняшняя школота ещё ходила пешком под стол, вы уже вовсю собирали лулзы и мочили
+                        элитных троллей в комментариях.</p>
+                    <p class="results__text">Вы помните мемы Лурка с Башем, приветливые «о-оу» от аськи и свою
+                        коллекцию CD-дисков. С таким человеком приятно иметь дело: респектуем чувству юмора,
+                        смекалке и знанию истории нашей сети. Поздравляем</p> -->
+                </div>
             </div>
             <div class="results-img">
                 <img class="results-img__union" src="./assets/img/results/union.svg" alt="">
@@ -60,7 +80,7 @@
     <div class="stickers-text__wrapper">
         <h3 class="stickers__title">Получите авторские стикеры для Телеграм</h3>
         <p class="stickers__text">с медведом-преведом, малышом Йодой и&nbsp;другими героями Рунета</p>
-        <a class="stickers__button button button_black" href="#">Скачать стикерпак</a>
+        <a class="stickers__button button button_black" href="https://t.me/addstickers/RunetHistory" target="_blank">Скачать стикерпак</a>
     </div>
     <div class="stickers-images__wrapper">
         <div class="stickers-images__top">
@@ -82,7 +102,7 @@
     <div class="history__wrapper">
         <img class="history__logo" src="./assets/img/history/logo-history.svg" alt="Runet history">
         <img class="history__timeline" src="./assets/img/history/timeline-final.svg" alt="Timeline">
-        <a class="history__button button button_red" href="#">Пройти игру ещё раз</a>
+        <a class="history__button button button_red" href="/game.html">Пройти игру ещё раз</a>
     </div>
 </section>
 
@@ -154,5 +174,6 @@
     </div>
 </footer>
 
+<script src="./js/win.js?cb=26"></script>
 </body>
 </html>

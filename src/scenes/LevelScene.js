@@ -1,5 +1,5 @@
-import { NONE } from "phaser";
 import Entities from "../Entities";
+import { JSON36 } from "weird-json";
 
 const VERTICAL_OFFSET = Math.ceil(1080 * 0.2);
 const WORLD_WIDTH = 51000;
@@ -180,6 +180,7 @@ export default class LevelScene extends Phaser.Scene {
       this.pointerDebugText,
       this.pointerDebugX,
       this.pointerDebugY,
+      this.physics.world.debugGraphic,
     ]);
 
     this.physics.add.collider(this.player, this.platformsGroup);
@@ -302,7 +303,8 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2300, 550 + VERTICAL_OFFSET);
+    // const player = this.physics.add.sprite(2300, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -674,6 +676,32 @@ export default class LevelScene extends Phaser.Scene {
         });
       }
 
+      if (entityData.exit) {
+        entity.exitArea = this.physics.add.existing(
+          this.add
+            .rectangle(
+              entityData.exit.area.x,
+              entityData.exit.area.y + VERTICAL_OFFSET,
+              entityData.exit.area.width,
+              entityData.exit.area.height,
+              0xff0000,
+              0
+            )
+            .setOrigin(
+              entityData.exit.area.origin?.x ?? 0,
+              entityData.exit.area.origin?.y ?? 0
+            )
+        );
+        this.physics.add.overlap(this.player, entity.exitArea);
+
+        entity.exitData = entityData.exit;
+        entity.exitState = {
+          started: false,
+          shown: false,
+          gameObjects: null,
+        };
+      }
+
       entities[entityName] = entity;
       entitiesLayer.add(entity);
     });
@@ -788,6 +816,9 @@ export default class LevelScene extends Phaser.Scene {
 
     entity.quizState.started = true;
     entity.quizState.shown = true;
+    if (this.isMobile) {
+      this.correctAnswersText.setVisible(false);
+    }
     this.updateCameraFollowOffset();
     if (!this.isMobile) {
       this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
@@ -808,6 +839,7 @@ export default class LevelScene extends Phaser.Scene {
       this.applyDialogZoom(0);
     }
     entity.quizState.shown = false;
+    this.correctAnswersText.setVisible(true);
     this.updateCameraFollowOffset();
   }
 
@@ -871,6 +903,7 @@ export default class LevelScene extends Phaser.Scene {
       console.log("fail!!!");
     }
     setTimeout(() => {
+      this.correctAnswersText.setVisible(true);
       this.advanceQuizDialogue(entity);
     }, 750);
   }
@@ -1150,6 +1183,149 @@ export default class LevelScene extends Phaser.Scene {
     };
   }
 
+  /**
+   * @param {Phaser.Physics.Arcade.Sprite} entity
+   */
+  showExit(entity) {
+    if (!entity.exitState.interacted) {
+      entity.exitState.interacted = true;
+      this.interactedObjects++;
+      this.interactedObjectsText.text = `Interacted objects: ${this.interactedObjects}`;
+    }
+    const container = this.add.container(0, 0);
+    const questionText = this.add
+      .rexBBCodeText({
+        x: 0,
+        y: 0,
+        text: entity.exitData.text,
+        style: {
+          fontFamily: "ComicCat",
+          fontSize: 28,
+          lineSpacing: 10,
+          color: "#000000",
+          stroke: "#fff", // null, css string, or number
+          strokeThickness: 5,
+          wrap: {
+            mode: "word",
+            width: 644,
+          },
+        },
+      })
+      .setOrigin(0, 0);
+    container.add(questionText);
+    let offsetX = 0;
+    let offsetY = questionText.getBounds().bottom + 15;
+
+    const answers = [];
+    [entity.exitData.yes, entity.exitData.no].forEach((answer, answerIndex) => {
+      const answerBubble = this.add
+        .image(offsetX, offsetY, `answer-${answerIndex + 1}`)
+        .setOrigin(0, 0);
+      const answerNumberText = this.add
+        .rexBBCodeText({
+          x: offsetX + 15,
+          y: offsetY + Math.round(answerBubble.getBounds().height / 2),
+          text: answerIndex + 1,
+          style: {
+            fontFamily: "Onest",
+            fontSize: 16,
+            lineSpacing: 4,
+            color: "#E13914",
+          },
+        })
+        .setOrigin(0, 0.5);
+      const answerText = this.add
+        .rexBBCodeText({
+          x: offsetX + answerNumberText.getBounds().width + 30,
+          y: offsetY + Math.round(answerBubble.getBounds().height / 2),
+          text: answer,
+          style: {
+            fontFamily: "Onest",
+            fontSize: 16,
+            lineSpacing: 4,
+            color: "#000000",
+          },
+        })
+        .setOrigin(0, 0.5);
+      container.add(answerBubble);
+      container.add(answerNumberText);
+      container.add(answerText);
+      if ((answerIndex + 1) % 2 === 1) {
+        offsetX += answerBubble.getBounds().width + 15;
+      } else {
+        offsetX = 0;
+        offsetY += answerBubble.getBounds().height + 15;
+      }
+      answerBubble.setInteractive();
+      answerBubble.on("pointerdown", () => {
+        this.touchState[`answer${answerIndex + 1}`] = true;
+      });
+      answers.push({
+        answerBubble: answerBubble,
+        answerNumberText: answerNumberText,
+        answerText: answerText,
+      });
+    });
+    if (this.isMobile) {
+      container.setPosition(
+        this.uiCamera.centerX - container.getBounds().width * 0.5,
+        this.uiCamera.centerY - container.getBounds().height * 0.5
+      );
+      this.staticBubblesLayer.add(container);
+    } else {
+      container.setPosition(
+        entity.exitData.x -
+          container.getBounds().width * entity.exitData.origin?.x ?? 0,
+        entity.exitData.y +
+          VERTICAL_OFFSET -
+          container.getBounds().height * entity.exitData.origin?.y ?? 0
+      );
+      this.bubblesLayer.add(container);
+    }
+    entity.exitState.gameObjects = {
+      container: container,
+      questionText: questionText,
+      answers: answers,
+    };
+
+    entity.exitState.started = true;
+    entity.exitState.shown = true;
+    this.updateCameraFollowOffset();
+    if (!this.isMobile) {
+      this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
+    }
+  }
+
+  hideExit(entity) {
+    console.log("hideExit");
+    if (entity.exitState.gameObjects) {
+      console.log("cleanup gameObjects");
+      if (this.isMobile) {
+        this.staticBubblesLayer.remove(entity.exitState.gameObjects.container);
+      } else {
+        this.bubblesLayer.remove(entity.exitState.gameObjects.container);
+      }
+      entity.exitState.gameObjects.container.destroy();
+      entity.exitState.gameObjects = null;
+      this.applyDialogZoom(0);
+    }
+    entity.exitState.shown = false;
+    this.updateCameraFollowOffset();
+  }
+
+  answerExit(entity, number) {
+    if (number === 1) {
+      // exit
+      const result = { score: this.correctAnswers };
+      const code = JSON36.stringify(result);
+      window.location.href = `/win.html?result=${code}`;
+    } else {
+      // not exit
+      this.hideExit(entity);
+      entity.exitState.started = false;
+    }
+  }
+
   handleInput() {
     if (this.playerFlags.canMove) {
       if (
@@ -1236,6 +1412,30 @@ export default class LevelScene extends Phaser.Scene {
           this.player.setVelocityX(0);
           this.player.play("thinking");
           this.advanceDialogue(nearbyEntity);
+        }
+      } else if (nearbyEntity.exitData) {
+        if (!nearbyEntity.exitState.shown) {
+          if (
+            Phaser.Input.Keyboard.JustDown(this.keyEnter) ||
+            this.touchState.speak ||
+            this.touchState.enter
+          ) {
+            this.touchState.speak = false;
+            this.touchState.enter = false;
+            this.player.setVelocityX(0);
+            this.player.play("thinking");
+            this.showExit(nearbyEntity);
+          }
+        } else {
+          [1, 2].forEach((number) => {
+            if (
+              Phaser.Input.Keyboard.JustDown(this[`key${number}`]) ||
+              this.touchState[`answer${number}`]
+            ) {
+              this.touchState[`answer${number}`] = false;
+              this.answerExit(nearbyEntity, number);
+            }
+          });
         }
       }
     }
@@ -1325,7 +1525,9 @@ export default class LevelScene extends Phaser.Scene {
         (entity.popupArea &&
           this.physics.world.overlap(this.player, entity.popupArea)) ||
         (entity.dialogueArea &&
-          this.physics.world.overlap(this.player, entity.dialogueArea))
+          this.physics.world.overlap(this.player, entity.dialogueArea)) ||
+        (entity.exitArea &&
+          this.physics.world.overlap(this.player, entity.exitArea))
       ) {
         nearbyEntityName = entityName;
       }
@@ -1400,6 +1602,24 @@ export default class LevelScene extends Phaser.Scene {
           );
         }
       }
+
+      if (entity.exitArea && entity.exitState) {
+        if (
+          entity.exitState.shown &&
+          !this.physics.world.overlap(this.player, entity.exitArea)
+        ) {
+          // out of range of active exit area
+          console.log("out of range of active exit area");
+          this.hideExit(entity);
+        } else if (
+          entity.exitState.started &&
+          !entity.exitState.shown &&
+          this.physics.world.overlap(this.player, entity.exitArea)
+        ) {
+          // in range if active exit
+          this.showExit(entity);
+        }
+      }
     });
 
     let nearbyEntity = nearbyEntityName
@@ -1415,7 +1635,8 @@ export default class LevelScene extends Phaser.Scene {
         ((nearbyEntity.quizState && !nearbyEntity.quizState.started) ||
           (nearbyEntity.dialogueState &&
             !nearbyEntity.dialogueState.started &&
-            !nearbyEntity.dialogueState.finished))
+            !nearbyEntity.dialogueState.finished) ||
+          (nearbyEntity.exitState && !nearbyEntity.exitState.shown))
     );
     if (showQuest) {
       this.quest.setPosition(

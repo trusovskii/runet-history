@@ -1,9 +1,68 @@
 const path = require("path");
-const { src, dest, task, series, watch } = require("gulp");
+const { src, dest, task, series, watch, parallel } = require("gulp");
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 const browserSync = require("browser-sync");
 const sass = require("gulp-sass")(require("sass"));
+
+const makeWebpackStream = () =>
+  webpackStream(
+    {
+      mode: process.env.NODE_ENV,
+      entry: {
+        game: "./src/Game.js",
+        win: "./src/win.js",
+      },
+      output: {
+        filename: `[name].js`,
+        publicPath: "js/",
+        chunkFilename: `js/chunks/[name][id].chunk.[chunkhash].js`,
+      },
+      resolve: {
+        alias: {
+          Phaser: "phaser",
+          "@": path.resolve(__dirname, "src"),
+          node_modules: path.resolve(__dirname, "node_modules"),
+        },
+        extensions: [".js"],
+        // modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /(node_modules)/,
+            loader: "babel-loader",
+            query: {
+              presets: [
+                [
+                  "@babel/preset-env",
+                  {
+                    useBuiltIns: "usage",
+                    corejs: 3,
+                  },
+                ],
+              ],
+            },
+          },
+          {
+            test: /\.css$/,
+            use: ["css-loader"],
+          },
+          {
+            test: /\.svg$/,
+            use: ["babel-loader"],
+          },
+        ],
+      },
+      plugins: [
+        new webpack.ProvidePlugin({
+          Phaser: "phaser",
+        }),
+      ],
+    },
+    webpack
+  );
 
 task("server", function () {
   browserSync({
@@ -14,65 +73,9 @@ task("server", function () {
   watch("*.html").on("change", browserSync.reload);
 });
 
-task("game", function () {
-  return src("src/Game.js")
-    .pipe(
-      webpackStream(
-        {
-          mode: process.env.NODE_ENV,
-          resolve: {
-            alias: {
-              Phaser: "phaser",
-              "@": path.resolve(__dirname, "src"),
-              "@assets": path.resolve(__dirname, "assets"),
-              "@templates": path.resolve(__dirname, "templates"),
-              node_modules: path.resolve(__dirname, "node_modules"),
-            },
-            extensions: [".js"],
-            // modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-          },
-          output: {
-            filename: "game.js",
-            publicPath: "js/",
-            chunkFilename: "js/chunks/[id].chunk.[chunkhash].js",
-          },
-          module: {
-            rules: [
-              {
-                test: /\.js$/,
-                exclude: /(node_modules)/,
-                loader: "babel-loader",
-                query: {
-                  presets: [
-                    [
-                      "@babel/preset-env",
-                      {
-                        useBuiltIns: "usage",
-                        corejs: 3,
-                      },
-                    ],
-                  ],
-                },
-              },
-              {
-                test: /\.css$/,
-                use: ["css-loader"],
-              },
-              {
-                test: /\.svg$/,
-                use: ["babel-loader"],
-              },
-            ],
-          },
-          plugins: [
-            new webpack.ProvidePlugin({
-              Phaser: "phaser",
-            }),
-          ],
-        },
-        webpack
-      )
-    )
+task("js", function () {
+  return src(["src/Game.js", "src/win.js"])
+    .pipe(makeWebpackStream())
     .pipe(dest("dist/js/"));
 });
 
@@ -90,11 +93,18 @@ task("styles", function () {
     .pipe(dest("dist/assets/css"));
 });
 
-task("watch", function () {
-  watch(["src/**/*"], series("game"));
-  watch(["pages/**/*"], series("pages"));
-  watch(["assets/**/*"], series("assets"));
-  watch(["src/sass/**/*.+(scss|sass)"], series("styles"));
-});
+task("default", series("js", "pages", "assets", "styles"));
 
-task("default", series("game", "pages", "assets", "styles", "server"));
+task(
+  "watch",
+  parallel(
+    "default",
+    function () {
+      watch(["src/**/*"], series("js"));
+      watch(["pages/**/*"], series("pages"));
+      watch(["assets/**/*"], series("assets"));
+      watch(["src/sass/**/*.+(scss|sass)"], series("styles"));
+    },
+    "server"
+  )
+);
