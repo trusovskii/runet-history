@@ -1654,7 +1654,8 @@ export default class LevelScene extends Phaser.Scene {
           !nearbyEntity.quizState.finished &&
           (!nearbyEntity.quizState.started ||
             nearbyEntity.quizState.answered)) ||
-          nearbyEntity.dialogueState)
+          nearbyEntity.dialogueState ||
+          (nearbyEntity.exitState && !nearbyEntity.exitState.shown))
     );
     if (this.isMobile && this.controls.speak.visible !== showSpeak) {
       console.log("speak.setVisible:", showSpeak);
