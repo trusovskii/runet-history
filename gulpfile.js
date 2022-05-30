@@ -8,7 +8,7 @@ const sass = require("gulp-sass")(require("sass"));
 const makeWebpackStream = () =>
   webpackStream(
     {
-      mode: process.env.NODE_ENV,
+      mode: 'production',
       entry: {
         game: "./src/Game.js",
         win: "./src/win.js",

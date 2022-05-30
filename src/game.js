@@ -1,3 +1,4 @@
+import './polyfill';
 import BootScene from "./scenes/BootScene";
 import LoadingScene from "./scenes/LoadingScene";
 import LevelScene from "./scenes/LevelScene";

@@ -1,3 +1,4 @@
+import './polyfill';
 import { JSON36 } from "weird-json";
 
 window.addEventListener("DOMContentLoaded", () => {
