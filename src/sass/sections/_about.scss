@@ -1,7 +1,6 @@
 .about {
   margin-top: 40px;
 
-
   @media screen and (min-width: 768px) {
     margin-top: 60px;
   }
@@ -9,6 +8,9 @@
   @media screen and (min-width: 1280px) {
     margin-top: 0;
     width: 100%;
+
+    // TODO: проработать на бОльших разрешениях
+    margin-bottom: -200px;
   }
 
   &-item {
@@ -41,17 +43,15 @@
 
       &_fox {
         position: absolute;
-        top: -130px;
+        top: -67px;
+        left: -60px;
 
         @media screen and (min-width: 375px) {
           left: -60px;
         }
 
         @media screen and (min-width: 425px) {
-          left: -60px;
-        }
-
-        @media screen and (min-width: 480px) {
+          top: -100px;
           left: -60px;
         }
 
@@ -91,11 +91,56 @@
           top: -40px;
         }
 
+        @media screen and (min-width: 1600px) {
+          width: 135px;
+          right: -30px;
+          top: -50px;
+        }
+
+        @media screen and (min-width: 1600px) {
+          top: -100px;
+        }
+
         img {
           height: 382px;
 
           @media screen and (min-width: 1280px) {
             height: 231px;
+          }
+
+          @media screen and (min-width: 1600px) {
+            width: 135px;
+            height: 315px;
+          }
+
+          @media screen and (min-width: 1600px) {
+            height: 377px;
+          }
+        }
+      }
+
+      &_lebedev {
+        width: 240px;
+        height: 213px;
+
+        @media screen and (min-width: 1280px) {
+          margin-right: auto;
+        }
+      }
+
+      &_devil {
+        img {
+          width: 107px;
+          height: 154px;
+
+          @media screen and (min-width: 480px) {
+            width: 145px;
+            height: 208px;
+          }
+
+          @media screen and (min-width: 1366px) {
+            width: 120px;
+            height: 173px;
           }
         }
       }
@@ -165,9 +210,12 @@
       color: #000000;
       margin-top: 8px;
 
-      @media screen and (min-width: 425px) {
+      @media screen and (min-width: 1024px) {
+        font-size: 24px;
+      }
+
+      @media screen and (min-width: 1366px) {
         font-size: 28px;
-        line-height: 130%;
       }
 
       &_red {
@@ -176,6 +224,7 @@
     }
 
     &_fawkes {
+
       @media screen and (min-width: 768px) {
         padding-right: 140px;
       }
@@ -183,6 +232,12 @@
       @media screen and (min-width: 1280px) {
         padding-right: 0;
         margin-top: -155px;
+      }
+
+      @media screen and (min-width: 1600px) {
+        .about-item__title {
+          gap: 70px;
+        }
       }
     }
 
@@ -210,10 +265,6 @@
         margin-top: 100px;
         gap: 50px;
         flex-direction: row-reverse;
-
-        > .about-item__img {
-          padding-top: 70px;
-        }
       }
 
       @media screen and (min-width: 1280px) {
@@ -238,6 +289,65 @@
 
       @media screen and (min-width: 1600px) {
         margin-top: -150px;
+      }
+    }
+  }
+
+  &-timeline {
+    position: relative;
+    display: block;
+
+    .timeline-top,
+    .timeline-bottom {
+      display: none;
+    }
+
+    @media screen and (min-width: 1280px) {
+      .timeline-top {
+        display: block;
+        position: absolute;
+        top: -1100px;
+        right: -30%;
+      }
+      .timeline-bottom{
+        display: block;
+        position: absolute;
+        top: 460px;
+        right: -30%;
+      }
+    }
+
+    @media screen and (min-width: 1366px) {
+      .timeline-top,
+      .timeline-bottom {
+        display: none;
+      }
+    }
+
+    .timeline-first {
+      position: absolute;
+      top: -1000px;
+      right: -30%;
+      display: none;
+
+      @media screen and (min-width: 1366px) {
+        display: block;
+        top: -1231px;
+        right: -33%;
+      }
+
+      @media screen and (min-width: 1440px) {
+        right: -22%;
+      }
+
+      @media screen and (min-width: 1600px) {
+        top: -1264px;
+        right: -20%;
+      }
+
+      @media screen and (min-width: 1920px) {
+        top: -1160px;
+        right: -7%;
       }
     }
   }

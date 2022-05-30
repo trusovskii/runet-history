@@ -303,8 +303,8 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(2300, 550 + VERTICAL_OFFSET);
-    // const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
+    // const player = this.physics.add.sprite(2300, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -902,14 +902,18 @@ export default class LevelScene extends Phaser.Scene {
       ].answerNumberText.setColor("#FFFFFF");
       console.log("fail!!!");
     }
-    setTimeout(() => {
-      this.correctAnswersText.setVisible(true);
+    this.advanceQuizDialogueTimeout = setTimeout(() => {
+      this.advanceQuizDialogueTimeout = null;
       this.advanceQuizDialogue(entity);
     }, 750);
   }
 
   advanceQuizDialogue(entity) {
     console.log("advanceQuizDialogue start");
+    if (this.advanceQuizDialogueTimeout) {
+      clearTimeout(this.advanceQuizDialogueTimeout);
+      this.advanceQuizDialogueTimeout = null;
+    }
     if (entity.quizState.gameObjects) {
       console.log("cleanup gameObjects");
       if (this.isMobile) {
@@ -934,11 +938,13 @@ export default class LevelScene extends Phaser.Scene {
       if (!this.isMobile) {
         this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
       }
+      this.correctAnswersText.setVisible(false);
       entity.quizState.shown = true;
     } else {
       console.log("No more lines of dialogue");
       entity.quizState.finished = true;
       entity.quizState.shown = false;
+      this.correctAnswersText.setVisible(true);
       this.applyDialogZoom(0);
     }
     console.log("advanceQuizDialogue end");
@@ -958,6 +964,7 @@ export default class LevelScene extends Phaser.Scene {
       this.applyDialogZoom(0);
     }
     entity.quizState.shown = false;
+    this.correctAnswersText.setVisible(true);
     this.updateCameraFollowOffset();
   }
 

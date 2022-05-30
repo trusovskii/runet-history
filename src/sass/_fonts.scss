@@ -10,12 +10,10 @@
 
 @font-face {
   font-family: 'Comic CAT';
-  src: url('../fonts/ComicCAT.eot');
-  src: url('../fonts/ComicCAT.eot');
-  src: url('../fonts/ComicCAT.eot?#iefix') format('embedded-opentype'),
-  url('../fonts/ComicCAT.ttf') format('truetype');
+  src: url('../fonts/ComicCAT.woff2') format('woff2'),
+       url('../fonts/ComicCAT.woff') format('woff');
   font-weight: normal;
-  font-style: italic;
+  font-style: normal;
   font-display: swap;
 }
 

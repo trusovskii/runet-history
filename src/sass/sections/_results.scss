@@ -52,6 +52,7 @@
     line-height: 130%;
     color: #000000;
     margin-top: 8px;
+    word-break: keep-all;
 
     &:first-of-type {
       margin-top: 25px;
@@ -79,7 +80,7 @@
 
   &__dance {
     position: absolute;
-    top: -80px;
+    top: -50px;
     left: 0;
   }
 

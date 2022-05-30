@@ -2,37 +2,73 @@
   margin-top: 48px;
   width: 100%;
 
-  @media screen and (min-width: 1600px) {
-    margin-top: 100px;
-  }
+  &--index {
+    @media screen and (min-width: 1280px) {
+      margin-top: 150px;
+    }
 
-  @media screen and (min-width: 1920px) {
-    margin-top: 150px;
+    @media screen and (min-width: 1366px) {
+      margin-top: 250px;
+    }
+
+    @media screen and (min-width: 1600px) {
+      margin-top: 370px;
+    }
+
+    @media screen and (min-width: 1920px) {
+      margin-top: 370px;
+    }
   }
 
   &-images {
     display: flex;
-    flex-wrap: nowrap;
     justify-content: center;
+    align-items: flex-end;
 
     @media screen and (min-width: 1280px) {
-      justify-content: space-evenly;
-      align-items: flex-end;
+      justify-content: space-between;
     }
 
     &__grogu {
-      width: 100px;
-      height: 112px;
+      width: 112.13px;
+      height: 99.92px;
     }
-    &__seeds {}
-    &__callcenter {
+
+    &__seeds {
+      width: 160px;
+      height: 118px;
+
+      @media screen and (min-width: 480px) {
+        width: 240px;
+        height: 177px;
+      }
+
+      @media screen and (min-width: 1024px) {
+        width: 288px;
+        height: 213px;
+      }
+
       @media screen and (min-width: 1280px) {
-        padding-bottom: 100px;
+        margin-left: 150px;
+      }
+
+      @media screen and (min-width: 1920px) {
+        margin-left: 200px;
+      }
+    }
+
+    &__callcenter {
+      width: 264px;
+      height: 279px;
+      margin-bottom: 100px;
+
+      @media screen and (min-width: 1920px) {
+        width: 354px;
+        height: 373px;
       }
     }
 
     img {
-      width: 160px;
 
       &:nth-child(2n+1) {
         display: none;
@@ -42,9 +78,9 @@
         }
       }
 
-      @media screen and (min-width: 480px) {
-        width: 240px;
-      }
+      //@media screen and (min-width: 480px) {
+      //  width: 240px;
+      //}
     }
   }
 
@@ -115,6 +151,19 @@
       margin: 58px 0;
       font-size: 18px;
       line-height: 130%;
+    }
+
+    &__text {
+      a {
+        color: black;
+        
+        &:hover {
+          color: #E13914;
+        }
+      }
+      &--white {
+        color: #FFFFFF;
+      }
     }
   }
 }

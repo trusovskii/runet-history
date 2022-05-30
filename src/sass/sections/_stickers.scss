@@ -1,6 +1,7 @@
 .stickers {
+  position: relative;
   margin-top: 50px;
-  background: #EEEEEE;
+  background: #eee;
   border-radius: 48px;
   padding: 40px 20px;
   text-align: center;
@@ -23,7 +24,6 @@
 
   &__title {
     font-family: 'Comic CAT', sans-serif;
-    font-style: italic;
     font-weight: 400;
     font-size: 24px;
     line-height: 120%;
@@ -72,9 +72,14 @@
 
 .stickers-images {
   &__wrapper {
-    position: relative;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: center;
+    pointer-events: none;
   }
 
   &__top,
@@ -82,12 +87,42 @@
   &__bottom {
     display: none;
     position: absolute;
+
+    .omskbird {
+      width: 126.75px;
+      height: 128.31px;
+    }
+
+    .grogu {
+      //width: 122.12px;
+      //height: 108.81px;
+    }
+
+    .ugh {
+      width: 82px;
+      height: 100px;
+    }
+
+    .medved {
+      width: 200px;
+      height: 172px;
+    }
+
+    .trollface {
+      width: 132px;
+      height: 110.85px;
+    }
+
+    .dvachtyan {
+      width: 176.44px;
+      height: 157.09px;
+    }
   }
 
   &__top {
     @media screen and (min-width: 1280px) {
       display: flex;
-      top: -390px;
+      top: -60px;
       gap: 1000px;
     }
   }
@@ -95,7 +130,8 @@
   &__middle {
     @media screen and (min-width: 1600px) {
       display: flex;
-      top: -200px;
+      top: 60%;
+      transform: translate3d(0, -50%, 0);
       gap: 1200px;
     }
   }
@@ -103,7 +139,8 @@
   &__bottom {
     @media screen and (min-width: 1024px) {
       display: flex;
-      top: -70px;
+      align-items: center;
+      bottom: -65px;
       gap: 510px;
     }
   }

@@ -1,0 +1,180 @@
+.again {
+
+  &__wrapper {
+    padding: 30px 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+
+
+    @media screen and (min-width: 1366px) {
+      padding: 0;
+      flex-direction: row-reverse;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+  }
+
+  &__image {
+    width: 231px;
+
+    @media screen and (min-width: 480px) {
+      width: 315px;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 388px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 487px;
+    }
+
+    @media screen and (min-width: 1366px) {
+      width: 675px;
+      position: absolute;
+      right: -156px;
+      bottom: 69px;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+
+    @media screen and (min-width: 1366px) {
+      align-items: flex-start;
+      margin: 140px 0 0 86px;
+
+    }
+  }
+
+  &__title {
+
+    h1 {
+      font-family: 'Comic CAT', sans-serif;
+      font-weight: 400;
+      font-size: 36px;
+      line-height: 120%;
+      text-align: center;
+      text-transform: uppercase;
+      color: #FFFFFF;
+
+      @media screen and (min-width: 480px) {
+        font-size: 40px;
+      }
+
+      @media screen and (min-width: 768px) {
+        font-size: 60px;
+        line-height: 110%;
+      }
+
+      @media screen and (min-width: 1366px) {
+        font-size: 78px;
+        line-height: 110%;
+      }
+    }
+  }
+
+  &__text {
+    margin-top: 12px;
+    font-family: 'Onest', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    text-align: center;
+    color: #FFFFFF;
+
+    @media screen and (min-width: 480px) {
+      font-size: 28px;
+    }
+  }
+}
+
+.again-content {
+  margin-top: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media screen and (min-width: 480px) {
+    margin-top: 56px;
+  }
+
+  @media screen and (min-width: 1366px) {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 200px;
+    margin: 411px 0 0 86px;
+  }
+
+  &__player {
+    width: 87px;
+
+    @media screen and (min-width: 480px) {
+      width: 130px;
+    }
+
+    @media screen and (min-width: 1366px) {
+      width: 190px;
+      align-self: center;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__button {
+    margin-top: 25px;
+    font-size: 20px;
+    line-height: 130%;
+
+    @media screen and (min-width: 480px) {
+      margin-top: 40px;
+      font-size: 34px;
+    }
+
+    @media screen and (min-width: 1366px) {
+      padding: 8px 0;
+    }
+  }
+
+  &__timeline {
+    display: none;
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    margin: 0 -10px;
+    pointer-events: none;
+
+    @media screen and (min-width: 768px) {
+      display: inline;
+    }
+
+    @media screen and (min-width: 1152px) {
+      bottom: 100px;
+    }
+
+    @media screen and (min-width: 1280px) {
+      bottom: 350px;
+    }
+
+    @media screen and (min-width: 1366px) {
+      bottom: 105px;
+      left: -537px;
+    }
+  }
+}
