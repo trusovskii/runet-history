@@ -1323,9 +1323,12 @@ export default class LevelScene extends Phaser.Scene {
   answerExit(entity, number) {
     if (number === 1) {
       // exit
-      const result = { score: this.correctAnswers };
+      const result = {
+        score: this.correctAnswers,
+        r: Math.round(Math.random() * 100000),
+      };
       const code = JSON36.stringify(result);
-      window.location.href = `/win.html?result=${code}`;
+      window.location.href = `/win/?result=${code}`;
     } else {
       // not exit
       this.hideExit(entity);

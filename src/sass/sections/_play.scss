@@ -83,8 +83,12 @@
     &__wrapper {
       position: relative;
 
+      img {
+        animation: spin 3s infinite linear paused;
+      }
+
       &:hover img {
-        animation: spin 3s infinite linear;
+        animation-play-state: running;
       }
     }
 
