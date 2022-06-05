@@ -5,15 +5,15 @@ export default {
     sprite: "year_1990",
   },
   doggo: {
-    x: 1400,
+    x: 1316,
     y: 960,
     sprite: "doggo",
     quiz: {
-      x: 1134,
-      y: 778,
+      x: 1110,
+      y: 760,
       origin: { x: 0, y: 1 },
       area: {
-        x: 1270,
+        x: 1245,
         y: 960,
         width: 270,
         height: 500,
@@ -208,7 +208,7 @@ export default {
         `«Самая честная студия»`,
         `«Просто Зая»`,
       ],
-      correctNumber: 2, 
+      correctNumber: 2,
       correctAnswerLines: [
         "Конечно же, [color=#3C7726]WebDesign[/color]. Тёма Лебедев — дизайнер, автор книги «Ководство», путешественник и эпатажный тролль Рунета. Артемий открыл одну из первых в России студий веб-дизайна. Он и его сотрудники изобрели «резиновую» вёрстку, создали дизайн-код Москвы и запустили ещё 4760 проекта. Лебедев 20 лет вёл дневник в «Живом Журнале», а сейчас выпускает «Самые честные новости» на своём канале в Youtube.",
       ],
@@ -322,10 +322,18 @@ export default {
       ],
     },
   },
-  Krovatka_1997: {
-    x: 4600,
-    y: 965,
-    sprite: "Krovatka_1997",
+  krovatka: {
+    x: 4804,
+    y: 708,
+    sprite: "krovatka",
+    atlas: "creatures4",
+    frame: {
+      start: 0,
+      end: 8,
+      rate: 4
+    },
+    scale: 0.75,
+    yoyo: false,
     colliders: [{ x: 4630, y: 813, width: 153, height: 210 }],
     quiz: {
       x: 4800,
@@ -371,7 +379,6 @@ export default {
       },
       quiestion: "[stroke]Чем известен питерский провайдер «Дукс»?[/stroke]",
       answers: [
-        
         `Внедрением «Тетриса»\nна компьютер «Электроника-60»`,
         `Организацией чемпионата\nпо классическому тетрису`,
         `Созданием игры\n«Тетрис для двоих»`,
@@ -714,9 +721,16 @@ export default {
     },
   },
   live_journal_1999: {
-    x: 10450,
-    y: 270,
-    sprite: "live-journal-1999",
+    // x: 46600,
+    x: 10400,
+    y: 210,
+    sprite: "jj",
+    atlas: "creatures",
+    frame: {
+      start: 0,
+      end: 12,
+      rate: 10
+    },
     quiz: {
       x: 10200,
       y: 136,
@@ -873,18 +887,24 @@ export default {
     y: 1060,
     sprite: "year_2000",
   },
-  tsy_thsy: {
-    x: 12030,
-    y: 957,
-    sprite: "tsy_thsy",
+  tsa: {
+    x: 12350,
+    y: 540,
+    sprite: "tsa",
+    atlas: "creatures5",
+    frame: {
+      start: 0,
+      end: 9,
+      rate: 3
+    },
     quiz: {
-      x: 12000,
-      y: 800,
+      x: 12060,
+      y: 770,
       origin: { x: 0, y: 1 },
       area: {
-        x: 11970,
+        x: 12030,
         y: 950,
-        width: 470,
+        width: 620,
         height: 500,
         origin: { x: 0, y: 1 },
       },
@@ -1052,17 +1072,24 @@ export default {
       ],
     },
   },
-  rutracker_2004: {
-    x: 13800,
-    y: 440,
-    sprite: "rutracker_2004",
-    colliders: [{ x: 13800, y: 440, width: 550, height: 100 }],
+  rutracker: {
+    x: 14074,
+    y: 416,
+    sprite: "rutracker",
+    atlas: "creatures4",
+    frame: {
+      start: 0,
+      end: 6,
+      rate: 3
+    },
+    yoyo: false,
+    colliders: [{ x: 13800, y: 432, width: 550, height: 80 }],
     quiz: {
       x: 13755,
       y: 233,
       origin: { x: 0, y: 1 },
       area: {
-        x: 13810,
+        x: 13800,
         y: 380,
         width: 550,
         height: 500,
@@ -1115,11 +1142,17 @@ export default {
       ],
     },
   },
-  runet_2004: {
-    x: 15300,
-    y: 960,
-    sprite: "runet_2004",
-    colliders: [{ x: 15300, y: 910, width: 115, height: 300 }],
+  runet: {
+    x: 15350,
+    y: 800,
+    sprite: "runet",
+    atlas: "creatures",
+    frame: {
+      start: 0,
+      end: 3,
+      rate: 1
+    },
+    colliders: [{ x: 15275, y: 940, width: 115, height: 310 }],
     quiz: {
       x: 15060,
       y: 484,
@@ -1179,10 +1212,16 @@ export default {
       ],
     },
   },
-  habr_2006: {
-    x: 16580,
-    y: 510,
-    sprite: "habr_2006",
+  habrPlate: {
+    x: 16880,
+    y: 200,
+    sprite: "habrPlate",
+    atlas: "creatures5",
+    frame: {
+      start: 0,
+      end: 18,
+      rate: 1
+    },
     quiz: {
       x: 16550,
       y: 270,
@@ -1210,6 +1249,12 @@ export default {
       ],
     },
   },
+  habr_2006: {
+    x: 16760,
+    y: 540,
+    sprite: "habr_2006",
+    scale: 0.4
+  },
   orly_2006: {
     x: 16150,
     y: 955,
@@ -1233,11 +1278,19 @@ export default {
       },
     },
   },
-  durov_2006: {
-    x: 17600,
-    y: 970,
-    sprite: "durov_2006",
-    colliders: [{ x: 17620, y: 950, width: 200, height: 300 }],
+  durov: {
+    x: 17735,
+    y: 794,
+    sprite: "durov",
+    atlas: "creatures2",
+    frame: {
+      start: 0,
+      end: 6,
+      rate: 2
+    },
+    yoyo: false,
+    scale: 0.47,
+    colliders: [{ x: 17620, y: 950, width: 200, height: 340 }],
     quiz: {
       x: 17350,
       y: 551,
@@ -1332,18 +1385,26 @@ export default {
     y: 1060,
     sprite: "year_2007",
   },
-  raek_2006: {
-    x: 18800,
-    y: 820,
-    sprite: "raek_2006",
-    colliders: [{ x: 18800, y: 770, width: 500, height: 70 }],
+  raek: {
+    x: 19150,
+    y: 760,
+    sprite: "raek",
+    atlas: "creatures4",
+    frame: {
+      start: 0,
+      end: 13,
+      rate: 4
+    },
+    yoyo: false,
+    scale: 0.8,
+    // colliders: [{ x: 19030, y: 770, width: 170, height: 70 }],
     quiz: {
       x: 18755,
-      y: 620,
+      y: 750,
       origin: { x: 0, y: 1 },
       area: {
-        x: 18800,
-        y: 713,
+        x: 18840,
+        y: 900,
         width: 500,
         height: 380,
         origin: { x: 0, y: 1 },
@@ -1401,10 +1462,18 @@ export default {
     sprite: "dvd_2007",
     colliders: [{ x: 20220, y: 1000, width: 300, height: 300 }],
   },
-  penek_2007: {
-    x: 19670,
-    y: 510,
-    sprite: "penek_2007",
+  potsyk: {
+    x: 19790,
+    y: 496,
+    sprite: "potsyk",
+    atlas: "creatures4",
+    frame: {
+      start: 0,
+      end: 8,
+      rate: 5
+    },
+    scale: 0.45,
+    yoyo: false,
     quiz: {
       x: 19450,
       y: 333,
@@ -1432,10 +1501,18 @@ export default {
       ],
     },
   },
-  lurk_2007: {
-    x: 21000,
-    y: 970,
-    sprite: "lurk_2007",
+  lurk: {
+    x: 21430,
+    y: 536,
+    sprite: "lurk",
+    atlas: "creatures3",
+    frame: {
+      start: 0,
+      end: 13,
+      rate: 5
+    },
+    yoyo: false,
+    scale: 0.9,
     quiz: {
       x: 21030,
       y: 577,
@@ -1487,10 +1564,16 @@ export default {
       ],
     },
   },
-  ypychka_2007: {
-    x: 20700,
-    y: 430,
-    sprite: "ypychka_2007",
+  upyachka: {
+    x: 20820,
+    y: 314,
+    sprite: "upyachka",
+    atlas: "creatures4",
+    frame: {
+      start: 0,
+      end: 7,
+      rate: 2
+    },
     dialogue: {
       x: 20580,
       y: 140,
@@ -2057,10 +2140,17 @@ export default {
     y: 1060,
     sprite: "year_2015",
   },
-  gidra_2015: {
+  gidra: {
     x: 33570,
-    y: 1000,
-    sprite: "gidra_2015",
+    // x: 46600,
+    y: 925,
+    sprite: "gidra",
+    atlas: "creatures",
+    frame: {
+      start: 0,
+      end: 8,
+      rate: 5
+    },
   },
   paket_yrovoy_2016: {
     x: 33747,

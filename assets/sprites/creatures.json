@@ -1,0 +1,566 @@
+{
+	"textures": [
+		{
+			"image": "creatures.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1518,
+				"h": 982
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "gidra7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 140,
+						"y": 135,
+						"w": 454,
+						"h": 298
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 454,
+						"h": 298
+					}
+				},
+				{
+					"filename": "gidra8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 140,
+						"y": 173,
+						"w": 461,
+						"h": 292
+					},
+					"frame": {
+						"x": 457,
+						"y": 1,
+						"w": 461,
+						"h": 292
+					}
+				},
+				{
+					"filename": "gidra5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 143,
+						"y": 145,
+						"w": 451,
+						"h": 268
+					},
+					"frame": {
+						"x": 920,
+						"y": 1,
+						"w": 451,
+						"h": 268
+					}
+				},
+				{
+					"filename": "runet2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 451,
+						"h": 660
+					},
+					"spriteSourceSize": {
+						"x": 129,
+						"y": 155,
+						"w": 119,
+						"h": 333
+					},
+					"frame": {
+						"x": 1373,
+						"y": 1,
+						"w": 119,
+						"h": 333
+					}
+				},
+				{
+					"filename": "jj12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 442,
+						"w": 247,
+						"h": 206
+					},
+					"frame": {
+						"x": 920,
+						"y": 271,
+						"w": 247,
+						"h": 206
+					}
+				},
+				{
+					"filename": "jj4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 184,
+						"y": 407,
+						"w": 174,
+						"h": 235
+					},
+					"frame": {
+						"x": 1169,
+						"y": 271,
+						"w": 174,
+						"h": 235
+					}
+				},
+				{
+					"filename": "runet0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 451,
+						"h": 660
+					},
+					"spriteSourceSize": {
+						"x": 168,
+						"y": 156,
+						"w": 117,
+						"h": 332
+					},
+					"frame": {
+						"x": 1345,
+						"y": 336,
+						"w": 117,
+						"h": 332
+					}
+				},
+				{
+					"filename": "gidra6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 142,
+						"y": 174,
+						"w": 455,
+						"h": 254
+					},
+					"frame": {
+						"x": 457,
+						"y": 295,
+						"w": 455,
+						"h": 254
+					}
+				},
+				{
+					"filename": "jj11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 163,
+						"y": 403,
+						"w": 205,
+						"h": 244
+					},
+					"frame": {
+						"x": 914,
+						"y": 479,
+						"w": 205,
+						"h": 244
+					}
+				},
+				{
+					"filename": "jj10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 223,
+						"y": 394,
+						"w": 145,
+						"h": 253
+					},
+					"frame": {
+						"x": 1121,
+						"y": 508,
+						"w": 145,
+						"h": 253
+					}
+				},
+				{
+					"filename": "jj5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 149,
+						"y": 440,
+						"w": 203,
+						"h": 169
+					},
+					"frame": {
+						"x": 1268,
+						"y": 670,
+						"w": 203,
+						"h": 169
+					}
+				},
+				{
+					"filename": "gidra2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 143,
+						"y": 280,
+						"w": 455,
+						"h": 134
+					},
+					"frame": {
+						"x": 1,
+						"y": 841,
+						"w": 455,
+						"h": 134
+					}
+				},
+				{
+					"filename": "gidra0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 140,
+						"y": 320,
+						"w": 454,
+						"h": 92
+					},
+					"frame": {
+						"x": 1,
+						"y": 725,
+						"w": 454,
+						"h": 92
+					}
+				},
+				{
+					"filename": "gidra4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 142,
+						"y": 196,
+						"w": 455,
+						"h": 218
+					},
+					"frame": {
+						"x": 457,
+						"y": 551,
+						"w": 455,
+						"h": 218
+					}
+				},
+				{
+					"filename": "jj9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 218,
+						"y": 449,
+						"w": 145,
+						"h": 195
+					},
+					"frame": {
+						"x": 914,
+						"y": 725,
+						"w": 145,
+						"h": 195
+					}
+				},
+				{
+					"filename": "gidra3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 141,
+						"y": 223,
+						"w": 454,
+						"h": 190
+					},
+					"frame": {
+						"x": 458,
+						"y": 771,
+						"w": 454,
+						"h": 190
+					}
+				},
+				{
+					"filename": "jj3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 226,
+						"y": 396,
+						"w": 125,
+						"h": 212
+					},
+					"frame": {
+						"x": 1061,
+						"y": 763,
+						"w": 125,
+						"h": 212
+					}
+				},
+				{
+					"filename": "jj6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 135,
+						"y": 497,
+						"w": 215,
+						"h": 130
+					},
+					"frame": {
+						"x": 1188,
+						"y": 841,
+						"w": 215,
+						"h": 130
+					}
+				},
+				{
+					"filename": "jj1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 227,
+						"y": 467,
+						"w": 112,
+						"h": 140
+					},
+					"frame": {
+						"x": 1405,
+						"y": 841,
+						"w": 112,
+						"h": 140
+					}
+				},
+				{
+					"filename": "gidra1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 638,
+						"h": 752
+					},
+					"spriteSourceSize": {
+						"x": 140,
+						"y": 320,
+						"w": 454,
+						"h": 92
+					},
+					"frame": {
+						"x": 1,
+						"y": 301,
+						"w": 454,
+						"h": 92
+					}
+				},
+				{
+					"filename": "jj7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 182,
+						"y": 499,
+						"w": 171,
+						"h": 151
+					},
+					"frame": {
+						"x": 1,
+						"y": 395,
+						"w": 171,
+						"h": 151
+					}
+				},
+				{
+					"filename": "jj8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 222,
+						"y": 491,
+						"w": 129,
+						"h": 158
+					},
+					"frame": {
+						"x": 1,
+						"y": 548,
+						"w": 129,
+						"h": 158
+					}
+				},
+				{
+					"filename": "jj2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 229,
+						"y": 439,
+						"w": 120,
+						"h": 169
+					},
+					"frame": {
+						"x": 132,
+						"y": 548,
+						"w": 120,
+						"h": 169
+					}
+				},
+				{
+					"filename": "jj0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 510,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 212,
+						"y": 477,
+						"w": 107,
+						"h": 130
+					},
+					"frame": {
+						"x": 174,
+						"y": 395,
+						"w": 107,
+						"h": 130
+					}
+				},
+				{
+					"filename": "runet1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 451,
+						"h": 660
+					},
+					"spriteSourceSize": {
+						"x": 168,
+						"y": 170,
+						"w": 80,
+						"h": 318
+					},
+					"frame": {
+						"x": 283,
+						"y": 395,
+						"w": 80,
+						"h": 318
+					}
+				},
+				{
+					"filename": "runet3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 451,
+						"h": 660
+					},
+					"spriteSourceSize": {
+						"x": 168,
+						"y": 186,
+						"w": 80,
+						"h": 302
+					},
+					"frame": {
+						"x": 365,
+						"y": 395,
+						"w": 80,
+						"h": 302
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:0f3fa02de818818ec5e7e2cc7f14dbbb:225d9550b3ee7a91fec12c54f42ff445:f41c7e12db68dcb339658de4dbfb6fc0$"
+	}
+}

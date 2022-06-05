@@ -1,0 +1,1007 @@
+{
+	"textures": [
+		{
+			"image": "creatures4.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 2043,
+				"h": 2298
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "krovatka8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 490,
+						"h": 478
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 490,
+						"h": 478
+					}
+				},
+				{
+					"filename": "krovatka7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 416,
+						"h": 474
+					},
+					"frame": {
+						"x": 0,
+						"y": 478,
+						"w": 416,
+						"h": 474
+					}
+				},
+				{
+					"filename": "potsyk0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 490,
+						"y": 0,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "potsyk1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 946,
+						"y": 0,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "potsyk2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 1402,
+						"y": 0,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "krovatka6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 296,
+						"h": 474
+					},
+					"frame": {
+						"x": 0,
+						"y": 952,
+						"w": 296,
+						"h": 474
+					}
+				},
+				{
+					"filename": "krovatka0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 214,
+						"h": 474
+					},
+					"frame": {
+						"x": 0,
+						"y": 1426,
+						"w": 214,
+						"h": 474
+					}
+				},
+				{
+					"filename": "rutracker6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 159,
+						"y": 220,
+						"w": 555,
+						"h": 179
+					},
+					"frame": {
+						"x": 490,
+						"y": 345,
+						"w": 555,
+						"h": 179
+					}
+				},
+				{
+					"filename": "rutracker0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 158,
+						"y": 205,
+						"w": 551,
+						"h": 194
+					},
+					"frame": {
+						"x": 1045,
+						"y": 345,
+						"w": 551,
+						"h": 194
+					}
+				},
+				{
+					"filename": "potsyk3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 416,
+						"y": 524,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "potsyk4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 872,
+						"y": 539,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "potsyk5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 1328,
+						"y": 539,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "krovatka1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 214,
+						"h": 474
+					},
+					"frame": {
+						"x": 296,
+						"y": 952,
+						"w": 214,
+						"h": 474
+					}
+				},
+				{
+					"filename": "krovatka2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 214,
+						"h": 474
+					},
+					"frame": {
+						"x": 214,
+						"y": 1426,
+						"w": 214,
+						"h": 474
+					}
+				},
+				{
+					"filename": "potsyk6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 0,
+						"y": 1900,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "krovatka3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 214,
+						"h": 474
+					},
+					"frame": {
+						"x": 510,
+						"y": 869,
+						"w": 214,
+						"h": 474
+					}
+				},
+				{
+					"filename": "potsyk7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 724,
+						"y": 884,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "potsyk8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 939,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 209,
+						"y": 273,
+						"w": 456,
+						"h": 345
+					},
+					"frame": {
+						"x": 1180,
+						"y": 884,
+						"w": 456,
+						"h": 345
+					}
+				},
+				{
+					"filename": "rutracker1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 159,
+						"y": 185,
+						"w": 550,
+						"h": 214
+					},
+					"frame": {
+						"x": 724,
+						"y": 1229,
+						"w": 550,
+						"h": 214
+					}
+				},
+				{
+					"filename": "krovatka4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 214,
+						"h": 474
+					},
+					"frame": {
+						"x": 428,
+						"y": 1426,
+						"w": 214,
+						"h": 474
+					}
+				},
+				{
+					"filename": "rutracker2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 159,
+						"y": 173,
+						"w": 550,
+						"h": 226
+					},
+					"frame": {
+						"x": 642,
+						"y": 1443,
+						"w": 550,
+						"h": 226
+					}
+				},
+				{
+					"filename": "rutracker4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 159,
+						"y": 175,
+						"w": 550,
+						"h": 224
+					},
+					"frame": {
+						"x": 642,
+						"y": 1669,
+						"w": 550,
+						"h": 224
+					}
+				},
+				{
+					"filename": "rutracker3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 159,
+						"y": 178,
+						"w": 550,
+						"h": 221
+					},
+					"frame": {
+						"x": 1274,
+						"y": 1229,
+						"w": 550,
+						"h": 221
+					}
+				},
+				{
+					"filename": "rutracker5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 867,
+						"h": 718
+					},
+					"spriteSourceSize": {
+						"x": 159,
+						"y": 179,
+						"w": 550,
+						"h": 220
+					},
+					"frame": {
+						"x": 1192,
+						"y": 1450,
+						"w": 550,
+						"h": 220
+					}
+				},
+				{
+					"filename": "upyachka3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 431,
+						"w": 336,
+						"h": 226
+					},
+					"frame": {
+						"x": 1192,
+						"y": 1670,
+						"w": 336,
+						"h": 226
+					}
+				},
+				{
+					"filename": "raek3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 402,
+						"y": 461,
+						"w": 286,
+						"h": 181
+					},
+					"frame": {
+						"x": 1596,
+						"y": 345,
+						"w": 286,
+						"h": 181
+					}
+				},
+				{
+					"filename": "raek5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 402,
+						"y": 461,
+						"w": 286,
+						"h": 181
+					},
+					"frame": {
+						"x": 1596,
+						"y": 345,
+						"w": 286,
+						"h": 181
+					}
+				},
+				{
+					"filename": "krovatka5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1174,
+						"h": 927
+					},
+					"spriteSourceSize": {
+						"x": 343,
+						"y": 304,
+						"w": 214,
+						"h": 474
+					},
+					"frame": {
+						"x": 1784,
+						"y": 526,
+						"w": 214,
+						"h": 474
+					}
+				},
+				{
+					"filename": "upyachka0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 154,
+						"y": 431,
+						"w": 283,
+						"h": 226
+					},
+					"frame": {
+						"x": 1528,
+						"y": 1670,
+						"w": 283,
+						"h": 226
+					}
+				},
+				{
+					"filename": "upyachka7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 139,
+						"y": 426,
+						"w": 319,
+						"h": 228
+					},
+					"frame": {
+						"x": 456,
+						"y": 1900,
+						"w": 319,
+						"h": 228
+					}
+				},
+				{
+					"filename": "upyachka2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 435,
+						"w": 320,
+						"h": 226
+					},
+					"frame": {
+						"x": 775,
+						"y": 1893,
+						"w": 320,
+						"h": 226
+					}
+				},
+				{
+					"filename": "raek11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 417,
+						"y": 463,
+						"w": 311,
+						"h": 179
+					},
+					"frame": {
+						"x": 775,
+						"y": 2119,
+						"w": 311,
+						"h": 179
+					}
+				},
+				{
+					"filename": "raek4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 403,
+						"y": 461,
+						"w": 356,
+						"h": 181
+					},
+					"frame": {
+						"x": 1095,
+						"y": 1896,
+						"w": 356,
+						"h": 181
+					}
+				},
+				{
+					"filename": "upyachka4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 134,
+						"y": 426,
+						"w": 309,
+						"h": 226
+					},
+					"frame": {
+						"x": 1451,
+						"y": 1896,
+						"w": 309,
+						"h": 226
+					}
+				},
+				{
+					"filename": "upyachka6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 149,
+						"y": 433,
+						"w": 307,
+						"h": 224
+					},
+					"frame": {
+						"x": 1636,
+						"y": 1000,
+						"w": 307,
+						"h": 224
+					}
+				},
+				{
+					"filename": "upyachka1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 154,
+						"y": 431,
+						"w": 306,
+						"h": 217
+					},
+					"frame": {
+						"x": 1095,
+						"y": 2077,
+						"w": 306,
+						"h": 217
+					}
+				},
+				{
+					"filename": "raek12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 418,
+						"y": 459,
+						"w": 164,
+						"h": 183
+					},
+					"frame": {
+						"x": 1858,
+						"y": 0,
+						"w": 164,
+						"h": 183
+					}
+				},
+				{
+					"filename": "raek9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 418,
+						"y": 459,
+						"w": 164,
+						"h": 183
+					},
+					"frame": {
+						"x": 1858,
+						"y": 0,
+						"w": 164,
+						"h": 183
+					}
+				},
+				{
+					"filename": "raek0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 295,
+						"y": 460,
+						"w": 135,
+						"h": 184
+					},
+					"frame": {
+						"x": 1824,
+						"y": 1224,
+						"w": 135,
+						"h": 184
+					}
+				},
+				{
+					"filename": "raek13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 295,
+						"y": 460,
+						"w": 135,
+						"h": 184
+					},
+					"frame": {
+						"x": 1824,
+						"y": 1224,
+						"w": 135,
+						"h": 184
+					}
+				},
+				{
+					"filename": "raek8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 295,
+						"y": 460,
+						"w": 135,
+						"h": 184
+					},
+					"frame": {
+						"x": 1824,
+						"y": 1224,
+						"w": 135,
+						"h": 184
+					}
+				},
+				{
+					"filename": "upyachka5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 575,
+						"h": 1068
+					},
+					"spriteSourceSize": {
+						"x": 154,
+						"y": 431,
+						"w": 283,
+						"h": 225
+					},
+					"frame": {
+						"x": 1760,
+						"y": 1896,
+						"w": 283,
+						"h": 225
+					}
+				},
+				{
+					"filename": "raek2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 403,
+						"y": 458,
+						"w": 228,
+						"h": 185
+					},
+					"frame": {
+						"x": 1742,
+						"y": 1450,
+						"w": 228,
+						"h": 185
+					}
+				},
+				{
+					"filename": "raek6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 403,
+						"y": 458,
+						"w": 228,
+						"h": 185
+					},
+					"frame": {
+						"x": 1742,
+						"y": 1450,
+						"w": 228,
+						"h": 185
+					}
+				},
+				{
+					"filename": "raek10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 414,
+						"y": 462,
+						"w": 217,
+						"h": 181
+					},
+					"frame": {
+						"x": 1811,
+						"y": 1635,
+						"w": 217,
+						"h": 181
+					}
+				},
+				{
+					"filename": "raek1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 404,
+						"y": 460,
+						"w": 150,
+						"h": 184
+					},
+					"frame": {
+						"x": 1882,
+						"y": 183,
+						"w": 150,
+						"h": 184
+					}
+				},
+				{
+					"filename": "raek7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1058,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 404,
+						"y": 460,
+						"w": 150,
+						"h": 184
+					},
+					"frame": {
+						"x": 1882,
+						"y": 183,
+						"w": 150,
+						"h": 184
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:866ed802a9b63977aeba99c9335e3256:8b93dd8973d05b1bdcb64d7585211b0f:b011e4928df6dc0d5d13f43c2e79347c$"
+	}
+}

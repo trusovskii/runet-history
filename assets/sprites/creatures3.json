@@ -1,0 +1,314 @@
+{
+	"textures": [
+		{
+			"image": "creatures3.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 3224,
+				"h": 2522
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "lurk13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 137,
+						"w": 995,
+						"h": 939
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 995,
+						"h": 939
+					}
+				},
+				{
+					"filename": "lurk12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 171,
+						"w": 955,
+						"h": 905
+					},
+					"frame": {
+						"x": 0,
+						"y": 939,
+						"w": 955,
+						"h": 905
+					}
+				},
+				{
+					"filename": "lurk11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 198,
+						"w": 919,
+						"h": 878
+					},
+					"frame": {
+						"x": 995,
+						"y": 0,
+						"w": 919,
+						"h": 878
+					}
+				},
+				{
+					"filename": "lurk10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 228,
+						"w": 866,
+						"h": 848
+					},
+					"frame": {
+						"x": 1914,
+						"y": 0,
+						"w": 866,
+						"h": 848
+					}
+				},
+				{
+					"filename": "lurk5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 400,
+						"w": 611,
+						"h": 676
+					},
+					"frame": {
+						"x": 0,
+						"y": 1844,
+						"w": 611,
+						"h": 676
+					}
+				},
+				{
+					"filename": "lurk1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 510,
+						"w": 444,
+						"h": 566
+					},
+					"frame": {
+						"x": 2780,
+						"y": 0,
+						"w": 444,
+						"h": 566
+					}
+				},
+				{
+					"filename": "lurk4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 432,
+						"w": 505,
+						"h": 644
+					},
+					"frame": {
+						"x": 611,
+						"y": 1844,
+						"w": 505,
+						"h": 644
+					}
+				},
+				{
+					"filename": "lurk9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 259,
+						"w": 823,
+						"h": 817
+					},
+					"frame": {
+						"x": 995,
+						"y": 878,
+						"w": 823,
+						"h": 817
+					}
+				},
+				{
+					"filename": "lurk8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 277,
+						"w": 759,
+						"h": 799
+					},
+					"frame": {
+						"x": 1116,
+						"y": 1695,
+						"w": 759,
+						"h": 799
+					}
+				},
+				{
+					"filename": "lurk7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 313,
+						"w": 735,
+						"h": 763
+					},
+					"frame": {
+						"x": 1818,
+						"y": 878,
+						"w": 735,
+						"h": 763
+					}
+				},
+				{
+					"filename": "lurk6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 334,
+						"w": 640,
+						"h": 742
+					},
+					"frame": {
+						"x": 1875,
+						"y": 1641,
+						"w": 640,
+						"h": 742
+					}
+				},
+				{
+					"filename": "lurk0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 495,
+						"w": 453,
+						"h": 581
+					},
+					"frame": {
+						"x": 2553,
+						"y": 848,
+						"w": 453,
+						"h": 581
+					}
+				},
+				{
+					"filename": "lurk3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 539,
+						"w": 463,
+						"h": 537
+					},
+					"frame": {
+						"x": 2553,
+						"y": 1429,
+						"w": 463,
+						"h": 537
+					}
+				},
+				{
+					"filename": "lurk2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1188,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 151,
+						"y": 520,
+						"w": 426,
+						"h": 556
+					},
+					"frame": {
+						"x": 2515,
+						"y": 1966,
+						"w": 426,
+						"h": 556
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:168d3f4578fab6f21352cfe66548aaa8:36ea822138b9a92f18d5bb9780093813:2232238433f7e678063e446498f00ae7$"
+	}
+}
