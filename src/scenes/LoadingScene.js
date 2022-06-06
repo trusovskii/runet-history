@@ -214,6 +214,10 @@ export default class LoadingScene extends Phaser.Scene {
       "leprosorium_2004",
       `/assets/sprites/leprosorium_2004.png?cb=${cb}`
     );
+    this.load.image(
+      "anon_2003",
+      `/assets/sprites/anon_2003.png?cb=${cb}`
+    );
     this.load.image("runet_2004", `/assets/sprites/runet_2004.png?cb=${cb}`);
     this.load.image("bash_2004", `/assets/sprites/bash_2004.png?cb=${cb}`);
     this.load.image("habr_2006", `/assets/sprites/habr_2006.png?cb=${cb}`);
@@ -280,6 +284,8 @@ export default class LoadingScene extends Phaser.Scene {
       `/assets/sprites/reestr_site_2012.png?cb=${cb}`
     );
     this.load.image("lisa", `/assets/sprites/lisa.png?cb=${cb}`);
+    this.load.image("yazz_2011", `/assets/sprites/yazz_2011.png?cb=${cb}`);
+    this.load.image("advokaat_2011", `/assets/sprites/advokaat_2011.png?cb=${cb}`);
     this.load.image("tg_2013", `/assets/sprites/tg_2013.png?cb=${cb}`);
     this.load.image("free_2013", `/assets/sprites/free_2013.png?cb=${cb}`);
     this.load.image(

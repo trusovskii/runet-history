@@ -303,7 +303,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(46600, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(30430, 550 + VERTICAL_OFFSET);
     // const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
@@ -453,6 +453,7 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(layer, group, 12170, 350, 1); /** Википедиа */
     this.createLargePlatform(layer, group, 12850, 350, 1); /** Мамба */
     this.createLargePlatform(layer, group, 14600, 650, 1); /** Лепрозорий */
+    this.createLargePlatform(layer, group, 14690, 135, 1); /** Маска анонимуса */
     this.createLargePlatform(layer, group, 16480, 500, 4); /** Хабр */
     this.createLargePlatform(layer, group, 18200, 440, 1); /** Одноклассники */
     this.createLargePlatform(layer, group, 18900, 290, 1); /** Тэглайн */
@@ -467,6 +468,8 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(layer, group, 29100, 520, 1);
     this.createLargePlatform(layer, group, 29770, 700, 3); /** Тян РНК */
     this.createLargePlatform(layer, group, 29700, 250, 1); /** Лиса */
+    this.createLargePlatform(layer, group, 30430, 130, 1); /** Язь */
+    this.createLargePlatform(layer, group, 31100, 130, 1); /** Адвокат */
     this.createLargePlatform(layer, group, 31680, 350, 1); /** Медуза */
     this.createLargePlatform(layer, group, 32400, 630, 1); /** Золотой сайт */
     this.createLargePlatform(layer, group, 32900, 340, 1);
@@ -1049,7 +1052,7 @@ export default class LevelScene extends Phaser.Scene {
           // wordWrap: { width: 385, useAdvancedWrap: true },
           wrap: {
             mode: "word",
-            width: 385,
+            width: 550,
           },
         },
       })
