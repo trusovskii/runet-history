@@ -2000,7 +2000,7 @@ export default {
         x: 31256,
         y: 636,
         width: 170,
-        height: 500,
+        height: 450,
         origin: { x: 0, y: 1 },
       },
       quiestion: "[stroke]Кого хочет встретить инвестор?[/stroke]",
@@ -2457,7 +2457,7 @@ export default {
     y: 960,
     sprite: "qr_2020",
     colliders: [
-      { x: 43980, y: 708, width: 110, height: 110 },
+      { x: 43967, y: 708, width: 110, height: 110 },
     ],
     quiz: {
       x: 43730,

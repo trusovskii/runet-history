@@ -303,7 +303,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(30430, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(43000, 550 + VERTICAL_OFFSET);
     // const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
