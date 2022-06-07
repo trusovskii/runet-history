@@ -1,0 +1,167 @@
+{
+	"textures": [
+		{
+			"image": "creatures2.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1891,
+				"h": 1669
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "durov2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 476,
+						"h": 834
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 476,
+						"h": 834
+					}
+				},
+				{
+					"filename": "durov1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 475,
+						"h": 834
+					},
+					"frame": {
+						"x": 476,
+						"y": 0,
+						"w": 475,
+						"h": 834
+					}
+				},
+				{
+					"filename": "durov0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 473,
+						"h": 836
+					},
+					"frame": {
+						"x": 951,
+						"y": 0,
+						"w": 473,
+						"h": 836
+					}
+				},
+				{
+					"filename": "durov3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 474,
+						"h": 831
+					},
+					"frame": {
+						"x": 0,
+						"y": 834,
+						"w": 474,
+						"h": 831
+					}
+				},
+				{
+					"filename": "durov5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 473,
+						"h": 835
+					},
+					"frame": {
+						"x": 474,
+						"y": 834,
+						"w": 473,
+						"h": 835
+					}
+				},
+				{
+					"filename": "durov4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 473,
+						"h": 830
+					},
+					"frame": {
+						"x": 947,
+						"y": 836,
+						"w": 473,
+						"h": 830
+					}
+				},
+				{
+					"filename": "durov6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1005,
+						"h": 1197
+					},
+					"spriteSourceSize": {
+						"x": 253,
+						"y": 163,
+						"w": 471,
+						"h": 832
+					},
+					"frame": {
+						"x": 1420,
+						"y": 836,
+						"w": 471,
+						"h": 832
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:b1470e19a2e622ac00e005127f76ae5e:1d8491503b1028b84896bb7351052cf2:d73b3c11da7694012ac20cbabf42b44c$"
+	}
+}

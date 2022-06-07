@@ -58,7 +58,8 @@ export default class LevelScene extends Phaser.Scene {
     this.mainCamera.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
     this.bgm = this.sound.add("bgm");
-    this.bgm.play(null, { loop: true });
+    this.bgm.setLoop(true);
+    this.bgm.play();
     // this.bgm.stop();
 
     this.sfxRun = this.sound.add("sfx:run");
@@ -303,7 +304,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(43000, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(1560, 550 + VERTICAL_OFFSET);
     // const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
@@ -569,10 +570,35 @@ export default class LevelScene extends Phaser.Scene {
   createEntities() {
     const entitiesLayer = this.add.layer();
     const entities = {};
+
     Object.entries(Entities).forEach(([entityName, entityData]) => {
-      const entity = this.physics.add
-        .sprite(entityData.x, entityData.y + VERTICAL_OFFSET, entityData.sprite)
-        .setOrigin(0, 1);
+      let entity;
+
+      if (entityData.frame) {
+        this.anims.create({
+          key: `${entityData.sprite}_animation`,
+          frames: this.anims.generateFrameNames(entityData.atlas, {
+            prefix: entityData.sprite,
+            suffix: ".png",
+            start: entityData.frame.start,
+            end: entityData.frame.end
+          }),
+          yoyo: entityData.yoyo ?? true,
+          repeat: -1,
+          repeatDelay: 5000,
+          frameRate: entityData.frame.rate
+        });
+
+        entity = this.physics.add
+            .sprite(entityData.x, entityData.y + VERTICAL_OFFSET, entityData.atlas)
+            .play(`${entityData.sprite}_animation`);
+      } else {
+        entity = this.physics.add
+            .sprite(entityData.x, entityData.y + VERTICAL_OFFSET, entityData.sprite)
+            .setOrigin(0, 1);
+      }
+
+      entityData.scale && entity.setScale(entityData.scale);
 
       if (entityData.quiz) {
         entity.quizArea = this.physics.add.existing(
@@ -1737,11 +1763,11 @@ export default class LevelScene extends Phaser.Scene {
     // console.log("resizeStaticObjects");
     const camZoom = this.mainCamera.zoom;
     const camWidth = this.mainCamera.worldView.width;
-    const camHeight = this.mainCamera.worldView.height;
+    // const camHeight = this.mainCamera.worldView.height;
     const unscaledWidth = camWidth * camZoom;
-    const unscaledHeight = camHeight * camZoom;
+    // const unscaledHeight = camHeight * camZoom;
     const topX = (unscaledWidth - camWidth) / 2;
-    const topY = (unscaledHeight - camHeight) / 2;
+    // const topY = (unscaledHeight - camHeight) / 2;
 
     // console.log("camZoom:", camZoom);
     // console.log("camWidth:", camWidth);

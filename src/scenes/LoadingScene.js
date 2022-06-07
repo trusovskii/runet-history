@@ -142,10 +142,6 @@ export default class LoadingScene extends Phaser.Scene {
       "Rambler_1997",
       `/assets/sprites/Rambler_1997.png?cb=${cb}`
     );
-    this.load.image(
-      "Krovatka_1997",
-      `/assets/sprites/Krovatka_1997.png?cb=${cb}`
-    );
     this.load.image("tetris_1997", `/assets/sprites/tetris_1997.png?cb=${cb}`);
     this.load.image("ICQ_1997", `/assets/sprites/ICQ_1997.png?cb=${cb}`);
     this.load.image(
@@ -181,10 +177,6 @@ export default class LoadingScene extends Phaser.Scene {
       "explorer_1999",
       `/assets/sprites/explorer_1999.png?cb=${cb}`
     );
-    this.load.image(
-      "live-journal-1999",
-      `/assets/sprites/live-journal-1999.png?cb=${cb}`
-    );
     this.load.image("nosik_1999", `/assets/sprites/nosik_1999.png?cb=${cb}`);
     this.load.image("hh_2000", `/assets/sprites/hh_2000.png?cb=${cb}`);
     this.load.image("year_2000", `/assets/sprites/year_2000.png?cb=${cb}`);
@@ -218,7 +210,7 @@ export default class LoadingScene extends Phaser.Scene {
       "anon_2003",
       `/assets/sprites/anon_2003.png?cb=${cb}`
     );
-    this.load.image("runet_2004", `/assets/sprites/runet_2004.png?cb=${cb}`);
+    // this.load.image("runet_2004", `/assets/sprites/runet_2004.png?cb=${cb}`);
     this.load.image("bash_2004", `/assets/sprites/bash_2004.png?cb=${cb}`);
     this.load.image("habr_2006", `/assets/sprites/habr_2006.png?cb=${cb}`);
     this.load.image("orly_2006", `/assets/sprites/orly_2006.png?cb=${cb}`);
@@ -226,7 +218,6 @@ export default class LoadingScene extends Phaser.Scene {
       "not_bag_2006",
       `/assets/sprites/not_bag_2006.png?cb=${cb}`
     );
-    this.load.image("durov_2006", `/assets/sprites/durov_2006.png?cb=${cb}`);
     this.load.image("ok_2006", `/assets/sprites/ok_2006.png?cb=${cb}`);
     this.load.image(
       "tagline_2006",
@@ -240,14 +231,9 @@ export default class LoadingScene extends Phaser.Scene {
     );
     this.load.image("dvd_2007", `/assets/sprites/dvd_2007.png?cb=${cb}`);
     this.load.image("penek_2007", `/assets/sprites/penek_2007.png?cb=${cb}`);
-    this.load.image("lurk_2007", `/assets/sprites/lurk_2007.png?cb=${cb}`);
     this.load.image(
       "who_are_you_2007",
       `/assets/sprites/who_are_you_2007.png?cb=${cb}`
-    );
-    this.load.image(
-      "ypychka_2007",
-      `/assets/sprites/ypychka_2007.png?cb=${cb}`
     );
     this.load.image(
       "putin_krab_2008",
@@ -306,7 +292,33 @@ export default class LoadingScene extends Phaser.Scene {
       `/assets/sprites/durov_way_out_2014.png?cb=${cb}`
     );
     this.load.image("year_2015", `/assets/sprites/year_2015.png?cb=${cb}`);
-    this.load.image("gidra_2015", `/assets/sprites/gidra_2015.png?cb=${cb}`);
+
+    this.load.atlas(
+        "creatures",
+        `/assets/sprites/creatures.png?cb=${cb}`,
+        `/assets/sprites/creatures.json?cb=${cb}`
+    );
+    this.load.atlas(
+        "creatures2",
+        `/assets/sprites/creatures2.png?cb=${cb}`,
+        `/assets/sprites/creatures2.json?cb=${cb}`
+    );
+    this.load.atlas(
+        "creatures3",
+        `/assets/sprites/creatures3.png?cb=${cb}`,
+        `/assets/sprites/creatures3.json?cb=${cb}`
+    );
+    this.load.atlas(
+        "creatures4",
+        `/assets/sprites/creatures4.png?cb=${cb}`,
+        `/assets/sprites/creatures4.json?cb=${cb}`
+    );
+    this.load.atlas(
+        "creatures5",
+        `/assets/sprites/creatures5.png?cb=${cb}`,
+        `/assets/sprites/creatures5.json?cb=${cb}`
+    );
+
     this.load.image(
       "paket_yrovoy_2016",
       `/assets/sprites/paket_yrovoy_2016.png?cb=${cb}`
