@@ -849,7 +849,7 @@ export default class LevelScene extends Phaser.Scene {
     if (this.isMobile) {
       container.setPosition(
         this.uiCamera.centerX - container.getBounds().width * 0.5,
-        this.uiCamera.centerY - container.getBounds().height * 0.5
+        10
       );
       this.staticBubblesLayer.add(container);
     } else {
@@ -1065,7 +1065,7 @@ export default class LevelScene extends Phaser.Scene {
     if (this.isMobile) {
       container.setPosition(
         this.uiCamera.centerX - container.getBounds().width * 0.5,
-        this.uiCamera.centerY - container.getBounds().height * 0.5
+        10
       );
       this.staticBubblesLayer.add(container);
     } else {
@@ -1336,7 +1336,7 @@ export default class LevelScene extends Phaser.Scene {
     if (this.isMobile) {
       container.setPosition(
         this.uiCamera.centerX - container.getBounds().width * 0.5,
-        this.uiCamera.centerY - container.getBounds().height * 0.5
+        10
       );
       this.staticBubblesLayer.add(container);
     } else {
