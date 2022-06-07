@@ -26,6 +26,15 @@ const JUMP_ZOOM_DOWN_EASING = "Linear";
 const JUMP_ZOOM_AMOUNT_MOBILE = -0.15;
 const JUMP_ZOOM_DURATION_MOBILE = 700;
 
+function decl(value, words) {
+  value = Math.abs(value) % 100;
+  var num = value % 10;
+  if (value > 10 && value < 20) return words[2];
+  if (num > 1 && num < 5) return words[1];
+  if (num == 1) return words[0];
+  return words[2];
+}
+
 export default class LevelScene extends Phaser.Scene {
   constructor() {
     super("level-scene");
@@ -115,7 +124,7 @@ export default class LevelScene extends Phaser.Scene {
       .rexBBCodeText({
         x: 15,
         y: 15,
-        text: "[stroke]Правильных ответов: 0 из 65[/stroke]",
+        text: "",
         style: {
           fontFamily: "ComicCat",
           fontSize: 24,
@@ -131,7 +140,8 @@ export default class LevelScene extends Phaser.Scene {
         },
       })
       .setOrigin(0, 0)
-      .setDepth(9999);
+      .setDepth(9999)
+      .setVisible(false);
     this.interactedObjectsText = this.add
       .rexBBCodeText({
         x: 15,
@@ -454,7 +464,13 @@ export default class LevelScene extends Phaser.Scene {
     this.createLargePlatform(layer, group, 12170, 350, 1); /** Википедиа */
     this.createLargePlatform(layer, group, 12850, 350, 1); /** Мамба */
     this.createLargePlatform(layer, group, 14600, 650, 1); /** Лепрозорий */
-    this.createLargePlatform(layer, group, 14690, 135, 1); /** Маска анонимуса */
+    this.createLargePlatform(
+      layer,
+      group,
+      14690,
+      135,
+      1
+    ); /** Маска анонимуса */
     this.createLargePlatform(layer, group, 16480, 500, 4); /** Хабр */
     this.createLargePlatform(layer, group, 18200, 440, 1); /** Одноклассники */
     this.createLargePlatform(layer, group, 18900, 290, 1); /** Тэглайн */
@@ -581,21 +597,29 @@ export default class LevelScene extends Phaser.Scene {
             prefix: entityData.sprite,
             suffix: ".png",
             start: entityData.frame.start,
-            end: entityData.frame.end
+            end: entityData.frame.end,
           }),
           yoyo: entityData.yoyo ?? true,
           repeat: -1,
           repeatDelay: 5000,
-          frameRate: entityData.frame.rate
+          frameRate: entityData.frame.rate,
         });
 
         entity = this.physics.add
-            .sprite(entityData.x, entityData.y + VERTICAL_OFFSET, entityData.atlas)
-            .play(`${entityData.sprite}_animation`);
+          .sprite(
+            entityData.x,
+            entityData.y + VERTICAL_OFFSET,
+            entityData.atlas
+          )
+          .play(`${entityData.sprite}_animation`);
       } else {
         entity = this.physics.add
-            .sprite(entityData.x, entityData.y + VERTICAL_OFFSET, entityData.sprite)
-            .setOrigin(0, 1);
+          .sprite(
+            entityData.x,
+            entityData.y + VERTICAL_OFFSET,
+            entityData.sprite
+          )
+          .setOrigin(0, 1);
       }
 
       entityData.scale && entity.setScale(entityData.scale);
@@ -768,8 +792,9 @@ export default class LevelScene extends Phaser.Scene {
       })
       .setOrigin(0, 0);
     container.add(questionText);
+    const answersTop = questionText.getBounds().bottom + 15;
     let offsetX = 0;
-    let offsetY = questionText.getBounds().bottom + 15;
+    let offsetY = answersTop;
 
     const answers = [];
     entity.quizData.answers.forEach((answer, answerIndex) => {
@@ -806,10 +831,10 @@ export default class LevelScene extends Phaser.Scene {
       container.add(answerNumberText);
       container.add(answerText);
       if ((answerIndex + 1) % 2 === 1) {
-        offsetX += answerBubble.getBounds().width + 15;
-      } else {
-        offsetX = 0;
         offsetY += answerBubble.getBounds().height + 15;
+      } else {
+        offsetY = answersTop;
+        offsetX += answerBubble.getBounds().width + 15;
       }
       answerBubble.setInteractive();
       answerBubble.on("pointerdown", () => {
@@ -917,7 +942,13 @@ export default class LevelScene extends Phaser.Scene {
       ].answerNumberText.setColor("#FFFFFF");
       console.log("correct!");
       this.correctAnswers++;
-      this.correctAnswersText.text = `[stroke]Правильных ответов: ${this.correctAnswers} из 65[/stroke]`;
+      this.correctAnswersText.text = `[stroke]${this.correctAnswers} ${decl(
+        this.correctAnswers,
+        ["правильный ответ", "правильных ответа", "правильных ответов"]
+      )}[/stroke]`;
+      if (!this.isMobile) {
+        this.correctAnswersText.setVisible(true);
+      }
     } else {
       entity.quizState.answered = true;
       entity.quizState.gameObjects.answers[number - 1].answerBubble.setTexture(
@@ -1811,6 +1842,11 @@ export default class LevelScene extends Phaser.Scene {
       uiCamWidth - this.safeAreaRight - 32,
       uiCamHeight - 32 - this.controls.jump.displayHeight - 32
     );
+    this.controls.soundOn.setPosition(uiCamWidth - this.safeAreaRight - 32, 10);
+    this.controls.soundOff.setPosition(
+      uiCamWidth - this.safeAreaRight - 32,
+      10
+    );
   }
 
   checkFlip(sprite) {
@@ -1828,9 +1864,12 @@ export default class LevelScene extends Phaser.Scene {
     const jump = this.add.image(0, 0, "control-jump").setOrigin(1, 1);
     const speak = this.add.image(0, 0, "control-speak").setOrigin(1, 1);
     const enter = this.add.image(0, 0, "control-enter").setOrigin(1, 1);
+    const soundOn = this.add.image(0, 0, "sound-on").setOrigin(1, 0);
+    const soundOff = this.add.image(0, 0, "sound-off").setOrigin(1, 0);
     speak.setVisible(false);
     enter.setVisible(false);
-    controlsLayer.add([left, right, jump, speak, enter]);
+    soundOff.setVisible(false);
+    controlsLayer.add([left, right, jump, speak, enter, soundOn, soundOff]);
     controlsLayer.each((item) => {
       item.setScrollFactor(0, 0);
       item.setInteractive();
@@ -1856,7 +1895,26 @@ export default class LevelScene extends Phaser.Scene {
         delete pointers[pointer.id];
       }
     });
-    this.controls = { layer: controlsLayer, left, right, jump, speak, enter };
+    soundOn.on("pointerdown", () => {
+      soundOn.setVisible(false);
+      soundOff.setVisible(true);
+      this.sound.setMute(true);
+    });
+    soundOff.on("pointerdown", () => {
+      soundOff.setVisible(false);
+      soundOn.setVisible(true);
+      this.sound.setMute(false);
+    });
+    this.controls = {
+      layer: controlsLayer,
+      left,
+      right,
+      jump,
+      speak,
+      enter,
+      soundOn,
+      soundOff,
+    };
   }
 
   panToFitBubbles() {
