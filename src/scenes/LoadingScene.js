@@ -94,6 +94,9 @@ export default class LoadingScene extends Phaser.Scene {
     });
     this.load.audio("sfx:run", `/assets/audio/run.mp3?cb=${cb}`);
     this.load.audio("sfx:land", `/assets/audio/land.mp3?cb=${cb}`);
+    this.load.audio("kaspersky", `/assets/audio/kaspersky.mp3?cb=${cb}`);
+    this.load.audio("icq", `/assets/audio/icq.mp3?cb=${cb}`);
+    this.load.audio("windows", `/assets/audio/windows.mp3?cb=${cb}`);
 
     this.load.spritesheet("player", `/assets/sprites/player.png?cb=${cb}`, {
       frameWidth: 284,
@@ -405,6 +408,8 @@ export default class LoadingScene extends Phaser.Scene {
     // #region Bubbles
 
     this.load.image("bubble-line", `/assets/bubbles/bubble-line.png?cb=${cb}`);
+    this.load.image("bubble-line-narrow", `/assets/bubbles/bubble-line-narrow.png?cb=${cb}`);
+    this.load.image("bubble-line-wide", `/assets/bubbles/bubble-line-wide.png?cb=${cb}`);
     this.load.image(
       "bubble-medium",
       `/assets/bubbles/bubble-medium.png?cb=${cb}`

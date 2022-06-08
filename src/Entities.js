@@ -397,6 +397,9 @@ export default {
     x: 6100,
     y: 960,
     sprite: "ICQ_1997",
+    sound: {
+      key: "icq",
+    },
     quiz: {
       x: 5810,
       y: 830,
@@ -491,6 +494,9 @@ export default {
     x: 6100,
     y: 425,
     sprite: "Kaspersky_ru_1997",
+    sound: {
+      key: "kaspersky",
+    },
     quiz: {
       x: 5849,
       y: 274,
@@ -1632,6 +1638,9 @@ export default {
     x: 23200,
     y: 955,
     sprite: "must_due_2008",
+    sound: {
+      key: "windows",
+    },
     popup: {
       x: 23200,
       y: 790,

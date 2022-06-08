@@ -624,6 +624,14 @@ export default class LevelScene extends Phaser.Scene {
 
       entityData.scale && entity.setScale(entityData.scale);
 
+      if (entityData.sound) {
+        entity.soundData = entityData.sound;
+        entity.soundState = {
+          played: false,
+          skipNext: true,
+        };
+      }
+
       if (entityData.quiz) {
         entity.quizArea = this.physics.add.existing(
           this.add
@@ -990,6 +998,14 @@ export default class LevelScene extends Phaser.Scene {
     let currentLine =
       entity.quizState.currentLine == null ? 0 : entity.quizState.currentLine;
     if (lines && lines.length > currentLine) {
+      // at first line play a sound
+      if (currentLine === 0 && entity.soundData && entity.soundState) {
+        if (entity.soundState.skipNext) {
+          entity.soundState.skipNext = false;
+        } else {
+          this.sound.play(entity.soundData.key);
+        }
+      }
       const line = lines[currentLine];
       console.log(`showQuizLine ${currentLine}`);
       this.showQuizLine(entity, line);
@@ -1030,32 +1046,33 @@ export default class LevelScene extends Phaser.Scene {
 
   showQuizLine(entity, line) {
     const container = this.add.container(0, 0);
-    const lineText = this.add
-      .rexBBCodeText({
-        x: 0,
-        y: 0,
-        text: line,
-        style: {
-          fontFamily: "Onest",
-          fontSize: 16,
-          lineSpacing: 6,
-          color: "#000",
-          // wordWrap: { width: 385, useAdvancedWrap: true },
-          wrap: {
-            mode: "word",
-            width: 385,
-          },
+    const lineText = this.add.rexBBCodeText({
+      x: 0,
+      y: 0,
+      text: line,
+      style: {
+        fontFamily: "Onest",
+        fontSize: 16,
+        lineSpacing: 6,
+        color: "#000",
+        // wordWrap: { width: 385, useAdvancedWrap: true },
+        wrap: {
+          mode: "word",
+          width: 385,
         },
-      })
-      .setOrigin(0, 0.5);
-    const bubbleSpriteKey =
-      lineText.getBounds().height < 38
-        ? "bubble-line"
-        : lineText.getBounds().height < 86
-        ? "bubble-medium"
-        : "bubble-large";
+      },
+    });
+    const bubbleSpriteKey = this.getBubbleSize(
+      lineText.getBounds().width,
+      lineText.getBounds().height
+    );
     const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
-    lineText.setPosition(25, lineBubble.getBounds().centerY);
+    lineText
+      .setPosition(
+        lineBubble.getBounds().centerX,
+        lineBubble.getBounds().centerY
+      )
+      .setOrigin(0.5, 0.5);
     container.add(lineBubble);
     container.add(lineText);
     lineBubble.setInteractive();
@@ -1096,32 +1113,33 @@ export default class LevelScene extends Phaser.Scene {
     }
     const popupData = entity.popupData;
     const container = this.add.container(0, 0);
-    const lineText = this.add
-      .rexBBCodeText({
-        x: 0,
-        y: 0,
-        text: popupData.text,
-        style: {
-          fontFamily: "Onest",
-          fontSize: 16,
-          lineSpacing: 10,
-          color: "#000",
-          // wordWrap: { width: 385, useAdvancedWrap: true },
-          wrap: {
-            mode: "word",
-            width: 550,
-          },
+    const lineText = this.add.rexBBCodeText({
+      x: 0,
+      y: 0,
+      text: popupData.text,
+      style: {
+        fontFamily: "Onest",
+        fontSize: 16,
+        lineSpacing: 10,
+        color: "#000",
+        // wordWrap: { width: 385, useAdvancedWrap: true },
+        wrap: {
+          mode: "word",
+          width: 550,
         },
-      })
-      .setOrigin(0, 0.5);
-    const bubbleSpriteKey =
-      lineText.getBounds().height < 38
-        ? "bubble-line"
-        : lineText.getBounds().height < 86
-        ? "bubble-medium"
-        : "bubble-large";
+      },
+    });
+    const bubbleSpriteKey = this.getBubbleSize(
+      lineText.getBounds().width,
+      lineText.getBounds().height
+    );
     const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
-    lineText.setPosition(25, lineBubble.getBounds().centerY);
+    lineText
+      .setPosition(
+        lineBubble.getBounds().centerX,
+        lineBubble.getBounds().centerY
+      )
+      .setOrigin(0.5, 0.5);
     container.add(lineBubble);
     container.add(lineText);
     container.setPosition(
@@ -1146,6 +1164,9 @@ export default class LevelScene extends Phaser.Scene {
       entity.popupState.gameObjects = null;
     }
     entity.popupState.shown = false;
+    if (entity.soundState) {
+      entity.soundState.played = false;
+    }
   }
 
   advanceDialogue(entity) {
@@ -1169,6 +1190,14 @@ export default class LevelScene extends Phaser.Scene {
         ? 0
         : entity.dialogueState.currentLine;
     if (lines && lines.length > currentLine) {
+      // at first line play a sound
+      if (currentLine === 0 && entity.soundData && entity.soundState) {
+        if (entity.soundState.skipNext) {
+          entity.soundState.skipNext = false;
+        } else {
+          this.sound.play(entity.soundData.key);
+        }
+      }
       const line = lines[currentLine];
       console.log(`showDialogueLine ${currentLine}`);
       this.showDialogueLine(entity, line);
@@ -1205,32 +1234,33 @@ export default class LevelScene extends Phaser.Scene {
 
   showDialogueLine(entity, line) {
     const container = this.add.container(0, 0);
-    const lineText = this.add
-      .rexBBCodeText({
-        x: 0,
-        y: 0,
-        text: line.text,
-        style: {
-          fontFamily: "Onest",
-          fontSize: 16,
-          lineSpacing: 10,
-          color: "#000",
-          // wordWrap: { width: 385, useAdvancedWrap: true },
-          wrap: {
-            mode: "word",
-            width: 385,
-          },
+    const lineText = this.add.rexBBCodeText({
+      x: 0,
+      y: 0,
+      text: line.text,
+      style: {
+        fontFamily: "Onest",
+        fontSize: 16,
+        lineSpacing: 10,
+        color: "#000",
+        // wordWrap: { width: 385, useAdvancedWrap: true },
+        wrap: {
+          mode: "word",
+          width: 385,
         },
-      })
-      .setOrigin(0, 0.5);
-    const bubbleSpriteKey =
-      lineText.getBounds().height < 38
-        ? "bubble-line"
-        : lineText.getBounds().height < 86
-        ? "bubble-medium"
-        : "bubble-large";
+      },
+    });
+    const bubbleSpriteKey = this.getBubbleSize(
+      lineText.getBounds().width,
+      lineText.getBounds().height
+    );
     const lineBubble = this.add.image(0, 0, bubbleSpriteKey).setOrigin(0, 0);
-    lineText.setPosition(25, lineBubble.getBounds().centerY);
+    lineText
+      .setPosition(
+        lineBubble.getBounds().centerX,
+        lineBubble.getBounds().centerY
+      )
+      .setOrigin(0.5, 0.5);
     container.add(lineBubble);
     container.add(lineText);
     if (!line.player) {
@@ -1357,6 +1387,9 @@ export default class LevelScene extends Phaser.Scene {
 
     entity.exitState.started = true;
     entity.exitState.shown = true;
+    if (this.isMobile) {
+      this.correctAnswersText.setVisible(false);
+    }
     this.updateCameraFollowOffset();
     if (!this.isMobile) {
       this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
@@ -1377,6 +1410,7 @@ export default class LevelScene extends Phaser.Scene {
       this.applyDialogZoom(0);
     }
     entity.exitState.shown = false;
+    this.correctAnswersText.setVisible(true);
     this.updateCameraFollowOffset();
   }
 
@@ -1393,6 +1427,22 @@ export default class LevelScene extends Phaser.Scene {
       // not exit
       this.hideExit(entity);
       entity.exitState.started = false;
+    }
+  }
+
+  getBubbleSize(textWidth, textHeight) {
+    if (textHeight <= 38) {
+      if (textWidth <= 383) {
+        return "bubble-line-narrow";
+      } else if (textWidth <= 558) {
+        return "bubble-line";
+      } else {
+        return "bubble-line-wide";
+      }
+    } else if (textWidth <= 86) {
+      return "bubble-medium";
+    } else {
+      return "bubble-large";
     }
   }
 
@@ -1467,6 +1517,10 @@ export default class LevelScene extends Phaser.Scene {
             ) {
               this.touchState.speak = false;
               this.touchState.enter = false;
+              if (nearbyEntity.quizState.finished) {
+                nearbyEntity.quizState.finished = false;
+                nearbyEntity.quizState.currentLine = null;
+              }
               this.advanceQuizDialogue(nearbyEntity);
             }
           }
@@ -1589,16 +1643,12 @@ export default class LevelScene extends Phaser.Scene {
 
     let nearbyEntityName = null;
     Object.entries(this.entities).forEach(([entityName, entity]) => {
-      if (
-        (entity.quizArea &&
-          this.physics.world.overlap(this.player, entity.quizArea)) ||
-        (entity.popupArea &&
-          this.physics.world.overlap(this.player, entity.popupArea)) ||
-        (entity.dialogueArea &&
-          this.physics.world.overlap(this.player, entity.dialogueArea)) ||
-        (entity.exitArea &&
-          this.physics.world.overlap(this.player, entity.exitArea))
-      ) {
+      const anyArea =
+        entity.quizArea ||
+        entity.popupArea ||
+        entity.dialogueArea ||
+        entity.exitArea;
+      if (anyArea && this.physics.world.overlap(this.player, anyArea)) {
         nearbyEntityName = entityName;
       }
 
@@ -1690,6 +1740,17 @@ export default class LevelScene extends Phaser.Scene {
           this.showExit(entity);
         }
       }
+
+      if (
+        entity.soundData &&
+        entity.soundState &&
+        !entity.soundState.played &&
+        anyArea &&
+        this.physics.world.overlap(this.player, anyArea)
+      ) {
+        this.sound.play(entity.soundData.key);
+        entity.soundState.played = true;
+      }
     });
 
     let nearbyEntity = nearbyEntityName
@@ -1721,7 +1782,6 @@ export default class LevelScene extends Phaser.Scene {
     const showSpeak = Boolean(
       nearbyEntity &&
         ((nearbyEntity.quizState &&
-          !nearbyEntity.quizState.finished &&
           (!nearbyEntity.quizState.started ||
             nearbyEntity.quizState.answered)) ||
           nearbyEntity.dialogueState ||
