@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import Entities from "../Entities";
 import { JSON36 } from "weird-json";
 
@@ -1997,5 +1998,67 @@ export default class LevelScene extends Phaser.Scene {
       }
     }
     this.mainCamera.setFollowOffset(camOffset.x, camOffset.y);
+  }
+
+  saveProgress() {
+    const player = {
+      x: this.player.x,
+      y: this.player.y,
+    };
+    const entities = {};
+    Object.entries(this.entities).forEach(([key, entity]) => {
+      const entityState = {};
+      const props = [
+        "quizState",
+        "popupState",
+        "dialogueState",
+        "soundState",
+        "exitState",
+      ];
+      props.forEach((prop) => {
+        if (entity[prop]) {
+          const state = { ...entity[prop] };
+          if (state.gameObjects != null) {
+            state.gameObjects = null;
+          }
+          entityState[prop] = state;
+        }
+      });
+      entities[key] = entityState;
+    });
+    const gameData = JSON.stringify({
+      player,
+      entities,
+      interactedObjects: this.interactedObjects,
+      correctAnswers: this.correctAnswers,
+    });
+    localStorage.setItem("gameData", gameData);
+  }
+
+  loadProgress() {
+    const gameDataJSON = localStorage.getItem("gameData");
+    if (!gameDataJSON) {
+      return;
+    }
+    const gameData = JSON.parse(gameDataJSON);
+    if (!gameData) {
+      return;
+    }
+    this.player.x = gameData.player.x;
+    this.player.y = gameData.player.y;
+    Object.entries(gameData.entities).forEach(([key, entity]) => {
+      const props = [
+        "quizState",
+        "popupState",
+        "dialogueState",
+        "soundState",
+        "exitState",
+      ];
+      props.forEach((prop) => {
+        if (entity[prop]) {
+          entityState[prop] = entity[prop];
+        }
+      });
+    });
   }
 }

@@ -1,4 +1,3 @@
-const path = require("path");
 const { src, dest, task, series, watch, parallel } = require("gulp");
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
@@ -8,24 +7,17 @@ const sass = require("gulp-sass")(require("sass"));
 const makeWebpackStream = () =>
   webpackStream(
     {
-      mode: 'production',
+      mode: "production",
       entry: {
         game: "./src/Game.js",
         win: "./src/win.js",
+        hydra: "./src/hydra.js",
+        maestro: "./src/maestro.js",
       },
       output: {
         filename: `[name].js`,
         publicPath: "js/",
-        chunkFilename: `js/chunks/[name][id].chunk.[chunkhash].js`,
-      },
-      resolve: {
-        alias: {
-          Phaser: "phaser",
-          "@": path.resolve(__dirname, "src"),
-          node_modules: path.resolve(__dirname, "node_modules"),
-        },
-        extensions: [".js"],
-        // modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        chunkFilename: `js/[name][id].chunk.[chunkhash].js`,
       },
       module: {
         rules: [
@@ -55,11 +47,6 @@ const makeWebpackStream = () =>
           },
         ],
       },
-      plugins: [
-        new webpack.ProvidePlugin({
-          Phaser: "phaser",
-        }),
-      ],
     },
     webpack
   );
@@ -74,7 +61,7 @@ task("server", function () {
 });
 
 task("js", function () {
-  return src(["src/Game.js", "src/win.js"])
+  return src(["src/Game.js", "src/win.js", "src/hydra.js", "src/maestro.js"])
     .pipe(makeWebpackStream())
     .pipe(dest("dist/js/"));
 });

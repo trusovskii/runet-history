@@ -1,7 +1,7 @@
-import './polyfill';
+import "./polyfill";
 import { JSON36 } from "weird-json";
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", function () {
   try {
     const paramPairs = location.search
       .replace(/^\?/, "")

@@ -1,4 +1,5 @@
 import './polyfill';
+import Phaser from 'phaser';
 import BootScene from "./scenes/BootScene";
 import LoadingScene from "./scenes/LoadingScene";
 import LevelScene from "./scenes/LevelScene";
