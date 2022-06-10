@@ -81,6 +81,9 @@ export default class LevelScene extends Phaser.Scene {
     this.createEntities();
     this.createControls();
 
+    // stop hydra and maestro animations
+    // this.entities.gidra.stop()
+
     this.bubblesLayer = this.add.layer();
     this.staticBubblesLayer = this.add.layer();
 
@@ -238,6 +241,18 @@ export default class LevelScene extends Phaser.Scene {
     this.safeAreaRight = 0;
 
     this.mainCamera.setBackgroundColor("#c5c5c5");
+
+    const gameContinue = window.localStorage.getItem('gameContinue')
+    const gameFinish = window.localStorage.getItem('gameFinish')
+    const gameResultCode = window.localStorage.getItem('gameResultCode')
+    if (gameContinue) {
+      window.localStorage.removeItem('gameContinue')
+      this.loadProgress();
+    } else if (gameFinish && gameResultCode) {
+      window.localStorage.removeItem('gameFinish')
+      window.localStorage.removeItem('gameResultCode')
+      window.location.href = `/win/?result=${gameResultCode}`;
+    }
 
     this.events.on("resize", () => {
       this.onResize();
@@ -591,28 +606,57 @@ export default class LevelScene extends Phaser.Scene {
     Object.entries(Entities).forEach(([entityName, entityData]) => {
       let entity;
 
-      if (entityData.frame) {
+      const createAnims = (sprite, atlas, frame, name) => {
         this.anims.create({
-          key: `${entityData.sprite}_animation`,
-          frames: this.anims.generateFrameNames(entityData.atlas, {
-            prefix: entityData.sprite,
+          key: `${sprite}_${name}`,
+          frames: this.anims.generateFrameNames(atlas, {
+            prefix: sprite,
             suffix: ".png",
-            start: entityData.frame.start,
-            end: entityData.frame.end,
+            start: frame.start,
+            end: frame.end,
           }),
-          yoyo: entityData.yoyo ?? true,
-          repeat: -1,
-          repeatDelay: 5000,
-          frameRate: entityData.frame.rate,
+          yoyo: frame.yoyo ?? true,
+          repeat: frame.repeat ?? -1,
+          repeatDelay: frame.repeatDelay ?? 5000,
+          frameRate: frame.rate ?? 1,
         });
+      };
 
-        entity = this.physics.add
-          .sprite(
-            entityData.x,
-            entityData.y + VERTICAL_OFFSET,
-            entityData.atlas
-          )
-          .play(`${entityData.sprite}_animation`);
+      if (entityData.frame) {
+        createAnims(
+          entityData.sprite,
+          entityData.atlas,
+          entityData.frame,
+          "animation"
+        );
+        entity = this.physics.add.sprite(
+          entityData.x,
+          entityData.y + VERTICAL_OFFSET,
+          entityData.atlas
+        );
+        if (entityData.portal) {
+          createAnims(
+            entityData.sprite,
+            entityData.atlas,
+            entityData.portal.stillFrame,
+            "still"
+          );
+          createAnims(
+            entityData.sprite,
+            entityData.atlas,
+            entityData.portal.enterFrame,
+            "enter"
+          );
+          createAnims(
+            entityData.sprite,
+            entityData.atlas,
+            entityData.portal.leaveFrame,
+            "leave"
+          );
+          entity.play(`${entityData.sprite}_still`);
+        } else {
+          entity.play(`${entityData.sprite}_animation`);
+        }
       } else {
         entity = this.physics.add
           .sprite(
@@ -761,6 +805,33 @@ export default class LevelScene extends Phaser.Scene {
           started: false,
           shown: false,
           gameObjects: null,
+        };
+      }
+
+      if (entityData.portal) {
+        entity.portalArea = this.physics.add.existing(
+          this.add
+            .rectangle(
+              entityData.portal.area.x,
+              entityData.portal.area.y + VERTICAL_OFFSET,
+              entityData.portal.area.width,
+              entityData.portal.area.height,
+              0xff0000,
+              0
+            )
+            .setOrigin(
+              entityData.portal.area.origin?.x ?? 0,
+              entityData.portal.area.origin?.y ?? 0
+            )
+        );
+        this.physics.add.overlap(this.player, entity.portalArea);
+
+        entity.portalData = {
+          ...entityData.portal,
+          sprite: entityData.sprite,
+        };
+        entity.portalState = {
+          interacted: false,
         };
       }
 
@@ -1126,11 +1197,11 @@ export default class LevelScene extends Phaser.Scene {
         // wordWrap: { width: 385, useAdvancedWrap: true },
         wrap: {
           mode: "word",
-          width: 550,
+          width: 838,
         },
       },
     });
-    const bubbleSpriteKey = this.getBubbleSize(
+    const bubbleSpriteKey = this.getPopupBubbleSize(
       lineText.getBounds().width,
       lineText.getBounds().height
     );
@@ -1431,14 +1502,49 @@ export default class LevelScene extends Phaser.Scene {
     }
   }
 
+  enterPortal(entity) {
+    console.log("type", entity.portalData.type);
+    entity.portalState.interacted = true;
+    this.saveProgress();
+    if (entity.portalData.type === "hydra") {
+      window.location.href = "/hydra/";
+    } else if (entity.portalData.type === "maestro") {
+      const result = {
+        score: this.correctAnswers,
+        r: Math.round(Math.random() * 100000),
+      };
+      const code = JSON36.stringify(result);
+      window.localStorage.setItem('gameResultCode', code);
+      window.location.href = "/maestro/";
+    }
+  }
+
   getBubbleSize(textWidth, textHeight) {
-    if (textHeight <= 38) {
+    if (textHeight <= 45) {
       if (textWidth <= 383) {
         return "bubble-line-narrow";
       } else if (textWidth <= 558) {
         return "bubble-line";
       } else {
         return "bubble-line-wide";
+      }
+    } else if (textWidth <= 86) {
+      return "bubble-medium";
+    } else {
+      return "bubble-large";
+    }
+  }
+
+  getPopupBubbleSize(textWidth, textHeight) {
+    if (textHeight <= 45) {
+      if (textWidth <= 290) {
+        return "bubble-line-tiny";
+      } else if (textWidth <= 369) {
+        return "bubble-line-narrow";
+      } else if (textWidth <= 663) {
+        return "bubble-line-wide";
+      } else {
+        return "bubble-line-ultrawide";
       }
     } else if (textWidth <= 86) {
       return "bubble-medium";
@@ -1537,6 +1643,16 @@ export default class LevelScene extends Phaser.Scene {
           this.player.setVelocityX(0);
           this.player.play("thinking");
           this.advanceDialogue(nearbyEntity);
+        }
+      } else if (nearbyEntity.portalData) {
+        if (!nearbyEntity.portalState.interacted) {
+          if (
+            Phaser.Input.Keyboard.JustDown(this.keyEnter) ||
+            this.touchState.speak ||
+            this.touchState.enter
+          ) {
+            this.enterPortal(nearbyEntity);
+          }
         }
       } else if (nearbyEntity.exitData) {
         if (!nearbyEntity.exitState.shown) {
@@ -1648,7 +1764,8 @@ export default class LevelScene extends Phaser.Scene {
         entity.quizArea ||
         entity.popupArea ||
         entity.dialogueArea ||
-        entity.exitArea;
+        entity.exitArea ||
+        entity.portalArea;
       if (anyArea && this.physics.world.overlap(this.player, anyArea)) {
         nearbyEntityName = entityName;
       }
@@ -1742,6 +1859,37 @@ export default class LevelScene extends Phaser.Scene {
         }
       }
 
+      if (entity.portalArea && entity.portalState && entity.anims.currentAnim) {
+        const curAnim = entity.anims.currentAnim.key;
+        const animEnter = `${entity.portalData.sprite}_enter`;
+        const animLeave = `${entity.portalData.sprite}_leave`;
+        const overlaps = this.physics.world.overlap(
+          this.player,
+          entity.portalArea
+        );
+        if (
+          overlaps &&
+          !entity.portalState.interacted &&
+          curAnim !== animEnter
+        ) {
+          if (!entity.anims.isPlaying) {
+            entity.play(animEnter);
+          } else {
+            entity.once("animationcomplete", () => {
+              entity.play(animEnter);
+            });
+          }
+        } else if (!overlaps && curAnim === animEnter) {
+          if (!entity.anims.isPlaying) {
+            entity.play(animLeave);
+          } else {
+            entity.once("animationcomplete", () => {
+              entity.play(animLeave);
+            });
+          }
+        }
+      }
+
       if (
         entity.soundData &&
         entity.soundState &&
@@ -1768,7 +1916,8 @@ export default class LevelScene extends Phaser.Scene {
           (nearbyEntity.dialogueState &&
             !nearbyEntity.dialogueState.started &&
             !nearbyEntity.dialogueState.finished) ||
-          (nearbyEntity.exitState && !nearbyEntity.exitState.shown))
+          (nearbyEntity.exitState && !nearbyEntity.exitState.shown) ||
+          (nearbyEntity.portalState && !nearbyEntity.portalState.interacted))
     );
     if (showQuest) {
       this.quest.setPosition(
@@ -1786,7 +1935,8 @@ export default class LevelScene extends Phaser.Scene {
           (!nearbyEntity.quizState.started ||
             nearbyEntity.quizState.answered)) ||
           nearbyEntity.dialogueState ||
-          (nearbyEntity.exitState && !nearbyEntity.exitState.shown))
+          (nearbyEntity.exitState && !nearbyEntity.exitState.shown) ||
+          (nearbyEntity.portalState && !nearbyEntity.portalState.interacted))
     );
     if (this.isMobile && this.controls.speak.visible !== showSpeak) {
       console.log("speak.setVisible:", showSpeak);
@@ -2014,12 +2164,16 @@ export default class LevelScene extends Phaser.Scene {
         "dialogueState",
         "soundState",
         "exitState",
+        "portalState",
       ];
       props.forEach((prop) => {
         if (entity[prop]) {
           const state = { ...entity[prop] };
           if (state.gameObjects != null) {
             state.gameObjects = null;
+          }
+          if (state.shown != null) {
+            state.shown = false;
           }
           entityState[prop] = state;
         }
@@ -2032,11 +2186,11 @@ export default class LevelScene extends Phaser.Scene {
       interactedObjects: this.interactedObjects,
       correctAnswers: this.correctAnswers,
     });
-    localStorage.setItem("gameData", gameData);
+    window.localStorage.setItem("gameData", gameData);
   }
 
   loadProgress() {
-    const gameDataJSON = localStorage.getItem("gameData");
+    const gameDataJSON = window.localStorage.getItem("gameData");
     if (!gameDataJSON) {
       return;
     }
@@ -2046,19 +2200,25 @@ export default class LevelScene extends Phaser.Scene {
     }
     this.player.x = gameData.player.x;
     this.player.y = gameData.player.y;
-    Object.entries(gameData.entities).forEach(([key, entity]) => {
+    Object.entries(gameData.entities).forEach(([key, entityData]) => {
       const props = [
         "quizState",
         "popupState",
         "dialogueState",
         "soundState",
         "exitState",
+        "portalState",
       ];
       props.forEach((prop) => {
-        if (entity[prop]) {
-          entityState[prop] = entity[prop];
+        if (entityData[prop]) {
+          this.entities[key][prop] = { ...entityData[prop] };
         }
       });
     });
+    this.interactedObjects = gameData.interactedObjects;
+    this.correctAnswers = gameData.correctAnswers;
+    if (this.correctAnswers > 0) {
+      this.correctAnswersText.setVisible(true);
+    }
   }
 }

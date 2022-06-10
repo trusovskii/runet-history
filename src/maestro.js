@@ -119,27 +119,27 @@ window.addEventListener("DOMContentLoaded", function () {
   //Массив с вопросами
   const questions = [
     new Question("Где больше пользователей Рунета?", [
-      new Answer("ВКонтакте", 1, "./assets/img/victorine/vk.png"),
-      new Answer("Одноклассники", 0, "./assets/img/victorine/ok.png"),
+      new Answer("ВКонтакте", 1, "/assets/img/victorine/vk.png"),
+      new Answer("Одноклассники", 0, "/assets/img/victorine/ok.png"),
     ]),
 
     new Question("Кто дарит статуэтку «Кибермастера»?", [
-      new Answer("Золотой сайт", 1, "./assets/img/victorine/goldsite.png"),
-      new Answer("Премия Рунета", 0, "./assets/img/victorine/runet.png"),
+      new Answer("Золотой сайт", 1, "/assets/img/victorine/goldsite.png"),
+      new Answer("Премия Рунета", 0, "/assets/img/victorine/runet.png"),
     ]),
 
     new Question("Куда можно зайти без приглашения?", [
-      new Answer("Луркоморье", 1, "./assets/img/victorine/lurka.png"),
-      new Answer("Лепрозорий", 0, "./assets/img/victorine/lepra.png"),
+      new Answer("Луркоморье", 1, "/assets/img/victorine/lurka.png"),
+      new Answer("Лепрозорий", 0, "/assets/img/victorine/lepra.png"),
     ]),
   ];
 
   const srcImagesLives = {
-    0: "./assets/img/hydra/hearts-empty.png",
-    1: "./assets/img/hydra/hearts-one-filled--white.png",
-    2: "./assets/img/hydra/hearts-two-filled--white.png",
-    3: "./assets/img/hydra/hearts-filled--white.png",
-    4: "./assets/img/hydra/hearts-win.png",
+    0: "/assets/img/hydra/hearts-empty.png",
+    1: "/assets/img/hydra/hearts-one-filled--white.png",
+    2: "/assets/img/hydra/hearts-two-filled--white.png",
+    3: "/assets/img/hydra/hearts-filled--white.png",
+    4: "/assets/img/hydra/hearts-win.png",
   };
 
   //Сам тест
@@ -182,9 +182,12 @@ window.addEventListener("DOMContentLoaded", function () {
     } else {
       //Если это конец, то редирект на результат
       if (playerLivesValue > 0) {
-        window.location.href = "maestro-loose/";
+        window.localStorage.setItem('gameFinish', JSON.stringify(true));
+        window.location.href = "/maestro-loose/";
       } else {
-        window.location.href = "maestro-win/";
+        window.localStorage.removeItem('gameFinish');
+        window.localStorage.removeItem('gameResultCode');
+        window.location.href = "/maestro-win/";
       }
     }
   }

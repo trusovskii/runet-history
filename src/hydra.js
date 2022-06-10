@@ -121,28 +121,28 @@ window.addEventListener("DOMContentLoaded", function () {
     new Question(
       "Что начали делать пользователи раньше: знакомиться или читать анекдоты?",
       [
-        new Answer("Анекдот.ру", 1, "./assets/img/victorine/joke.png"),
-        new Answer("Чат «Кроватка»", 0, "./assets/img/victorine/bed.png"),
+        new Answer("Анекдот.ру", 1, "/assets/img/victorine/joke.png"),
+        new Answer("Чат «Кроватка»", 0, "/assets/img/victorine/bed.png"),
       ]
     ),
 
     new Question("Кто сказал «о-оу»?", [
-      new Answer("Аська", 1, "./assets/img/victorine/icq.png"),
-      new Answer("Масяня", 0, "./assets/img/victorine/masyanya.png"),
+      new Answer("Аська", 1, "/assets/img/victorine/icq.png"),
+      new Answer("Масяня", 0, "/assets/img/victorine/masyanya.png"),
     ]),
 
     new Question("Где можно посмотреть в «Бездну»?", [
-      new Answer("Хабр", 1, "./assets/img/victorine/habr.png"),
-      new Answer("Башорг", 0, "./assets/img/victorine/bashorg.png"),
+      new Answer("Хабр", 1, "/assets/img/victorine/habr.png"),
+      new Answer("Башорг", 0, "/assets/img/victorine/bashorg.png"),
     ]),
   ];
 
   const srcImagesLives = {
-    0: "./assets/img/hydra/hearts-empty.png",
-    1: "./assets/img/hydra/hearts-one-filled.png",
-    2: "./assets/img/hydra/hearts-two-filled.png",
-    3: "./assets/img/hydra/hearts-filled.png",
-    4: "./assets/img/hydra/hearts-win.png",
+    0: "/assets/img/hydra/hearts-empty.png",
+    1: "/assets/img/hydra/hearts-one-filled.png",
+    2: "/assets/img/hydra/hearts-two-filled.png",
+    3: "/assets/img/hydra/hearts-filled.png",
+    4: "/assets/img/hydra/hearts-win.png",
   };
 
   //Сам тест
@@ -181,9 +181,11 @@ window.addEventListener("DOMContentLoaded", function () {
     } else {
       //Если это конец, то редирект на результат
       if (playerLivesValue > 0) {
-        window.location.href = "hydra-loose/";
+        window.localStorage.setItem('gameContinue', JSON.stringify(true));
+        window.location.href = "/hydra-loose/";
       } else {
-        window.location.href = "hydra-win/";
+        window.localStorage.removeItem('gameContinue');
+        window.location.href = "/hydra-win/";
       }
     }
   }

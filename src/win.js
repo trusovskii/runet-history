@@ -2,6 +2,9 @@ import "./polyfill";
 import { JSON36 } from "weird-json";
 
 window.addEventListener("DOMContentLoaded", function () {
+  window.localStorage.removeItem('gameFinish');
+  window.localStorage.removeItem('gameResultCode');
+
   try {
     const paramPairs = location.search
       .replace(/^\?/, "")

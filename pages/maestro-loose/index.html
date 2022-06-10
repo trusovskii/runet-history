@@ -47,14 +47,23 @@
             </div>
         </div>
         <div class="again-content__button">
-            <a class="button button_grey button_grey--maestro" href="#">Закончить игру</a>
+            <a class="button button_grey button_grey--maestro" href="/game/">Закончить игру</a>
         </div>
         <div class="again-content__timeline">
             <img src="/assets/img/hydra/timeline.svg" alt="Timeline">
         </div>
     </section>
 
-    <script type="text/javascript" src="/js/maestro.js?cb=cb33"></script>
+    <!-- <script type="text/javascript" src="/js/maestro.js?cb=cb_34"></script> -->
+    <script>
+        var gameFinish = window.localStorage.getItem('gameFinish');
+        var gameResultCode = window.localStorage.getItem('gameResultCode');
 
+        if (gameFinish && gameResultCode) {
+            document.querySelector('.button_grey--maestro').href = '/win/?result=' + gameResultCode;
+            window.localStorage.removeItem('gameFinish');
+            window.localStorage.removeItem('gameResultCode');
+        }
+    </script>
 </body>
 </html>

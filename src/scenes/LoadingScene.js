@@ -411,6 +411,8 @@ export default class LoadingScene extends Phaser.Scene {
 
     this.load.image("bubble-line", `/assets/bubbles/bubble-line.png?cb=${cb}`);
     this.load.image("bubble-line-narrow", `/assets/bubbles/bubble-line-narrow.png?cb=${cb}`);
+    this.load.image("bubble-line-tiny", `/assets/bubbles/bubble-line-tiny.png?cb=${cb}`);
+    this.load.image("bubble-line-ultrawide", `/assets/bubbles/bubble-line-ultrawide.png?cb=${cb}`);
     this.load.image("bubble-line-wide", `/assets/bubbles/bubble-line-wide.png?cb=${cb}`);
     this.load.image(
       "bubble-medium",

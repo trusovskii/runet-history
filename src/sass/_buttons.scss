@@ -1,8 +1,9 @@
 .button {
-  transition: 0.12s;
+  transition: 0.3s;
   width: 100%;
   text-align: center;
   text-transform: uppercase;
+  white-space: nowrap;
 
   &_red {
     border-radius: 96px;
@@ -18,8 +19,18 @@
       background: #000000;
       // box-shadow: 0px 2px 14px rgba(225, 57, 20, 0.8);
     }
+
     &:disabled {
       color: rgba(255, 255, 255, 0.4);
+    }
+
+    &--hydra {
+
+      &:hover {
+        box-shadow: none;
+        background: #FFFFFF;
+        color: black;
+      }
     }
   }
 
@@ -57,8 +68,19 @@
       background: #E13914;
       // box-shadow: 0 2px 14px rgba(225, 57, 20, 0.8);
     }
+
     &:disabled {
       color: rgba(255, 255, 255, 0.4);
+    }
+
+    &--maestro {
+      padding: 12px 40px;
+
+      &:hover {
+        box-shadow: none;
+        background: #000000;
+        color: white;
+      }
     }
   }
 
@@ -66,3 +88,4 @@
     font-size: 24px;
   }
 }
+
