@@ -1537,11 +1537,13 @@ export default class LevelScene extends Phaser.Scene {
 
   getPopupBubbleSize(textWidth, textHeight) {
     if (textHeight <= 45) {
-      if (textWidth <= 290) {
+      if (textWidth <= 300) {
         return "bubble-line-tiny";
-      } else if (textWidth <= 369) {
+      } else if (textWidth <= 379) {
         return "bubble-line-narrow";
-      } else if (textWidth <= 663) {
+      } else if (textWidth <= 558) {
+        return "bubble-line";
+      } else if (textWidth <= 673) {
         return "bubble-line-wide";
       } else {
         return "bubble-line-ultrawide";
