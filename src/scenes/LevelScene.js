@@ -3,7 +3,7 @@ import Entities from "../Entities";
 import { JSON36 } from "weird-json";
 
 const VERTICAL_OFFSET = Math.ceil(1080 * 0.2);
-const WORLD_WIDTH = 51000;
+const WORLD_WIDTH = 50520;
 const WORLD_HEIGHT = 1080 + VERTICAL_OFFSET;
 
 const DEPTH_BACKGROUND = 100;
@@ -387,7 +387,7 @@ export default class LevelScene extends Phaser.Scene {
     const group = this.physics.add.staticGroup();
     this.floorLayer = layer;
     this.floorGroup = group;
-    this.createLargePlatform(layer, group, 0, 930, 423);
+    this.createLargePlatform(layer, group, 0, 930, 419);
   }
 
   createBackground() {
@@ -529,7 +529,14 @@ export default class LevelScene extends Phaser.Scene {
       layer,
       group,
       47480,
-      700,
+      620,
+      2
+    ); /** Банк беспокоит> */
+    this.createLargePlatform(
+      layer,
+      group,
+      48330,
+      430,
       2
     ); /** Банк беспокоит> */
   }

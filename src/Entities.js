@@ -147,7 +147,7 @@ export default {
       x: 1140,
       y: 233,
       origin: { x: 0, y: 1 },
-      text: "Интернет, они ставят. Он нам н@%й не нужон, интернет ваш",
+      text: "Интернет, они ставят. Он нам н@%й не нужон, интернет ваш!",
       area: {
         x: 1230,
         y: 425,
@@ -528,7 +528,7 @@ export default {
     y: 250,
     sprite: "gopstop_1998",
     popup: {
-      x: 8010,
+      x: 8060,
       y: 58,
       origin: { x: 0, y: 1 },
       text: "Пацаны ваще ребята! Умеете, могёте",
@@ -545,6 +545,9 @@ export default {
     x: 5200,
     y: 970,
     sprite: "router_1996",
+    sound: {
+      key: "modem",
+    },
     popup: {
       x: 5200,
       y: 651,
@@ -734,8 +737,8 @@ export default {
       rate: 10,
     },
     quiz: {
-      x: 10200,
-      y: 136,
+      x: 10130,
+      y: 50,
       origin: { x: 0, y: 1 },
       area: {
         x: 10267,
@@ -897,7 +900,7 @@ export default {
     },
     quiz: {
       x: 12060,
-      y: 770,
+      y: 716,
       origin: { x: 0, y: 1 },
       area: {
         x: 12030,
@@ -972,6 +975,9 @@ export default {
     x: 14000,
     y: 953,
     sprite: "mas_2001",
+    sound: {
+      key: "mas",
+    },
     quiz: {
       x: 13800,
       y: 730,
@@ -1097,7 +1103,7 @@ export default {
     y: 675,
     sprite: "leprosorium_2004",
     quiz: {
-      x: 14540,
+      x: 14490,
       y: 517,
       origin: { x: 0, y: 1 },
       area: {
@@ -1155,7 +1161,7 @@ export default {
     colliders: [{ x: 15275, y: 940, width: 115, height: 310 }],
     quiz: {
       x: 15060,
-      y: 484,
+      y: 535,
       origin: { x: 0, y: 1 },
       area: {
         x: 15200,
@@ -1251,7 +1257,7 @@ export default {
     y: 955,
     sprite: "orly_2006",
     popup: {
-      x: 16010,
+      x: 16040,
       y: 804,
       origin: { x: 0, y: 1 },
       text: "Совы не то, чем кажутся.",
@@ -1269,8 +1275,8 @@ export default {
     y: 970,
     sprite: "not_bag_2006",
     popup: {
-      x: 16720,
-      y: 820,
+      x: 16750,
+      y: 840,
       origin: { x: 0, y: 1 },
       text: "Это не баг. Это — фича.",
       area: {
@@ -1283,20 +1289,12 @@ export default {
     },
   },
   durov: {
-    x: 17735,
-    y: 794,
+    x: 17618,
+    y: 967,
     sprite: "durov",
-    atlas: "creatures2",
-    frame: {
-      start: 0,
-      end: 6,
-      rate: 2,
-      yoyo: false,
-    },
-    scale: 0.47,
-    colliders: [{ x: 17620, y: 950, width: 200, height: 340 }],
+    colliders: [{ x: 17620, y: 950, width: 205, height: 315 }],
     quiz: {
-      x: 17350,
+      x: 17410,
       y: 551,
       origin: { x: 0, y: 1 },
       area: {
@@ -1468,8 +1466,8 @@ export default {
     sprite: "dvd_2007",
     colliders: [{ x: 20220, y: 1000, width: 300, height: 300 }],
     popup: {
-      x: 20150,
-      y: 655,
+      x: 20210,
+      y: 620,
       origin: { x: 0, y: 1 },
       text: "Ломай. Ломай меня. Я тебя прошу",
       area: {
@@ -1521,7 +1519,7 @@ export default {
     },
   },
   lurk: {
-    x: 21430,
+    x: 22100,
     y: 536,
     sprite: "lurk",
     atlas: "creatures3",
@@ -1533,11 +1531,11 @@ export default {
     },
     scale: 0.9,
     quiz: {
-      x: 21030,
-      y: 577,
+      x: 21580,
+      y: 490,
       origin: { x: 0, y: 1 },
       area: {
-        x: 20970,
+        x: 21600,
         y: 950,
         width: 500,
         height: 500,
@@ -1555,18 +1553,21 @@ export default {
     },
   },
   who_are_you_2007: {
-    x: 21650,
+    x: 21050,
     y: 955,
     sprite: "who_are_you_2007",
+    sound: {
+      key: "ded",
+    },
     popup: {
-      x: 21600,
+      x: 21050,
       y: 710,
       origin: { x: 0, y: 1 },
       text: "Вы кто такие? Я вас не звал. Идите нах%й",
       area: {
-        x: 21585,
+        x: 21000,
         y: 950,
-        width: 350,
+        width: 390,
         height: 500,
         origin: { x: 0, y: 1 },
       },
@@ -1606,7 +1607,7 @@ export default {
     y: 580,
     sprite: "putin_krab_2008",
     popup: {
-      x: 22450,
+      x: 22495,
       y: 390,
       origin: { x: 0, y: 1 },
       text: "А Ленин — Гриб",
@@ -1980,9 +1981,12 @@ export default {
     x: 30550,
     y: 153,
     sprite: "yazz_2011",
+    sound: {
+      key: "yazz",
+    },
     popup: {
-      x: 30400,
-      y: 8,
+      x: 30470,
+      y: -5,
       origin: { x: 0, y: 1 },
       text: "Вот она! Вот она — рыба моей мечты!",
       area: {
@@ -1998,9 +2002,12 @@ export default {
     x: 31200,
     y: 153,
     sprite: "advokaat_2011",
+    sound: {
+      key: "advokat",
+    },
     popup: {
-      x: 31060,
-      y: 8,
+      x: 31130,
+      y: -5,
       origin: { x: 0, y: 1 },
       text: "АДВОКАААТ!!!1!!1",
       area: {
@@ -2329,7 +2336,7 @@ export default {
     y: 220,
     sprite: "inagent_2017",
     popup: {
-      x: 34260,
+      x: 34060,
       y: 50,
       origin: { x: 0, y: 1 },
       text: "ДАННЫЙ ПРОЕКТ (ИГРА) СОЗДАН И (ИЛИ) РАСПРОСТРАНЯЕТСЯ В БОГОСПАСАЕМОМ РУНЕТЕ",
@@ -2353,7 +2360,7 @@ export default {
     sprite: "remote_2017",
     popup: {
       x: 35230,
-      y: 195,
+      y: 185,
       origin: { x: 0, y: 1 },
       text: "Когда-то и я был авантюристом, а потом мне прострелили колено",
       area: {
@@ -2411,9 +2418,22 @@ export default {
     },
   },
   ilona_2018: {
-    x: 36920,
-    y: 300,
+    x: 38370,
+    y: 360,
     sprite: "ilona_2018",
+    popup: {
+      x: 38300,
+      y: 125,
+      origin: { x: 0, y: 1 },
+      text: "Продаю практически всё имущество. Не буду иметь дома.",
+      area: {
+        x: 38120,
+        y: 353,
+        width: 260,
+        height: 500,
+        origin: { x: 0, y: 1 },
+      },
+    },
   },
   tiktok_2019: {
     x: 36950,
@@ -2509,7 +2529,7 @@ export default {
     y: 550,
     sprite: "ioda_2020",
     popup: {
-      x: 38810,
+      x: 38835,
       y: 363,
       origin: { x: 0, y: 1 },
       text: "Да пребудет с тобой сила Рунета",
@@ -2579,7 +2599,7 @@ export default {
     sprite: "g5_2020",
     popup: {
       x: 42462,
-      y: 680,
+      y: 665,
       origin: { x: 0, y: 1 },
       text: "Нельзя просто так взять и не пошутить про 5G",
       area: {
@@ -2592,16 +2612,16 @@ export default {
     },
   },
   qr_2020: {
-    x: 43900,
+    x: 43700,
     y: 960,
     sprite: "qr_2020",
-    colliders: [{ x: 43967, y: 708, width: 110, height: 110 }],
+    colliders: [{ x: 43767, y: 708, width: 110, height: 110 }],
     quiz: {
-      x: 43730,
+      x: 43530,
       y: 560,
       origin: { x: 0, y: 1 },
       area: {
-        x: 43850,
+        x: 43650,
         y: 950,
         width: 400,
         height: 800,
@@ -2680,8 +2700,8 @@ export default {
     sprite: "holiday_2020",
     colliders: [{ x: 45500, y: 800, width: 230, height: 190 }],
     popup: {
-      x: 45430,
-      y: 520,
+      x: 45460,
+      y: 530,
       origin: { x: 0, y: 1 },
       text: "От души поздравляем!",
       area: {
@@ -2700,7 +2720,7 @@ export default {
     colliders: [{ x: 45950, y: 550, width: 190, height: 265 }],
     popup: {
       x: 45780,
-      y: 190,
+      y: 200,
       origin: { x: 0, y: 1 },
       text: "Наташ, играешь? Рунету скоро 30 лет. Ты помнишь, Наташ?",
       area: {
@@ -2780,9 +2800,12 @@ export default {
     x: 44260,
     y: 959,
     sprite: "doctor_2020",
+    sound: {
+      key: "doctor",
+    },
     popup: {
-      x: 44190,
-      y: 640,
+      x: 44315,
+      y: 625,
       origin: { x: 0, y: 1 },
       text: "Мы — русские. С нами QR-код",
       area: {
@@ -2796,16 +2819,16 @@ export default {
   },
   zk_2021: {
     x: 47640,
-    y: 738,
+    y: 655,
     sprite: "zk_2021",
     popup: {
-      x: 47530,
-      y: 490,
+      x: 47570,
+      y: 405,
       origin: { x: 0, y: 1 },
       text: "Часик в радость! Вас банк беспокоит.",
       area: {
         x: 47540,
-        y: 723,
+        y: 638,
         width: 350,
         height: 500,
         origin: { x: 0, y: 1 },
@@ -2818,7 +2841,7 @@ export default {
     sprite: "sell_fishes_2021",
     popup: {
       x: 46100,
-      y: 840,
+      y: 855,
       origin: { x: 0, y: 1 },
       text: "Вы подключаете котов к интернетам? Только показываете?",
       area: {
@@ -2863,33 +2886,33 @@ export default {
     },
   },
   hasbik_2021: {
-    x: 48800,
-    y: 960,
+    x: 48490,
+    y: 456,
     sprite: "hasbik_2021",
     popup: {
-      x: 48590,
-      y: 735,
+      x: 48300,
+      y: 234,
       origin: { x: 0, y: 1 },
       text: "Много не пейте, тренируйтесь, чисто ахей-махей.",
       area: {
-        x: 48700,
-        y: 950,
-        width: 300,
+        x: 48380,
+        y: 450,
+        width: 350,
         height: 500,
         origin: { x: 0, y: 1 },
       },
     },
   },
   ban_social_2022: {
-    x: 49180,
+    x: 49130,
     y: 998,
     sprite: "ban_social_2022",
     quiz: {
-      x: 49150,
+      x: 49100,
       y: 745,
       origin: { x: 0, y: 1 },
       area: {
-        x: 49130,
+        x: 49080,
         y: 950,
         width: 700,
         height: 500,
@@ -2917,13 +2940,16 @@ export default {
     sprite: "year_2022",
   },
   maestro_2022: {
-    x: 50500,
+    x: 50150,
     y: 987,
     sprite: "maestro_2022",
+    sound: {
+      key: "maestro",
+    },
     portal: {
       type: "maestro",
       area: {
-        x: 50450,
+        x: 50050,
         y: 950,
         width: 320,
         height: 500,
