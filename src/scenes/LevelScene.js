@@ -75,6 +75,10 @@ export default class LevelScene extends Phaser.Scene {
     this.sfxRun = this.sound.add("sfx:run");
     this.sfxLand = this.sound.add("sfx:land");
 
+    this.sfxQuizStart = this.sound.add("quiz-start");
+    this.sfxQuizFail = this.sound.add("quiz-fail");
+    this.sfxQuizSuccess = this.sound.add("quiz-success");
+
     this.createBackground();
     this.createFloor();
     this.createPlatforms();
@@ -1042,6 +1046,7 @@ export default class LevelScene extends Phaser.Scene {
       if (!this.isMobile) {
         this.correctAnswersText.setVisible(true);
       }
+      this.sfxQuizSuccess.play();
     } else {
       entity.quizState.answered = true;
       entity.quizState.gameObjects.answers[number - 1].answerBubble.setTexture(
@@ -1053,6 +1058,7 @@ export default class LevelScene extends Phaser.Scene {
       entity.quizState.gameObjects.answers[
         number - 1
       ].answerNumberText.setColor("#FFFFFF");
+      this.sfxQuizFail.play();
       console.log("fail!!!");
     }
     this.advanceQuizDialogueTimeout = setTimeout(() => {
@@ -1624,6 +1630,7 @@ export default class LevelScene extends Phaser.Scene {
             this.touchState.enter = false;
             this.player.setVelocityX(0);
             this.player.play("thinking");
+            this.sfxQuizStart.play();
             this.showQuiz(nearbyEntity);
           }
         } else {
@@ -2074,20 +2081,20 @@ export default class LevelScene extends Phaser.Scene {
     );
     if (this.isMobile) {
       this.controls.soundOn.setPosition(
-        uiCamWidth - this.safeAreaRight - 24,
+        uiCamWidth - this.safeAreaRight - 28,
         8
       );
       this.controls.soundOff.setPosition(
-        uiCamWidth - this.safeAreaRight - 29,
+        uiCamWidth - this.safeAreaRight - 28,
         8
       );
     } else {
       this.controls.soundOn.setPosition(
-        uiCamWidth - this.safeAreaRight - 24,
+        uiCamWidth - this.safeAreaRight - 28,
         16
       );
       this.controls.soundOff.setPosition(
-        uiCamWidth - this.safeAreaRight - 29,
+        uiCamWidth - this.safeAreaRight - 28,
         16
       );
     }
