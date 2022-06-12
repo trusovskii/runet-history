@@ -181,7 +181,7 @@ window.addEventListener("DOMContentLoaded", function () {
     } else {
       //Если это конец, то редирект на результат
       if (playerLivesValue > 0) {
-        window.localStorage.setItem('gameContinue', JSON.stringify(true));
+        window.localStorage.setItem('gameContinue', true);
         window.location.href = "/hydra-loose/";
       } else {
         window.localStorage.removeItem('gameContinue');

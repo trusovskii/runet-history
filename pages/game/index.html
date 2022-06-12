@@ -15,11 +15,11 @@
 
   <meta property="og:url" content="https://runet-history.ru/">
 
-  <meta property="og:image" content="https://runet-history.ru/assets/opengraph/tg_image.png">
+  <meta property="og:image" content="https://runet-history.ru/assets/opengraph/og_image.png">
   <meta name="twitter:image" content="https://runet-history.ru/assets/opengraph/tw_image.png">
   <meta property="vk:image"  content="https://runet-history.ru/assets/opengraph/vk_image.png">
 
-  <link rel="shortcut icon" href="/assets/favicon.png?cb=cb_36" type="image/png">
+  <link rel="shortcut icon" href="/assets/favicon.png?cb=cb_37" type="image/png">
   <style media='screen' type='text/css'>
     @font-face {
       font-family: "DigitalStrip";
@@ -91,11 +91,11 @@
       pointer-events: none;
       overflow: hidden;
       opacity: 0;
-      transition: all 0.2s ease;
-      mix-blend-mode: overlay;
+      transition: opacity 0.2s ease;
     }
     .nyancat-overlay.active {
       opacity: 1;
+      mix-blend-mode: overlay;
     }
     .nyancat-overlay::before,
     .nyancat-overlay::after {
@@ -107,6 +107,15 @@
       height: 100%;
       z-index: 1000;
       pointer-events: none;
+    }
+    .nyancat-overlay::before {
+      top: 0;
+    }
+    .nyancat-overlay::after {
+      top: -99%;
+    }
+    .nyancat-overlay.active::before,
+    .nyancat-overlay.active::after {
       background: linear-gradient(
           0deg,
           rgba(255, 0, 0, 1) 0%,
@@ -121,15 +130,6 @@
           rgba(251, 7, 217, 1) 90%,
           rgba(255, 0, 0, 1) 100%
       );
-    }
-    .nyancat-overlay::before {
-      top: 0;
-    }
-    .nyancat-overlay::after {
-      top: -99%;
-    }
-    .nyancat-overlay.active::before,
-    .nyancat-overlay.active::after {
       animation: nyancat-bg;
       animation-duration: 2s;
       animation-timing-function: linear;
@@ -163,10 +163,10 @@
   <div style="font-family:'Onest'; font-weight: bold; color: transparent; pointer-events: none; position: absolute;">Onest Bold</div>
   <div class="rotate-your-phone"><span>Переверните экран</span></div>
   <div id="game"></div>
-  <script>
-    window.cb = 'cb_36';
-  </script>
-  <script src="/js/game.js?cb=cb_36"></script>
   <div class="nyancat-overlay"></div>
+  <script>
+    window.cb = 'cb_37';
+  </script>
+  <script src="/js/game.js?cb=cb_37"></script>
 </body>
 </html>

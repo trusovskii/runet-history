@@ -182,11 +182,12 @@ window.addEventListener("DOMContentLoaded", function () {
     } else {
       //Если это конец, то редирект на результат
       if (playerLivesValue > 0) {
-        window.localStorage.setItem('gameFinish', JSON.stringify(true));
+        window.localStorage.setItem('gameFinish', true);
         window.location.href = "/maestro-loose/";
       } else {
         window.localStorage.removeItem('gameFinish');
-        window.localStorage.removeItem('gameResultCode');
+        window.localStorage.removeItem('gameScore');
+        window.localStorage.removeItem('gameFinishPage');
         window.location.href = "/maestro-win/";
       }
     }

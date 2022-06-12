@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import Entities from "../Entities";
-import { JSON36 } from "weird-json";
 
 const VERTICAL_OFFSET = Math.ceil(1080 * 0.2);
 const WORLD_WIDTH = 50520;
@@ -26,9 +25,6 @@ const JUMP_ZOOM_DOWN_EASING = "Linear";
 
 const JUMP_ZOOM_AMOUNT_MOBILE = -0.15;
 const JUMP_ZOOM_DURATION_MOBILE = 700;
-
-const NYANCAT_ACTIVATION_RANGE = 600;
-const NYANCAT_DEACTIVATION_RANGE = 700;
 
 function decl(value, words) {
   value = Math.abs(value) % 100;
@@ -81,7 +77,7 @@ export default class LevelScene extends Phaser.Scene {
     this.sfxQuizStart = this.sound.add("quiz-start");
     this.sfxQuizFail = this.sound.add("quiz-fail");
     this.sfxQuizSuccess = this.sound.add("quiz-success");
-    
+
     this.nyancatBgm = this.sound.add("nyancat-bgm");
     this.nyancatBgm.setLoop(true);
     this.nyancatMode = false;
@@ -250,21 +246,30 @@ export default class LevelScene extends Phaser.Scene {
 
     this.mainCamera.setBackgroundColor("#c5c5c5");
 
+    window.localStorage.setItem("gameStarted", true);
     const gameContinue = window.localStorage.getItem("gameContinue");
-    const gameFinish = window.localStorage.getItem("gameFinish");
-    const gameResultCode = window.localStorage.getItem("gameResultCode");
     if (gameContinue) {
       window.localStorage.removeItem("gameContinue");
       this.loadProgress();
-    } else if (gameFinish && gameResultCode) {
-      window.localStorage.removeItem("gameFinish");
-      window.localStorage.removeItem("gameResultCode");
-      window.location.href = `/win/?result=${gameResultCode}`;
     }
-    window.localStorage.setItem('gameStarted', true);
 
     this.mainCamera.centerOn(this.player.x, this.player.y);
     this.mainCamera.startFollow(this.player, true, 0.08, 1);
+
+    const catBounds = this.entities.cat.getBounds();
+    this.entities.cat.nyancatArea = this.physics.add.existing(
+      this.add
+        .rectangle(
+          catBounds.left,
+          catBounds.bottom - 5,
+          catBounds.width,
+          700,
+          0xff0000,
+          0
+        )
+        .setOrigin(0, 1)
+    );
+    this.physics.add.overlap(this.player, this.entities.cat.nyancatArea);
 
     this.events.on("resize", () => {
       this.onResize();
@@ -1522,12 +1527,6 @@ export default class LevelScene extends Phaser.Scene {
   answerExit(entity, number) {
     if (number === 1) {
       // exit
-      const result = {
-        score: this.correctAnswers,
-        r: Math.round(Math.random() * 100000),
-      };
-      const code = JSON36.stringify(result);
-      window.location.href = `/win/?result=${code}`;
     } else {
       // not exit
       this.hideExit(entity);
@@ -1542,13 +1541,24 @@ export default class LevelScene extends Phaser.Scene {
     if (entity.portalData.type === "hydra") {
       window.location.href = "/hydra/";
     } else if (entity.portalData.type === "maestro") {
-      const result = {
-        score: this.correctAnswers,
-        r: Math.round(Math.random() * 100000),
-      };
-      const code = JSON36.stringify(result);
-      window.localStorage.setItem("gameResultCode", code);
+      window.localStorage.setItem("gameScore", this.correctAnswers);
+      window.localStorage.setItem("gameFinishPage", this.getFinishPage());
       window.location.href = "/maestro/";
+    }
+  }
+
+  getFinishPage() {
+    const score = this.correctAnswers;
+    if (score <= 13) {
+      return "awful";
+    } else if (score <= 26) {
+      return "bad";
+    } else if (score <= 40) {
+      return "average";
+    } else if (score <= 55) {
+      return "good";
+    } else {
+      return "genius";
     }
   }
 
@@ -2036,7 +2046,7 @@ export default class LevelScene extends Phaser.Scene {
     //   this.controls.layer.setVisible(false);
     // }
 
-    this.checkNyanCatMode()
+    this.checkNyanCatMode();
 
     this.handleInput();
   }
@@ -2287,17 +2297,15 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   checkNyanCatMode() {
-    const shouldActivate = (
-      this.player.x >= (this.entities.cat.getBounds().left - NYANCAT_ACTIVATION_RANGE) &&
-      this.player.x <= (this.entities.cat.getBounds().right + NYANCAT_ACTIVATION_RANGE)
-    )
-    const shouldDeactivate = (
-      this.player.x <= (this.entities.cat.getBounds().left - NYANCAT_DEACTIVATION_RANGE) ||
-      this.player.x >= (this.entities.cat.getBounds().right + NYANCAT_DEACTIVATION_RANGE)
-    )
-    if (shouldActivate && !this.nyancatMode) {
+    const inZone = this.physics.world.overlap(
+      this.player,
+      this.entities.cat.nyancatArea
+    );
+    if (inZone && !this.nyancatMode) {
+      console.log("activateNyanCatMode");
       this.activateNyanCatMode();
-    } else if (shouldDeactivate && this.nyancatMode) {
+    } else if (!inZone && this.nyancatMode) {
+      console.log("deactivateNyanCatMode");
       this.deactivateNyanCatMode();
     }
   }
@@ -2306,13 +2314,13 @@ export default class LevelScene extends Phaser.Scene {
     this.nyancatMode = true;
     this.bgm.pause();
     this.nyancatBgm.play();
-    document.querySelector('.nyancat-overlay').classList.add('active');
+    document.querySelector(".nyancat-overlay").classList.add("active");
   }
 
   deactivateNyanCatMode() {
     this.nyancatMode = false;
     this.nyancatBgm.pause();
     this.bgm.resume();
-    document.querySelector('.nyancat-overlay').classList.remove('active');
+    document.querySelector(".nyancat-overlay").classList.remove("active");
   }
 }
