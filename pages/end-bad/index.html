@@ -38,6 +38,21 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/89173664" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
+
+    <script>
+        const gameStarted = window.localStorage.getItem("gameStarted");
+        const gameFinishPage = window.localStorage.getItem("gameFinishPage");
+    
+        if (!gameStarted) {
+            window.location.href = "/";
+        }
+        if (
+            !gameFinishPage ||
+            window.location.pathname !== '/end-'+gameFinishPage+'/'
+        ) {
+            window.location.href = "/";
+        }
+    </script>
 </head>
 <body>
 

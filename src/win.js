@@ -3,8 +3,8 @@ import "./polyfill";
 window.addEventListener("DOMContentLoaded", function () {
   try {
     const score = parseInt(window.localStorage.getItem("gameScore") || 0);
-    const gameFinishPage = window.localStorage.getItem("gameFinishPage");
     const gameStarted = window.localStorage.getItem("gameStarted");
+    const gameFinishPage = window.localStorage.getItem("gameFinishPage");
 
     if (!gameStarted) {
       window.location.href = "/";
