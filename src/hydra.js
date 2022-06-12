@@ -132,8 +132,8 @@ window.addEventListener("DOMContentLoaded", function () {
     ]),
 
     new Question("Где можно посмотреть в «Бездну»?", [
-      new Answer("Хабр", 1, "/assets/img/victorine/habr.png"),
-      new Answer("Башорг", 0, "/assets/img/victorine/bashorg.png"),
+      new Answer("Хабр", 0, "/assets/img/victorine/habr.png"),
+      new Answer("Башорг", 1, "/assets/img/victorine/bashorg.png"),
     ]),
   ];
 

@@ -99,6 +99,13 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("kaspersky", `/assets/audio/kaspersky.mp3?cb=${cb}`);
     this.load.audio("icq", `/assets/audio/icq.mp3?cb=${cb}`);
     this.load.audio("windows", `/assets/audio/windows.mp3?cb=${cb}`);
+    this.load.audio("ded", `/assets/audio/ded.mp3?cb=${cb}`);
+    this.load.audio("maestro", `/assets/audio/maestro.mp3?cb=${cb}`);
+    this.load.audio("yazz", `/assets/audio/yazz.mp3?cb=${cb}`);
+    this.load.audio("advokat", `/assets/audio/advokat.mp3?cb=${cb}`);
+    this.load.audio("doctor", `/assets/audio/doctor.mp3?cb=${cb}`);
+    this.load.audio("modem", `/assets/audio/modem.mp3?cb=${cb}`);
+    this.load.audio("mas", `/assets/audio/mas.mp3?cb=${cb}`);
 
     this.load.spritesheet("player", `/assets/sprites/player.png?cb=${cb}`, {
       frameWidth: 284,
@@ -291,6 +298,10 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image(
       "gold_site_2014",
       `/assets/sprites/gold_site_2014.png?cb=${cb}`
+    );
+    this.load.image(
+      "durov",
+      `/assets/sprites/durov.png?cb=${cb}`
     );
     this.load.image(
       "durov_way_out_2014",
