@@ -73,6 +73,7 @@ export default class LevelScene extends Phaser.Scene {
     // this.bgm.stop();
 
     this.sfxRun = this.sound.add("sfx:run");
+    this.sfxLand = this.sound.add("sfx:land");
 
     this.createBackground();
     this.createFloor();
@@ -80,9 +81,6 @@ export default class LevelScene extends Phaser.Scene {
     this.createPlayer();
     this.createEntities();
     this.createControls();
-
-    // stop hydra and maestro animations
-    // this.entities.gidra.stop()
 
     this.bubblesLayer = this.add.layer();
     this.staticBubblesLayer = this.add.layer();
@@ -126,8 +124,8 @@ export default class LevelScene extends Phaser.Scene {
       .setVisible(false);
     this.correctAnswersText = this.add
       .rexBBCodeText({
-        x: 15,
-        y: 15,
+        x: 10,
+        y: 10,
         text: "",
         style: {
           fontFamily: "ComicCat",
@@ -141,6 +139,7 @@ export default class LevelScene extends Phaser.Scene {
             mode: "word",
             width: 500,
           },
+          padding: 5,
         },
       })
       .setOrigin(0, 0)
@@ -201,8 +200,6 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platformsGroup);
     this.physics.add.collider(this.player, this.floorGroup);
 
-    this.mainCamera.startFollow(this.player, true, 0.08, 1);
-
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keyEnter = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
@@ -242,17 +239,20 @@ export default class LevelScene extends Phaser.Scene {
 
     this.mainCamera.setBackgroundColor("#c5c5c5");
 
-    const gameContinue = window.localStorage.getItem('gameContinue')
-    const gameFinish = window.localStorage.getItem('gameFinish')
-    const gameResultCode = window.localStorage.getItem('gameResultCode')
+    const gameContinue = window.localStorage.getItem("gameContinue");
+    const gameFinish = window.localStorage.getItem("gameFinish");
+    const gameResultCode = window.localStorage.getItem("gameResultCode");
     if (gameContinue) {
-      window.localStorage.removeItem('gameContinue')
+      window.localStorage.removeItem("gameContinue");
       this.loadProgress();
     } else if (gameFinish && gameResultCode) {
-      window.localStorage.removeItem('gameFinish')
-      window.localStorage.removeItem('gameResultCode')
+      window.localStorage.removeItem("gameFinish");
+      window.localStorage.removeItem("gameResultCode");
       window.location.href = `/win/?result=${gameResultCode}`;
     }
+
+    this.mainCamera.centerOn(this.player.x, this.player.y);
+    this.mainCamera.startFollow(this.player, true, 0.08, 1);
 
     this.events.on("resize", () => {
       this.onResize();
@@ -602,6 +602,7 @@ export default class LevelScene extends Phaser.Scene {
   createEntities() {
     const entitiesLayer = this.add.layer();
     const entities = {};
+    const entitiesSounds = {};
 
     Object.entries(Entities).forEach(([entityName, entityData]) => {
       let entity;
@@ -670,11 +671,14 @@ export default class LevelScene extends Phaser.Scene {
       entityData.scale && entity.setScale(entityData.scale);
 
       if (entityData.sound) {
+        const soundInstance = this.sound.add(entityData.sound.key);
+        entitiesSounds[entityName] = soundInstance;
         entity.soundData = entityData.sound;
         entity.soundState = {
           played: false,
           skipNext: true,
         };
+        entity.soundInstance = soundInstance;
       }
 
       if (entityData.quiz) {
@@ -840,6 +844,7 @@ export default class LevelScene extends Phaser.Scene {
     });
     this.entities = entities;
     this.entitiesLayer = entitiesLayer;
+    this.entitiesSounds = entitiesSounds;
   }
 
   /**
@@ -868,6 +873,7 @@ export default class LevelScene extends Phaser.Scene {
             mode: "word",
             width: 644,
           },
+          padding: 5,
         },
       })
       .setOrigin(0, 0);
@@ -1075,7 +1081,9 @@ export default class LevelScene extends Phaser.Scene {
         if (entity.soundState.skipNext) {
           entity.soundState.skipNext = false;
         } else {
-          this.sound.play(entity.soundData.key);
+          if (!this.anyEntitySoundIsPlaying()) {
+            entity.soundInstance.play();
+          }
         }
       }
       const line = lines[currentLine];
@@ -1086,7 +1094,9 @@ export default class LevelScene extends Phaser.Scene {
       if (!this.isMobile) {
         this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
       }
-      this.correctAnswersText.setVisible(false);
+      if (this.isMobile) {
+        this.correctAnswersText.setVisible(false);
+      }
       entity.quizState.shown = true;
     } else {
       console.log("No more lines of dialogue");
@@ -1267,7 +1277,9 @@ export default class LevelScene extends Phaser.Scene {
         if (entity.soundState.skipNext) {
           entity.soundState.skipNext = false;
         } else {
-          this.sound.play(entity.soundData.key);
+          if (!this.anyEntitySoundIsPlaying()) {
+            entity.soundInstance.play();
+          }
         }
       }
       const line = lines[currentLine];
@@ -1514,7 +1526,7 @@ export default class LevelScene extends Phaser.Scene {
         r: Math.round(Math.random() * 100000),
       };
       const code = JSON36.stringify(result);
-      window.localStorage.setItem('gameResultCode', code);
+      window.localStorage.setItem("gameResultCode", code);
       window.location.href = "/maestro/";
     }
   }
@@ -1729,9 +1741,9 @@ export default class LevelScene extends Phaser.Scene {
     } else if (this.player.body.velocity.y > 100) {
       this.sfxRun.pause();
       this.player.play("fall", true);
-    } else if (this.player.body.touching.down) {
+    } else if (this.player.body.blocked.down) {
       if (["fall", "jump"].includes(currentAnimKey)) {
-        this.sound.play("sfx:land");
+        this.sfxLand.play();
       }
       if (Math.abs(this.player.body.velocity.x) > 0) {
         if (!this.sfxRun.isPlaying) {
@@ -1899,8 +1911,10 @@ export default class LevelScene extends Phaser.Scene {
         anyArea &&
         this.physics.world.overlap(this.player, anyArea)
       ) {
-        this.sound.play(entity.soundData.key);
-        entity.soundState.played = true;
+        if (!this.anyEntitySoundIsPlaying()) {
+          entity.soundInstance.play();
+          entity.soundState.played = true;
+        }
       }
     });
 
@@ -2047,18 +2061,32 @@ export default class LevelScene extends Phaser.Scene {
       uiCamWidth - this.safeAreaRight - 32,
       uiCamHeight - 32
     );
-    this.controls.speak.setPosition(
-      uiCamWidth - this.safeAreaRight - 32,
-      uiCamHeight - 32 - this.controls.jump.displayHeight - 32
-    );
     this.controls.enter.setPosition(
       uiCamWidth - this.safeAreaRight - 32,
       uiCamHeight - 32 - this.controls.jump.displayHeight - 32
     );
-    this.controls.soundOn.setPosition(uiCamWidth - this.safeAreaRight - 32, 10);
-    this.controls.soundOff.setPosition(
+    if (this.isMobile) {
+      this.controls.soundOn.setPosition(
+        uiCamWidth - this.safeAreaRight - 24,
+        8
+      );
+      this.controls.soundOff.setPosition(
+        uiCamWidth - this.safeAreaRight - 29,
+        8
+      );
+    } else {
+      this.controls.soundOn.setPosition(
+        uiCamWidth - this.safeAreaRight - 24,
+        16
+      );
+      this.controls.soundOff.setPosition(
+        uiCamWidth - this.safeAreaRight - 29,
+        16
+      );
+    }
+    this.controls.speak.setPosition(
       uiCamWidth - this.safeAreaRight - 32,
-      10
+      Math.round(uiCamHeight / 2) - 15
     );
   }
 
@@ -2075,7 +2103,7 @@ export default class LevelScene extends Phaser.Scene {
     const left = this.add.image(0, 0, "control-left").setOrigin(0, 1);
     const right = this.add.image(0, 0, "control-right").setOrigin(0, 1);
     const jump = this.add.image(0, 0, "control-jump").setOrigin(1, 1);
-    const speak = this.add.image(0, 0, "control-speak").setOrigin(1, 1);
+    const speak = this.add.image(0, 0, "control-speak").setOrigin(1, 0.5);
     const enter = this.add.image(0, 0, "control-enter").setOrigin(1, 1);
     const soundOn = this.add.image(0, 0, "sound-on").setOrigin(1, 0);
     const soundOff = this.add.image(0, 0, "sound-off").setOrigin(1, 0);
@@ -2222,5 +2250,15 @@ export default class LevelScene extends Phaser.Scene {
     if (this.correctAnswers > 0) {
       this.correctAnswersText.setVisible(true);
     }
+  }
+
+  anyEntitySoundIsPlaying() {
+    let playing = false;
+    Object.values(this.entitiesSounds).forEach((entitySound) => {
+      if (entitySound.isPlaying) {
+        playing = true;
+      }
+    });
+    return playing;
   }
 }
