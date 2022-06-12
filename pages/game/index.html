@@ -6,19 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>История Рунета</title>
   <meta name="description" content="Игра про историю Рунета. На одном таймлайне собраны главные символы российской сети: события, мемы и лица. Отвечайте на вопросы и набирайте очки. Авторский стикерпак — в подарок!">
-
-  <meta property="og:title" content="История Рунета">
-  <meta name="twitter:title" content="История Рунета">
-
-  <meta property="og:image" content="https://runet-history.ru/assets/opengraph.png">
-  <meta name="twitter:image" content="https://runet-history.ru/assets/opengraph.png">
+  <meta property="og:description" content="Игра про историю Рунета. На одном таймлайне собраны главные символы российской сети: события, мемы и лица. Отвечайте на вопросы и набирайте очки. Авторский стикерпак — в подарок!">
 
   <meta name="twitter:card" content="summary_large_image">
 
-  <meta property="og:description" content="Игра про историю Рунета. На одном таймлайне собраны главные символы российской сети: события, мемы и лица. Отвечайте на вопросы и набирайте очки. Авторский стикерпак — в подарок!">
+  <meta property="og:title" content="Пробежимся по истории? Игра в Рунет!">
+  <meta name="twitter:title" content="Пробежимся по истории? Игра в Рунет!">
+
   <meta property="og:url" content="https://runet-history.ru/">
 
-  <link rel="shortcut icon" href="/assets/favicon.png?cb=cb_35" type="image/png">
+  <meta property="og:image" content="https://runet-history.ru/assets/opengraph/tg_image.png">
+  <meta name="twitter:image" content="https://runet-history.ru/assets/opengraph/tw_image.png">
+  <meta property="vk:image"  content="https://runet-history.ru/assets/opengraph/vk_image.png">
+
+  <link rel="shortcut icon" href="/assets/favicon.png?cb=cb_36" type="image/png">
   <style media='screen' type='text/css'>
     @font-face {
       font-family: "DigitalStrip";
@@ -72,6 +73,71 @@
         color: #FFFFFF;
       }
     }
+    @keyframes nyancat-bg {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(99%);
+      }
+    }
+    .nyancat-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.2s ease;
+      mix-blend-mode: overlay;
+    }
+    .nyancat-overlay.active {
+      opacity: 1;
+    }
+    .nyancat-overlay::before,
+    .nyancat-overlay::after {
+      content: '';
+      position: absolute;
+      /* top: 0; */
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      pointer-events: none;
+      background: linear-gradient(
+          0deg,
+          rgba(255, 0, 0, 1) 0%,
+          rgba(255, 154, 0, 1) 10%,
+          rgba(208, 222, 33, 1) 20%,
+          rgba(79, 220, 74, 1) 30%,
+          rgba(63, 218, 216, 1) 40%,
+          rgba(47, 201, 226, 1) 50%,
+          rgba(28, 127, 238, 1) 60%,
+          rgba(95, 21, 242, 1) 70%,
+          rgba(186, 12, 248, 1) 80%,
+          rgba(251, 7, 217, 1) 90%,
+          rgba(255, 0, 0, 1) 100%
+      );
+    }
+    .nyancat-overlay::before {
+      top: 0;
+    }
+    .nyancat-overlay::after {
+      top: -99%;
+    }
+    .nyancat-overlay.active::before,
+    .nyancat-overlay.active::after {
+      animation: nyancat-bg;
+      animation-duration: 2s;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-direction: normal;
+      animation-play-state: running;
+    }
   </style>
 
   <!-- Yandex.Metrika counter -->
@@ -98,8 +164,9 @@
   <div class="rotate-your-phone"><span>Переверните экран</span></div>
   <div id="game"></div>
   <script>
-    window.cb = 'cb_35';
+    window.cb = 'cb_36';
   </script>
-  <script src="/js/game.js?cb=cb_35"></script>
+  <script src="/js/game.js?cb=cb_36"></script>
+  <div class="nyancat-overlay"></div>
 </body>
 </html>

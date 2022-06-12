@@ -107,6 +107,8 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("modem", `/assets/audio/modem.mp3?cb=${cb}`);
     this.load.audio("mas", `/assets/audio/mas.mp3?cb=${cb}`);
 
+    this.load.audio("nyancat-bgm", `/assets/audio/nyancat.mp3?cb=${cb}`);
+
     this.load.audio("quiz-start", `/assets/audio/quiz-start.mp3?cb=${cb}`);
     this.load.audio("quiz-fail", `/assets/audio/quiz-fail.mp3?cb=${cb}`);
     this.load.audio("quiz-success", `/assets/audio/quiz-success.mp3?cb=${cb}`);

@@ -27,6 +27,9 @@ const JUMP_ZOOM_DOWN_EASING = "Linear";
 const JUMP_ZOOM_AMOUNT_MOBILE = -0.15;
 const JUMP_ZOOM_DURATION_MOBILE = 700;
 
+const NYANCAT_ACTIVATION_RANGE = 600;
+const NYANCAT_DEACTIVATION_RANGE = 700;
+
 function decl(value, words) {
   value = Math.abs(value) % 100;
   var num = value % 10;
@@ -78,6 +81,10 @@ export default class LevelScene extends Phaser.Scene {
     this.sfxQuizStart = this.sound.add("quiz-start");
     this.sfxQuizFail = this.sound.add("quiz-fail");
     this.sfxQuizSuccess = this.sound.add("quiz-success");
+    
+    this.nyancatBgm = this.sound.add("nyancat-bgm");
+    this.nyancatBgm.setLoop(true);
+    this.nyancatMode = false;
 
     this.createBackground();
     this.createFloor();
@@ -254,6 +261,7 @@ export default class LevelScene extends Phaser.Scene {
       window.localStorage.removeItem("gameResultCode");
       window.location.href = `/win/?result=${gameResultCode}`;
     }
+    window.localStorage.setItem('gameStarted', true);
 
     this.mainCamera.centerOn(this.player.x, this.player.y);
     this.mainCamera.startFollow(this.player, true, 0.08, 1);
@@ -2028,6 +2036,8 @@ export default class LevelScene extends Phaser.Scene {
     //   this.controls.layer.setVisible(false);
     // }
 
+    this.checkNyanCatMode()
+
     this.handleInput();
   }
 
@@ -2274,5 +2284,35 @@ export default class LevelScene extends Phaser.Scene {
       }
     });
     return playing;
+  }
+
+  checkNyanCatMode() {
+    const shouldActivate = (
+      this.player.x >= (this.entities.cat.getBounds().left - NYANCAT_ACTIVATION_RANGE) &&
+      this.player.x <= (this.entities.cat.getBounds().right + NYANCAT_ACTIVATION_RANGE)
+    )
+    const shouldDeactivate = (
+      this.player.x <= (this.entities.cat.getBounds().left - NYANCAT_DEACTIVATION_RANGE) ||
+      this.player.x >= (this.entities.cat.getBounds().right + NYANCAT_DEACTIVATION_RANGE)
+    )
+    if (shouldActivate && !this.nyancatMode) {
+      this.activateNyanCatMode();
+    } else if (shouldDeactivate && this.nyancatMode) {
+      this.deactivateNyanCatMode();
+    }
+  }
+
+  activateNyanCatMode() {
+    this.nyancatMode = true;
+    this.bgm.pause();
+    this.nyancatBgm.play();
+    document.querySelector('.nyancat-overlay').classList.add('active');
+  }
+
+  deactivateNyanCatMode() {
+    this.nyancatMode = false;
+    this.nyancatBgm.pause();
+    this.bgm.resume();
+    document.querySelector('.nyancat-overlay').classList.remove('active');
   }
 }
