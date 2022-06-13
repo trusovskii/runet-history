@@ -8,7 +8,7 @@ import ButtonPlugin from "phaser3-rex-plugins/plugins/button-plugin.js";
 
 const gameConfig = {
   title: "Meme Game",
-  type: Phaser.CANVAS,
+  type: Phaser.AUTO,
   parent: "game",
   backgroundColor: "#fff",
   scale: {
@@ -32,7 +32,7 @@ const gameConfig = {
       gravity: {
         y: 0,
       },
-      debug: true,
+      debug: false,
     },
   },
   render: {

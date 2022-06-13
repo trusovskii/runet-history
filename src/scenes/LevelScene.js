@@ -97,38 +97,38 @@ export default class LevelScene extends Phaser.Scene {
       .setOrigin(0.5, 1)
       .setVisible(false);
 
-    this.pointerDebugText = this.add
-      .rexBBCodeText({
-        x: 0,
-        y: 0,
-        text: "debug",
-        style: {
-          fontFamily: "Onest",
-          fontSize: 20,
-          lineSpacing: 8,
-          color: "#404",
-          // wordWrap: { width: 400, useAdvancedWrap: true },
-          wrap: {
-            mode: "word",
-            width: 400,
-          },
-          stroke: "#ffffff",
-          strokeThickness: 4,
-        },
-      })
-      .setOrigin(0, 0)
-      .setDepth(9999)
-      .setVisible(false);
-    this.pointerDebugX = this.add
-      .line(0, 0, 0, 0, 0, 0, 0x00000, 1)
-      .setOrigin(0, 0)
-      .setDepth(9999)
-      .setVisible(false);
-    this.pointerDebugY = this.add
-      .line(0, 0, 0, 0, 0, 0, 0x00000, 1)
-      .setOrigin(0, 0)
-      .setDepth(9999)
-      .setVisible(false);
+    // this.pointerDebugText = this.add
+    //   .rexBBCodeText({
+    //     x: 0,
+    //     y: 0,
+    //     text: "debug",
+    //     style: {
+    //       fontFamily: "Onest",
+    //       fontSize: 20,
+    //       lineSpacing: 8,
+    //       color: "#404",
+    //       // wordWrap: { width: 400, useAdvancedWrap: true },
+    //       wrap: {
+    //         mode: "word",
+    //         width: 400,
+    //       },
+    //       stroke: "#ffffff",
+    //       strokeThickness: 4,
+    //     },
+    //   })
+    //   .setOrigin(0, 0)
+    //   .setDepth(9999)
+    //   .setVisible(false);
+    // this.pointerDebugX = this.add
+    //   .line(0, 0, 0, 0, 0, 0, 0x00000, 1)
+    //   .setOrigin(0, 0)
+    //   .setDepth(9999)
+    //   .setVisible(false);
+    // this.pointerDebugY = this.add
+    //   .line(0, 0, 0, 0, 0, 0, 0x00000, 1)
+    //   .setOrigin(0, 0)
+    //   .setDepth(9999)
+    //   .setVisible(false);
     this.correctAnswersText = this.add
       .rexBBCodeText({
         x: 10,
@@ -198,10 +198,10 @@ export default class LevelScene extends Phaser.Scene {
       this.bubblesLayer,
       this.player,
       this.quest,
-      this.pointerDebugText,
-      this.pointerDebugX,
-      this.pointerDebugY,
-      this.physics.world.debugGraphic,
+      // this.pointerDebugText,
+      // this.pointerDebugX,
+      // this.pointerDebugY,
+      // this.physics.world.debugGraphic,
     ]);
 
     this.physics.add.collider(this.player, this.platformsGroup);
@@ -238,8 +238,8 @@ export default class LevelScene extends Phaser.Scene {
       canMove: true,
     };
 
-    this.physics.world.drawDebug = false;
-    this.physics.world.debugGraphic.clear();
+    // this.physics.world.drawDebug = false;
+    // this.physics.world.debugGraphic.clear();
 
     this.safeAreaLeft = 0;
     this.safeAreaRight = 0;
@@ -1716,26 +1716,26 @@ export default class LevelScene extends Phaser.Scene {
       this.shouldResizeStaticObjects = true;
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-      if (this.physics.world.drawDebug) {
-        this.physics.world.drawDebug = false;
-        this.physics.world.debugGraphic.clear();
-      } else {
-        this.physics.world.drawDebug = true;
-      }
-    }
+    // if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+    //   if (this.physics.world.drawDebug) {
+    //     this.physics.world.drawDebug = false;
+    //     this.physics.world.debugGraphic.clear();
+    //   } else {
+    //     this.physics.world.drawDebug = true;
+    //   }
+    // }
 
-    if (Phaser.Input.Keyboard.JustDown(this.keyP)) {
-      if (this.pointerDebugText.visible) {
-        this.pointerDebugText.setVisible(false);
-        this.pointerDebugX.setVisible(false);
-        this.pointerDebugY.setVisible(false);
-      } else {
-        this.pointerDebugText.setVisible(true);
-        this.pointerDebugX.setVisible(true);
-        this.pointerDebugY.setVisible(true);
-      }
-    }
+    // if (Phaser.Input.Keyboard.JustDown(this.keyP)) {
+    //   if (this.pointerDebugText.visible) {
+    //     this.pointerDebugText.setVisible(false);
+    //     this.pointerDebugX.setVisible(false);
+    //     this.pointerDebugY.setVisible(false);
+    //   } else {
+    //     this.pointerDebugText.setVisible(true);
+    //     this.pointerDebugX.setVisible(true);
+    //     this.pointerDebugY.setVisible(true);
+    //   }
+    // }
   }
 
   update() {
@@ -2005,19 +2005,19 @@ export default class LevelScene extends Phaser.Scene {
       this.shouldResizeStaticObjects = false;
     }
 
-    const pointerX = this.input.mousePointer.positionToCamera(
-      this.mainCamera
-    ).x;
-    const pointerY = this.input.mousePointer.positionToCamera(
-      this.mainCamera
-    ).y;
-    this.pointerDebugText.setText([
-      `X: ${pointerX.toFixed(2)}`,
-      `Y: ${(pointerY - VERTICAL_OFFSET).toFixed(2)}`,
-    ]);
-    this.pointerDebugText.setPosition(pointerX + 20, pointerY + 20);
-    this.pointerDebugX.setTo(pointerX, 0, pointerX, WORLD_HEIGHT);
-    this.pointerDebugY.setTo(0, pointerY, WORLD_WIDTH, pointerY);
+    // const pointerX = this.input.mousePointer.positionToCamera(
+    //   this.mainCamera
+    // ).x;
+    // const pointerY = this.input.mousePointer.positionToCamera(
+    //   this.mainCamera
+    // ).y;
+    // this.pointerDebugText.setText([
+    //   `X: ${pointerX.toFixed(2)}`,
+    //   `Y: ${(pointerY - VERTICAL_OFFSET).toFixed(2)}`,
+    // ]);
+    // this.pointerDebugText.setPosition(pointerX + 20, pointerY + 20);
+    // this.pointerDebugX.setTo(pointerX, 0, pointerX, WORLD_HEIGHT);
+    // this.pointerDebugY.setTo(0, pointerY, WORLD_WIDTH, pointerY);
 
     this.checkNyanCatMode();
 
