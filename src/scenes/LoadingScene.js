@@ -132,7 +132,22 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image("wall-right", `/assets/sprites/wall--right.png?cb=${cb}`);
     this.load.image("wall", `/assets/sprites/floor-inner.png?cb=${cb}`);
 
-    this.load.image("year_1990", `/assets/sprites/year_1990.png?cb=${cb}`);
+    this.load.image("before1994", `/assets/sprites/before1994.png?cb=${cb}`);
+    this.load.image("y1994", `/assets/sprites/y1994.png?cb=${cb}`);
+    this.load.image("y1996", `/assets/sprites/y1996.png?cb=${cb}`);
+    this.load.image("y1997", `/assets/sprites/y1997.png?cb=${cb}`);
+    this.load.image("y1998", `/assets/sprites/y1998.png?cb=${cb}`);
+    this.load.image("y1999", `/assets/sprites/y1999.png?cb=${cb}`);
+    this.load.image("y2001", `/assets/sprites/y2001.png?cb=${cb}`);
+    this.load.image("y2003", `/assets/sprites/y2003.png?cb=${cb}`);
+    this.load.image("y2004", `/assets/sprites/y2004.png?cb=${cb}`);
+    this.load.image("y2006", `/assets/sprites/y2006.png?cb=${cb}`);
+    this.load.image("y2009", `/assets/sprites/y2009.png?cb=${cb}`);
+    this.load.image("y2011", `/assets/sprites/y2011.png?cb=${cb}`);
+    this.load.image("y2013", `/assets/sprites/y2013.png?cb=${cb}`);
+    this.load.image("y2014", `/assets/sprites/y2014.png?cb=${cb}`);
+    this.load.image("y2019", `/assets/sprites/y2019.png?cb=${cb}`);
+    this.load.image("y2021", `/assets/sprites/y2021.png?cb=${cb}`);
     this.load.image("some_place", `/assets/sprites/some_place.png?cb=${cb}`);
     this.load.image("doggo", `/assets/sprites/doggo.png?cb=${cb}`);
     this.load.image("anek", `/assets/sprites/anek.png?cb=${cb}`);
@@ -313,7 +328,7 @@ export default class LoadingScene extends Phaser.Scene {
       "durov_way_out_2014",
       `/assets/sprites/durov_way_out_2014.png?cb=${cb}`
     );
-    this.load.image("year_2015", `/assets/sprites/year_2015.png?cb=${cb}`);
+    this.load.image("year_2016", `/assets/sprites/year_2016.png?cb=${cb}`);
 
     this.load.atlas(
         "creatures",
