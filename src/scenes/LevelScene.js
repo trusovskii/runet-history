@@ -298,10 +298,7 @@ export default class LevelScene extends Phaser.Scene {
     //   } else if (!this.isMobile && !hasActiveBubbles) {
     //     offsetY = Math.round(this.mainCamera.worldView.height * -0.2);
     //   }
-    //   console.log("nearbyEntityName", this.nearbyEntityName);
-    //   console.log("hasActiveBubbles", hasActiveBubbles);
     //   if (this.mainCamera.followOffset.y !== offsetY) {
-    //     console.log("setFollowOffset", offsetY);
     //     this.mainCamera.setFollowOffset(0, offsetY);
     //   }
     // });
@@ -347,8 +344,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(33900, 550 + VERTICAL_OFFSET);
-    // const player = this.physics.add.sprite(50000, 550 + VERTICAL_OFFSET);
+    const player = this.physics.add.sprite(2200, 550 + VERTICAL_OFFSET);
     player.body.setSize(40, 200);
     player.setScale(0.4, 0.4);
     player.body.setOffset(120, 40);
@@ -990,9 +986,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   hideQuiz(entity) {
-    console.log("hideQuiz");
     if (entity.quizState.gameObjects) {
-      console.log("cleanup gameObjects");
       if (this.isMobile) {
         this.staticBubblesLayer.remove(entity.quizState.gameObjects.container);
       } else {
@@ -1008,13 +1002,11 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   applyDialogZoom(dialogZoom) {
-    console.log("applyDialogZoom:", dialogZoom);
     this.dialogZoom = dialogZoom;
     this.applyCameraZoom(DIALOG_ZOOM_DURATION, DIALOG_ZOOM_EASING);
   }
 
   applyJumpZoom(jumpZoom, easing) {
-    // console.log("applyJumpZoom:", jumpZoom);
     this.jumpZoom = jumpZoom;
     const jumpZoomDuration = this.isMobile
       ? JUMP_ZOOM_DURATION_MOBILE
@@ -1050,7 +1042,6 @@ export default class LevelScene extends Phaser.Scene {
       entity.quizState.gameObjects.answers[
         number - 1
       ].answerNumberText.setColor("#FFFFFF");
-      console.log("correct!");
       this.correctAnswers++;
       this.correctAnswersText.text = `[stroke]${this.correctAnswers} ${decl(
         this.correctAnswers,
@@ -1072,7 +1063,6 @@ export default class LevelScene extends Phaser.Scene {
         number - 1
       ].answerNumberText.setColor("#FFFFFF");
       this.sfxQuizFail.play();
-      console.log("fail!!!");
     }
     this.advanceQuizDialogueTimeout = setTimeout(() => {
       this.advanceQuizDialogueTimeout = null;
@@ -1081,13 +1071,11 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   advanceQuizDialogue(entity) {
-    console.log("advanceQuizDialogue start");
     if (this.advanceQuizDialogueTimeout) {
       clearTimeout(this.advanceQuizDialogueTimeout);
       this.advanceQuizDialogueTimeout = null;
     }
     if (entity.quizState.gameObjects) {
-      console.log("cleanup gameObjects");
       if (this.isMobile) {
         this.staticBubblesLayer.remove(entity.quizState.gameObjects.container);
       } else {
@@ -1113,7 +1101,6 @@ export default class LevelScene extends Phaser.Scene {
         }
       }
       const line = lines[currentLine];
-      console.log(`showQuizLine ${currentLine}`);
       this.showQuizLine(entity, line);
       entity.quizState.currentLine = currentLine + 1;
       this.updateCameraFollowOffset();
@@ -1125,19 +1112,15 @@ export default class LevelScene extends Phaser.Scene {
       }
       entity.quizState.shown = true;
     } else {
-      console.log("No more lines of dialogue");
       entity.quizState.finished = true;
       entity.quizState.shown = false;
       this.correctAnswersText.setVisible(true);
       this.applyDialogZoom(0);
     }
-    console.log("advanceQuizDialogue end");
   }
 
   hideQuizDialogue(entity) {
-    console.log("hideQuizDialogue");
     if (entity.quizState.gameObjects) {
-      console.log("cleanup gameObjects");
       if (this.isMobile) {
         this.staticBubblesLayer.remove(entity.quizState.gameObjects.container);
       } else {
@@ -1278,7 +1261,6 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   advanceDialogue(entity) {
-    console.log("advanceDialogue start");
     entity.dialogueState.started = true;
     if (!entity.dialogueState.interacted) {
       entity.dialogueState.interacted = true;
@@ -1286,7 +1268,6 @@ export default class LevelScene extends Phaser.Scene {
       this.interactedObjectsText.text = `Interacted objects: ${this.interactedObjects}`;
     }
     if (entity.dialogueState.gameObjects) {
-      console.log("cleanup gameObjects");
       // cleanup previous text bubbles
       this.bubblesLayer.remove(entity.dialogueState.gameObjects.container);
       entity.dialogueState.gameObjects.container.destroy();
@@ -1309,7 +1290,6 @@ export default class LevelScene extends Phaser.Scene {
         }
       }
       const line = lines[currentLine];
-      console.log(`showDialogueLine ${currentLine}`);
       this.showDialogueLine(entity, line);
       entity.dialogueState.isPlayer = line.player;
       entity.dialogueState.currentLine = currentLine + 1;
@@ -1319,20 +1299,16 @@ export default class LevelScene extends Phaser.Scene {
         this.applyDialogZoom(DIALOG_ZOOM_AMOUNT);
       }
     } else {
-      console.log("No more lines of dialogue");
       entity.dialogueState.started = false;
       entity.dialogueState.finished = true;
       entity.dialogueState.shown = false;
       entity.dialogueState.currentLine = null;
       this.applyDialogZoom(0);
     }
-    console.log("advanceDialogue end");
   }
 
   hideDialogue(entity) {
-    console.log("hideDialogue");
     if (entity.dialogueState.gameObjects) {
-      console.log("cleanup gameObjects");
       // cleanup previous text bubbles
       this.bubblesLayer.remove(entity.dialogueState.gameObjects.container);
       entity.dialogueState.gameObjects.container.destroy();
@@ -1507,9 +1483,7 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   hideExit(entity) {
-    console.log("hideExit");
     if (entity.exitState.gameObjects) {
-      console.log("cleanup gameObjects");
       if (this.isMobile) {
         this.staticBubblesLayer.remove(entity.exitState.gameObjects.container);
       } else {
@@ -1535,7 +1509,6 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   enterPortal(entity) {
-    console.log("type", entity.portalData.type);
     entity.portalState.interacted = true;
     this.saveProgress();
     if (entity.portalData.type === "hydra") {
@@ -1766,27 +1739,37 @@ export default class LevelScene extends Phaser.Scene {
   }
 
   update() {
-    const currentAnimKey = this.player.anims.currentAnim.key;
+    const animKey = this.player.anims.currentAnim.key;
     if (this.player.body.velocity.y < 0) {
-      this.sfxRun.pause();
-      this.player.play("jump", true);
+      if (this.sfxRun.isPlaying) {
+        this.sfxRun.pause();
+      }
+      if (animKey !== "jump") {
+        this.player.play("jump", true);
+      }
     } else if (this.player.body.velocity.y > 100) {
-      this.sfxRun.pause();
-      this.player.play("fall", true);
+      if (this.sfxRun.isPlaying) {
+        this.sfxRun.pause();
+      }
+      if (animKey !== "fall") {
+        this.player.play("fall", true);
+      }
     } else if (this.player.body.blocked.down) {
-      if (["fall", "jump"].includes(currentAnimKey)) {
-        this.sfxLand.play();
+      if (["fall", "jump"].includes(animKey)) {
+        if (!this.sfxLand.isPlaying) {
+          this.sfxLand.play();
+        }
       }
       if (Math.abs(this.player.body.velocity.x) > 0) {
         if (!this.sfxRun.isPlaying) {
           this.sfxRun.play(null, { loop: true });
         }
-        this.player.play("run", true);
+        if (animKey !== "run") {
+          this.player.play("run", true);
+        }
       } else {
-        if (["jump", "fall", "run"].includes(currentAnimKey)) {
-          if (currentAnimKey !== "still") {
-            this.sfxRun.pause();
-          }
+        if (["jump", "fall", "run"].includes(animKey)) {
+          this.sfxRun.pause();
           this.player.play("still", true);
         }
       }
@@ -1836,7 +1819,6 @@ export default class LevelScene extends Phaser.Scene {
           !this.physics.world.overlap(this.player, entity.quizArea)
         ) {
           // out of range of active quiz area
-          console.log("out of range of active quiz area");
           if (!entity.quizState.answered) {
             this.hideQuiz(entity);
           } else {
@@ -1893,7 +1875,6 @@ export default class LevelScene extends Phaser.Scene {
           !this.physics.world.overlap(this.player, entity.exitArea)
         ) {
           // out of range of active exit area
-          console.log("out of range of active exit area");
           this.hideExit(entity);
         } else if (
           entity.exitState.started &&
@@ -1987,7 +1968,6 @@ export default class LevelScene extends Phaser.Scene {
           (nearbyEntity.portalState && !nearbyEntity.portalState.interacted))
     );
     if (this.isMobile && this.controls.speak.visible !== showSpeak) {
-      console.log("speak.setVisible:", showSpeak);
       this.controls.speak.setVisible(showSpeak);
       if (this.controls.enter.visible) {
         this.controls.enter.setVisible(false);
@@ -1995,7 +1975,6 @@ export default class LevelScene extends Phaser.Scene {
     } else if (!this.isMobile && this.controls.enter.visible !== showSpeak) {
       this.controls.enter.setVisible(showSpeak);
       if (this.controls.speak.visible) {
-        console.log("speak.setVisible:", false);
         this.controls.speak.setVisible(false);
       }
     }
@@ -2040,19 +2019,12 @@ export default class LevelScene extends Phaser.Scene {
     this.pointerDebugX.setTo(pointerX, 0, pointerX, WORLD_HEIGHT);
     this.pointerDebugY.setTo(0, pointerY, WORLD_WIDTH, pointerY);
 
-    // if (this.isMobile && !this.controls.layer.visible) {
-    //   this.controls.layer.setVisible(true);
-    // } else if (!this.isMobile && this.controls.layer.visible) {
-    //   this.controls.layer.setVisible(false);
-    // }
-
     this.checkNyanCatMode();
 
     this.handleInput();
   }
 
   resizeStaticObjects() {
-    // console.log("resizeStaticObjects");
     const camZoom = this.mainCamera.zoom;
     const camWidth = this.mainCamera.worldView.width;
     // const camHeight = this.mainCamera.worldView.height;
@@ -2060,14 +2032,6 @@ export default class LevelScene extends Phaser.Scene {
     // const unscaledHeight = camHeight * camZoom;
     const topX = (unscaledWidth - camWidth) / 2;
     // const topY = (unscaledHeight - camHeight) / 2;
-
-    // console.log("camZoom:", camZoom);
-    // console.log("camWidth:", camWidth);
-    // console.log("camHeight:", camHeight);
-    // console.log("unscaledWidth:", unscaledWidth);
-    // console.log("unscaledHeight:", unscaledHeight);
-    // console.log("topX:", topX);
-    // console.log("topY:", topY);
 
     this.bg.clouds.width = Math.ceil(camWidth);
     this.bg.clouds.x = Math.round(topX);
@@ -2302,10 +2266,8 @@ export default class LevelScene extends Phaser.Scene {
       this.entities.cat.nyancatArea
     );
     if (inZone && !this.nyancatMode) {
-      console.log("activateNyanCatMode");
       this.activateNyanCatMode();
     } else if (!inZone && this.nyancatMode) {
-      console.log("deactivateNyanCatMode");
       this.deactivateNyanCatMode();
     }
   }

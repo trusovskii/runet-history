@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     const shareUrl = encodeURIComponent(window.location.href);
     let shareComment = null;
-    let scoreText = `Вы ответили на ${score} из 65 вопросов`;
+    let scoreText = `Вы ответили на ${score}&nbsp;из&nbsp;65 вопросов`;
 
     if (score <= 13) {
       shareComment =
