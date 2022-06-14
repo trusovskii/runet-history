@@ -31,6 +31,13 @@
   }
 }
 
+.authors-content-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .authors-content {
   display: flex;
   flex-direction: row;
@@ -41,6 +48,7 @@
   padding: 0 18px;
   gap: 24px;
   justify-content: center;
+  flex: 0 1 auto;
 
   &::after {
     flex: 1;
@@ -72,6 +80,15 @@
   @media screen and (min-width: 1600px) {
     gap: 60px;
     max-width: 1500px;
+  }
+
+  @media screen and (max-width: 524px) {
+    justify-content: flex-start;
+    width: 300px;
+  }
+
+  @media screen and (max-width: 360px) {
+    width: 156px;
   }
 }
 

@@ -89,6 +89,32 @@ export default class LevelScene extends Phaser.Scene {
     this.createEntities();
     this.createControls();
 
+    this.years = [
+      { sprite: 'before1994', x: 0 },
+      { sprite: 'y1994', x: 1760 },
+      { sprite: 'year_1995', x: 3370 },
+      { sprite: 'y1996', x: 4520 },
+      { sprite: 'y1997', x: 6100 },
+      { sprite: 'y1998', x: 7600 },
+      { sprite: 'y1999', x: 9680 },
+      { sprite: 'year_2000', x: 10550 },
+      { sprite: 'y2001', x: 12370 },
+      { sprite: 'y2003', x: 13000 },
+      { sprite: 'y2004', x: 13900 },
+      { sprite: 'y2006', x: 16800 },
+      { sprite: 'year_2007', x: 19600 },
+      { sprite: 'y2009', x: 23500 },
+      { sprite: 'year_2010', x: 27265 },
+      { sprite: 'y2011', x: 27900 },
+      { sprite: 'y2013', x: 30650 },
+      { sprite: 'y2014', x: 31815 },
+      { sprite: 'year_2016', x: 33310 },
+      { sprite: 'y2019', x: 36380 },
+      { sprite: 'year_2020', x: 37500 },
+      { sprite: 'y2021', x: 46890 },
+      { sprite: 'year_2022', x: 49388 },
+    ];
+
     this.bubblesLayer = this.add.layer();
     this.staticBubblesLayer = this.add.layer();
 
@@ -174,6 +200,12 @@ export default class LevelScene extends Phaser.Scene {
       .setOrigin(0, 0)
       .setDepth(9999);
 
+    this.currentYear = this.add
+      .sprite(0, 0, "before1994")
+      .setOrigin(0.5, 1)
+      .setScrollFactor(0, 1)
+      .setDepth(DEPTH_ENTITIES);
+
     this.bg.layer.setDepth(DEPTH_BACKGROUND);
     this.floorLayer.setDepth(DEPTH_FLOOR);
     this.platformsLayer.setDepth(DEPTH_PLATFORMS);
@@ -198,6 +230,7 @@ export default class LevelScene extends Phaser.Scene {
       this.bubblesLayer,
       this.player,
       this.quest,
+      this.currentYear,
       // this.pointerDebugText,
       // this.pointerDebugX,
       // this.pointerDebugY,
@@ -2021,17 +2054,33 @@ export default class LevelScene extends Phaser.Scene {
 
     this.checkNyanCatMode();
 
+    this.updateCurrentYear();
+
     this.handleInput();
+  }
+
+  updateCurrentYear() {
+    let sprite = this.years[0].sprite;
+    for (let i = 0 ; i < this.years.length; i++) {
+      if (this.player.x >= this.years[i].x) {
+        sprite = this.years[i].sprite;
+      } else {
+        break;
+      }
+    }
+    if (this.currentYear.texture.key !== sprite) {
+      this.currentYear.setTexture(sprite);
+    }
   }
 
   resizeStaticObjects() {
     const camZoom = this.mainCamera.zoom;
     const camWidth = this.mainCamera.worldView.width;
-    // const camHeight = this.mainCamera.worldView.height;
+    const camHeight = this.mainCamera.worldView.height;
     const unscaledWidth = camWidth * camZoom;
-    // const unscaledHeight = camHeight * camZoom;
+    const unscaledHeight = camHeight * camZoom;
     const topX = (unscaledWidth - camWidth) / 2;
-    // const topY = (unscaledHeight - camHeight) / 2;
+    const topY = (unscaledHeight - camHeight) / 2;
 
     this.bg.clouds.width = Math.ceil(camWidth);
     this.bg.clouds.x = Math.round(topX);
@@ -2041,6 +2090,11 @@ export default class LevelScene extends Phaser.Scene {
     this.bg.bg2.x = Math.round(topX);
     this.bg.bg3.width = Math.ceil(camWidth);
     this.bg.bg3.x = Math.round(topX);
+
+    this.currentYear.setPosition(
+      Math.round(topX + camWidth / 2),
+      WORLD_HEIGHT - 20
+    );
 
     // this.correctAnswersText.setPosition(topX + 15, topY + 15);
 
