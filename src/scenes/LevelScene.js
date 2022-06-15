@@ -1062,6 +1062,13 @@ export default class LevelScene extends Phaser.Scene {
     );
   }
 
+  updateCorrectAnswersText() {
+    this.correctAnswersText.text = `[stroke]${this.correctAnswers} ${decl(
+      this.correctAnswers,
+      ["правильный ответ", "правильных ответа", "правильных ответов"]
+    )}[/stroke]`;
+  }
+
   answerQuiz(entity, number) {
     if (entity.quizData.correctNumber === number) {
       entity.quizState.answered = true;
@@ -1076,10 +1083,7 @@ export default class LevelScene extends Phaser.Scene {
         number - 1
       ].answerNumberText.setColor("#FFFFFF");
       this.correctAnswers++;
-      this.correctAnswersText.text = `[stroke]${this.correctAnswers} ${decl(
-        this.correctAnswers,
-        ["правильный ответ", "правильных ответа", "правильных ответов"]
-      )}[/stroke]`;
+      this.updateCorrectAnswersText();
       if (!this.isMobile) {
         this.correctAnswersText.setVisible(true);
       }
@@ -2299,6 +2303,7 @@ export default class LevelScene extends Phaser.Scene {
     });
     this.interactedObjects = gameData.interactedObjects;
     this.correctAnswers = gameData.correctAnswers;
+    this.updateCorrectAnswersText();
     if (this.correctAnswers > 0) {
       this.correctAnswersText.setVisible(true);
     }
