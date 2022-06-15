@@ -151,6 +151,13 @@
 
         &--maestro {
 
+          .victorine__button-wrap {
+            &:hover {
+              transition: .1s linear;
+              filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+            }
+          }
+
           .victorine__button {
             background: #ED8872;
 
@@ -163,10 +170,22 @@
         }
       }
 
+      &__button-wrap {
+        width: 100%;
+
+        &:hover {
+          transition: .1s linear;
+          filter: drop-shadow(0 0 10px rgba(134, 134, 134, 0.8));
+        }
+
+        @media screen and (min-width: 1280px) {
+          width: 320px;
+        }
+      }
+
       &__button {
         background: #292929;
-        border-radius: 48px;
-        width: 100%;
+        // border-radius: 48px;
         height: 237px;
         padding: 25px 0;
         display: flex;
@@ -175,6 +194,10 @@
         justify-content: space-around;
         align-items: center;
         cursor: pointer;
+        -webkit-mask-image: url('/assets/img/mask/answer.svg');
+        mask-image: url('/assets/img/mask/answer.svg');
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
 
         &:hover {
           transition: .1s linear;
@@ -190,8 +213,10 @@
           }
         }
 
-        @media screen and (min-width: 1280px) {
-          width: 320px;
+        @media screen and (max-width: 768px) {
+          border-radius: 48px;
+          mask-image: none;
+          -webkit-mask-image: none;
         }
 
         img {
