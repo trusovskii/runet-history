@@ -160,17 +160,20 @@ window.addEventListener("DOMContentLoaded", function () {
       //Создаём кнопки для новых вариантов ответов
       for (let i = 0; i < quiz.questions[quiz.current].answers.length; i++) {
         let btn = document.createElement("div");
+        let btnWrap = document.createElement("div");
         let image = document.createElement("img");
 
         image.src = quiz.questions[quiz.current].answers[i].picture;
 
         btn.className = "victorine__button";
+        btnWrap.className = "victorine__button-wrap";
 
         btn.innerHTML = quiz.questions[quiz.current].answers[i].text;
 
         btn.setAttribute("index", i);
 
-        buttonsElem.appendChild(btn);
+        btnWrap.appendChild(btn);
+        buttonsElem.appendChild(btnWrap);
         btn.prepend(image);
       }
       //Обновляем счетчик жизней
