@@ -66,6 +66,7 @@ export default class LevelScene extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, false, true);
     this.mainCamera.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
+    this.sound.pauseOnBlur = false;
     this.bgm = this.sound.add("bgm");
     this.bgm.setLoop(true);
     this.bgm.play();
@@ -90,29 +91,29 @@ export default class LevelScene extends Phaser.Scene {
     this.createControls();
 
     this.years = [
-      { sprite: 'before1994', x: 0 },
-      { sprite: 'y1994', x: 1760 },
-      { sprite: 'year_1995', x: 3370 },
-      { sprite: 'y1996', x: 4520 },
-      { sprite: 'y1997', x: 6100 },
-      { sprite: 'y1998', x: 7600 },
-      { sprite: 'y1999', x: 9680 },
-      { sprite: 'year_2000', x: 10550 },
-      { sprite: 'y2001', x: 12370 },
-      { sprite: 'y2003', x: 13000 },
-      { sprite: 'y2004', x: 13900 },
-      { sprite: 'y2006', x: 16800 },
-      { sprite: 'year_2007', x: 19600 },
-      { sprite: 'y2009', x: 23500 },
-      { sprite: 'year_2010', x: 27265 },
-      { sprite: 'y2011', x: 27900 },
-      { sprite: 'y2013', x: 30650 },
-      { sprite: 'y2014', x: 31815 },
-      { sprite: 'year_2016', x: 33310 },
-      { sprite: 'y2019', x: 36380 },
-      { sprite: 'year_2020', x: 37500 },
-      { sprite: 'y2021', x: 46890 },
-      { sprite: 'year_2022', x: 49388 },
+      { sprite: "before1994", x: 0 },
+      { sprite: "y1994", x: 1760 },
+      { sprite: "year_1995", x: 3370 },
+      { sprite: "y1996", x: 4520 },
+      { sprite: "y1997", x: 6100 },
+      { sprite: "y1998", x: 7600 },
+      { sprite: "y1999", x: 9680 },
+      { sprite: "year_2000", x: 10550 },
+      { sprite: "y2001", x: 12370 },
+      { sprite: "y2003", x: 13000 },
+      { sprite: "y2004", x: 13900 },
+      { sprite: "y2006", x: 16800 },
+      { sprite: "year_2007", x: 19600 },
+      { sprite: "y2009", x: 23500 },
+      { sprite: "year_2010", x: 27265 },
+      { sprite: "y2011", x: 27900 },
+      { sprite: "y2013", x: 30650 },
+      { sprite: "y2014", x: 31815 },
+      { sprite: "year_2016", x: 33310 },
+      { sprite: "y2019", x: 36380 },
+      { sprite: "year_2020", x: 37500 },
+      { sprite: "y2021", x: 46890 },
+      { sprite: "year_2022", x: 49388 },
     ];
 
     this.bubblesLayer = this.add.layer();
@@ -729,7 +730,6 @@ export default class LevelScene extends Phaser.Scene {
         entity.soundData = entityData.sound;
         entity.soundState = {
           played: false,
-          skipNext: true,
         };
         entity.soundInstance = soundInstance;
       }
@@ -1128,15 +1128,15 @@ export default class LevelScene extends Phaser.Scene {
       entity.quizState.currentLine == null ? 0 : entity.quizState.currentLine;
     if (lines && lines.length > currentLine) {
       // at first line play a sound
-      if (currentLine === 0 && entity.soundData && entity.soundState) {
-        if (entity.soundState.skipNext) {
-          entity.soundState.skipNext = false;
-        } else {
-          if (!this.anyEntitySoundIsPlaying()) {
-            entity.soundInstance.play();
-          }
-        }
-      }
+      // if (currentLine === 0 && entity.soundData && entity.soundState) {
+      //   if (entity.soundState.skipNext) {
+      //     entity.soundState.skipNext = false;
+      //   } else {
+      //     if (!this.anyEntitySoundIsPlaying()) {
+      //       entity.soundInstance.play();
+      //     }
+      //   }
+      // }
       const line = lines[currentLine];
       this.showQuizLine(entity, line);
       entity.quizState.currentLine = currentLine + 1;
@@ -1317,15 +1317,15 @@ export default class LevelScene extends Phaser.Scene {
         : entity.dialogueState.currentLine;
     if (lines && lines.length > currentLine) {
       // at first line play a sound
-      if (currentLine === 0 && entity.soundData && entity.soundState) {
-        if (entity.soundState.skipNext) {
-          entity.soundState.skipNext = false;
-        } else {
-          if (!this.anyEntitySoundIsPlaying()) {
-            entity.soundInstance.play();
-          }
-        }
-      }
+      // if (currentLine === 0 && entity.soundData && entity.soundState) {
+      //   if (entity.soundState.skipNext) {
+      //     entity.soundState.skipNext = false;
+      //   } else {
+      //     if (!this.anyEntitySoundIsPlaying()) {
+      //       entity.soundInstance.play();
+      //     }
+      //   }
+      // }
       const line = lines[currentLine];
       this.showDialogueLine(entity, line);
       entity.dialogueState.isPlayer = line.player;
@@ -1954,16 +1954,14 @@ export default class LevelScene extends Phaser.Scene {
         }
       }
 
-      if (
-        entity.soundData &&
-        entity.soundState &&
-        !entity.soundState.played &&
-        anyArea &&
-        this.physics.world.overlap(this.player, anyArea)
-      ) {
-        if (!this.anyEntitySoundIsPlaying()) {
-          entity.soundInstance.play();
-          entity.soundState.played = true;
+      if (entity.soundData && entity.soundState && anyArea) {
+        if (this.physics.world.overlap(this.player, anyArea)) {
+          if (!entity.soundState.played && !this.anyEntitySoundIsPlaying()) {
+            entity.soundInstance.play();
+            entity.soundState.played = true;
+          }
+        } else if (entity.soundState.played) {
+          entity.soundState.played = false;
         }
       }
     });
@@ -2065,7 +2063,7 @@ export default class LevelScene extends Phaser.Scene {
 
   updateCurrentYear() {
     let sprite = this.years[0].sprite;
-    for (let i = 0 ; i < this.years.length; i++) {
+    for (let i = 0; i < this.years.length; i++) {
       if (this.player.x >= this.years[i].x) {
         sprite = this.years[i].sprite;
       } else {

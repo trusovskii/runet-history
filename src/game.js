@@ -38,6 +38,7 @@ const gameConfig = {
   render: {
     antialiasGL: true,
     pixelArt: false,
+    roundPixels: true,
   },
   // callbacks: {
   //   postBoot: () => {

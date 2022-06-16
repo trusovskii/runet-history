@@ -75,10 +75,10 @@
     }
     @keyframes nyancat-bg {
       from {
-        transform: translateY(0);
+        transform: translateX(0);
       }
       to {
-        transform: translateY(99%);
+        transform: translateX(-99%);
       }
     }
     .nyancat-overlay {
@@ -101,23 +101,23 @@
     .nyancat-overlay::after {
       content: '';
       position: absolute;
-      /* top: 0; */
-      left: 0;
+      top: 0;
+      /* left: 0; */
       width: 100%;
       height: 100%;
       z-index: 1000;
       pointer-events: none;
     }
     .nyancat-overlay::before {
-      top: 0;
+      left: 0;
     }
     .nyancat-overlay::after {
-      top: -99%;
+      left: 99%;
     }
     .nyancat-overlay.active::before,
     .nyancat-overlay.active::after {
       background: linear-gradient(
-          0deg,
+          90deg,
           rgba(255, 0, 0, 1) 0%,
           rgba(255, 154, 0, 1) 10%,
           rgba(208, 222, 33, 1) 20%,

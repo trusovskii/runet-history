@@ -230,10 +230,10 @@ export default class LoadingScene extends Phaser.Scene {
       "kinopoisk_2003",
       `/assets/sprites/kinopoisk_2003.png?cb=${cb}`
     );
-    this.load.image(
-      "rutracker_2004",
-      `/assets/sprites/rutracker_2004.png?cb=${cb}`
-    );
+    // this.load.image(
+    //   "rutracker_2004",
+    //   `/assets/sprites/rutracker_2004.png?cb=${cb}`
+    // );
     this.load.image("mamba_2003", `/assets/sprites/mamba_2003.png?cb=${cb}`);
     this.load.image(
       "leprosorium_2004",
@@ -257,13 +257,13 @@ export default class LoadingScene extends Phaser.Scene {
       `/assets/sprites/tagline_2006.png?cb=${cb}`
     );
     this.load.image("year_2007", `/assets/sprites/year_2007.png?cb=${cb}`);
-    this.load.image("raek_2006", `/assets/sprites/raek_2006.png?cb=${cb}`);
+    // this.load.image("raek_2006", `/assets/sprites/raek_2006.png?cb=${cb}`);
     this.load.image(
       "youtube_2007",
       `/assets/sprites/youtube_2007.png?cb=${cb}`
     );
     this.load.image("dvd_2007", `/assets/sprites/dvd_2007.png?cb=${cb}`);
-    this.load.image("penek_2007", `/assets/sprites/penek_2007.png?cb=${cb}`);
+    // this.load.image("penek_2007", `/assets/sprites/penek_2007.png?cb=${cb}`);
     this.load.image(
       "who_are_you_2007",
       `/assets/sprites/who_are_you_2007.png?cb=${cb}`
